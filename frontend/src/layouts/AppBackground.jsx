@@ -1,25 +1,31 @@
+import React from 'react';
+
 const AppBackground = ({ children, showGrid = true }) => {
+  const gridStyle = {
+    backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`, 
+    backgroundSize: '40px 40px' 
+  };
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-background-dark transition-colors duration-500 font-display text-white">
-
-      {/* Animated Background Effects */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        {/* Primary Blob */}
-        <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[80px] opacity-60 animate-blob"></div>
-
-        {/* Cyan Blob */}
-        <div className="absolute top-[20%] right-[-10%] w-80 h-80 bg-cyan-500/20 rounded-full mix-blend-screen filter blur-[80px] opacity-50 animate-blob animation-delay-2000"></div>
-
-        {/* Yellow Blob */}
-        <div className="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-yellow-500/10 rounded-full mix-blend-screen filter blur-[100px] opacity-40 animate-blob animation-delay-4000"></div>
-
-        {/* Optional Grid */}
-        {showGrid && (
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://placeholder.pics/svg/20')] bg-repeat"></div>
-        )}
+    <div className="relative min-h-screen w-full bg-[#0B0F1E] overflow-x-hidden">
+      {/* Background Blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[#FF4D4D] opacity-10 rounded-full blur-[120px] animate-blob"></div>
+        <div 
+          className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#c813ec] opacity-10 rounded-full blur-[120px] animate-blob"
+          style={{ animationDelay: '2s' }}
+        ></div>
       </div>
 
-      {/* Page Content */}
+      {/* Conditional Grid */}
+      {showGrid && (
+        <div 
+          className="fixed inset-0 z-0 pointer-events-none opacity-[0.03]" 
+          style={gridStyle}
+        ></div>
+      )}
+
+      {/* Content */}
       <div className="relative z-10">
         {children}
       </div>

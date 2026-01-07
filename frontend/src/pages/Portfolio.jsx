@@ -1,10 +1,10 @@
-import React, { useState } from 'react'; // useState add kiya
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ShoppingCart, User, Star, Eye } from 'lucide-react';
+import { Star, Eye } from 'lucide-react';
+import NavBar from '../components/Navbar'; 
 
 const Portfolio = () => {
   const navigate = useNavigate();
-  // Filter state
   const [activeTab, setActiveTab] = useState('All Projects');
 
   const projects = [
@@ -16,7 +16,6 @@ const Portfolio = () => {
     { id: 6, title: "Custom Packaging", desc: "Branded shipping boxes with internal printing.", category: "Stationery", rating: 5, img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600", match: "Perfect Fit", tags: ["Packaging", "Branding"] },
   ];
 
-  // Filtering Logic
   const filteredProjects = activeTab === 'All Projects' 
     ? projects 
     : projects.filter(p => p.category === activeTab);
@@ -26,32 +25,7 @@ const Portfolio = () => {
   return (
     <div className="bg-[#0B0F1E] font-sans text-white overflow-x-hidden min-h-screen flex flex-col relative text-left">
       
-      {/* HEADER (Same as your design) */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0B0F1E]/70 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center text-white font-bold text-xl">C</div>
-              <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-pink-200 to-[#FF9F43]">Colour Pix</span>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Home</button>
-                <button onClick={() => navigate('/catalog')} className="text-gray-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Products</button>
-                <button className="text-white px-3 py-2 text-sm font-medium relative">
-                  Portfolio
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43]"></span>
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-               <button className="flex size-10 items-center justify-center rounded-full bg-[#1F2937] hover:bg-[#FF4D4D] transition-all"><Search size={18} /></button>
-               <button className="flex size-10 items-center justify-center rounded-full bg-[#1F2937] hover:bg-[#FF4D4D] transition-all"><ShoppingCart size={18} /></button>
-               <button className="flex size-10 items-center justify-center rounded-full bg-[#1F2937] hover:bg-[#FF4D4D] transition-all"><User size={18} /></button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
 
       <main className="flex-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1f302a] via-[#0f1715] to-[#000000] pt-32 pb-0">
         
@@ -61,7 +35,7 @@ const Portfolio = () => {
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">Real-world examples of pixel-perfect production.</p>
         </section>
 
-        {/* Sticky Filter Bar (Now Functional) */}
+        {/* Sticky Filter Bar */}
         <div className="sticky top-20 z-40 bg-[#0f1715]/95 backdrop-blur-sm border-b border-[#39564c]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex overflow-x-auto gap-8 no-scrollbar py-4">
             {tabs.map((tab) => (
@@ -80,7 +54,7 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-10 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((item) => (
-              <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full animate-in fade-in zoom-in duration-300">
+              <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full">
                 <div className="relative h-64 overflow-hidden">
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
@@ -105,7 +79,7 @@ const Portfolio = () => {
           </div>
         </div>
 
-        {/* Case Study Section (Restored) */}
+        {/* Case Study Section */}
         <section className="py-20 bg-[#1F2937]/30 border-t border-[#273a34]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-12 items-center text-left">
             <div className="flex-1 w-full relative h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
@@ -133,16 +107,28 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - UPDATED BUTTONS */}
         <section className="py-24 px-4 text-center">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#1F2937] to-[#0B0F1E] rounded-3xl p-12 border border-[#39564c]">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Start your own masterpiece?</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-text-muted leading-relaxed font-light">
+            <p className="text-gray-400 text-lg mb-10">
               Join thousands of creators who trust COLOUR PIX for their custom merchandise. Guaranteed quality, every time.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => navigate('/catalog')} className="px-10 py-4 bg-[#00ffaa] hover:bg-white text-black font-black rounded-xl transition-all">Start Custom Order</button>
-              <button className="px-10 py-4 border border-gray-600 text-white hover:bg-white/5 font-bold rounded-xl transition-all">Request Sample Kit</button>
+              {/* Navigate to Contact */}
+              <button 
+                onClick={() => navigate('/contact')} 
+                className="px-10 py-4 bg-[#00ffaa] hover:bg-white text-black font-black rounded-xl transition-all"
+              >
+                Start Custom Order
+              </button>
+              {/* Navigate to Catalog/Products */}
+              <button 
+                onClick={() => navigate('/catalog')} 
+                className="px-10 py-4 border border-gray-600 text-white hover:bg-white/5 font-bold rounded-xl transition-all"
+              >
+                Request Sample Kit
+              </button>
             </div>
           </div>
         </section>

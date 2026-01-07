@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Palette } from 'lucide-react';
 
 const DesignReview = () => {
   const location = useLocation();
@@ -43,14 +44,12 @@ const DesignReview = () => {
       
       {/* HEADER */}
       <header className="flex items-center justify-between border-b border-[#273a34] bg-[#101816]/90 backdrop-blur-md px-6 py-3 z-50 shrink-0">
-        <div className="flex items-center gap-4 text-white cursor-pointer" onClick={() => navigate('/')}>
-          <div className="size-8 text-[#00ffaa]">
-            <svg className="w-full h-full" fill="none" viewBox="0 0 48 48">
-              <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
-            </svg>
-          </div>
-          <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">COLOUR PIX</h2>
-        </div>
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF4D4D] to-[#c813ec] flex items-center justify-center text-white">
+                    <Palette size={24} />
+                  </div>
+                  <span className="text-xl font-bold text-white">Colour Pix</span>
+                </div>
         <div className="flex items-center justify-end gap-4">
           <span className="text-[#9abcb0] text-sm hidden sm:block">Temporary Order ID : #4429</span>
           <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-[#273a34]" style={{backgroundImage: 'url("https://i.pravatar.cc/100")'}}></div>

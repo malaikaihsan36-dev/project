@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle, Search } from 'lucide-react';
+// useNavigate aur Search hata diya gaya hai kyunki wo use nahi ho rahay thay
+import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle } from 'lucide-react';
+import NavBar from '../components/Navbar';
 
 const ContactPage = () => {
-  const navigate = useNavigate();
-  
   // Form Logic
   const [formData, setFormData] = useState({
     name: '',
@@ -36,39 +35,9 @@ const ContactPage = () => {
         <div className="absolute -left-[10%] top-[20%] w-[40%] h-[40%] bg-[#10B981]/10 blur-[120px] rounded-full"></div>
       </div>
 
-      {/* 1. EXACT ORIGINAL HEADER */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0B0F1E]/70 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-              <div className="size-10 rounded-full bg-gradient-to-tr from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center text-white font-bold text-xl shadow-lg">C</div>
-              <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-pink-200 to-[#FF9F43]">Colour Pix</span>
-            </div>
-            
-            <div className="hidden lg:flex items-center gap-8">
-              {['Home', 'Products', 'Portfolio'].map((item) => (
-                <button key={item} onClick={() => navigate(item === 'Home' ? '/' : `/${item.toLowerCase()}`)} 
-                  className="text-gray-400 hover:text-white text-sm font-medium transition-colors">{item}</button>
-              ))}
-              <button onClick={() => navigate('/reviews')} className="text-gray-400 hover:text-white text-sm font-medium transition-colors">Reviews</button>
-              <button className="text-white text-sm font-bold relative">
-                Contact
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43]"></span>
-              </button>
-            </div>
+      {/* SHARED NAVBAR */}
+      <NavBar />
 
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10">
-                <Search size={18} className="text-gray-500" />
-                <input className="bg-transparent border-none focus:ring-0 text-sm ml-2 placeholder:text-gray-600 outline-none" placeholder="Search..." />
-              </div>
-              <button className="bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43] px-6 py-2 rounded-full text-sm font-bold shadow-lg active:scale-95 transition-all">Login</button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* 2. MAIN CONTENT - EXACT LAYOUT RETAINED */}
       <main className="relative pt-32 pb-16 px-4 max-w-7xl mx-auto z-10">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tight text-white">
@@ -80,7 +49,7 @@ const ContactPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Form Section - Original Col Span 7 */}
+          {/* Form Section */}
           <div className="lg:col-span-7 bg-[#141A3A]/40 backdrop-blur-md border border-white/5 rounded-3xl p-8 shadow-xl">
             {isSubmitted ? (
               <div className="h-full flex flex-col items-center justify-center py-12 text-center">
@@ -127,7 +96,7 @@ const ContactPage = () => {
             )}
           </div>
 
-          {/* Info Section - Original Col Span 5 */}
+          {/* Info Section */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#141A3A] rounded-3xl overflow-hidden h-64 relative group border border-white/5">
               <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=800" alt="Map" className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" />
@@ -162,7 +131,6 @@ const ContactPage = () => {
   );
 };
 
-// Sub-component RETAINED
 const ContactInfoCard = ({ icon, title, info, isLink, link }) => {
   const content = (
     <div className="bg-[#141A3A]/40 border border-white/5 p-6 rounded-2xl flex items-center gap-5 hover:border-[#10B981]/30 transition-all group">

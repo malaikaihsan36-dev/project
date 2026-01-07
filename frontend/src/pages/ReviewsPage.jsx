@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Star, Send, RefreshCw, ThumbsUp, Share2, User, CheckCircle, Search, ChevronDown } from 'lucide-react';
+import { Star, Send, ThumbsUp, Share2, User, CheckCircle, ChevronDown, RefreshCw } from 'lucide-react';
+import NavBar from '../components/Navbar'; // Shared NavBar import kiya
 
 const ReviewsPage = () => {
-  const navigate = useNavigate();
-  
   // States for Form
   const [name, setName] = useState('');
   const [product, setProduct] = useState('Select a product...');
@@ -87,34 +85,9 @@ const ReviewsPage = () => {
   return (
     <div className="bg-[#0B0F1E] text-white min-h-screen font-sans selection:bg-[#FF4D4D] text-left">
       
-      {/* SHARED HEADER */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0B0F1E]/70 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-              <div className="size-10 rounded-full bg-gradient-to-tr from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center text-white font-bold text-xl">C</div>
-              <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-pink-200 to-[#FF9F43]">Colour Pix</span>
-            </div>
-            
-            <div className="hidden lg:flex items-center gap-8">
-              {['Home', 'Products', 'Portfolio', 'Contact'].map((item) => (
-                <button key={item} onClick={() => navigate(item === 'Home' ? '/' : `/${item.toLowerCase()}`)} className="text-gray-400 hover:text-white text-sm font-medium transition-colors">{item}</button>
-              ))}
-              <button className="text-white text-sm font-bold relative">Reviews <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43]"></span></button>
-            </div>
+      {/* SHARED NAVBAR (Purana manual header replace kar diya) */}
+      <NavBar />
 
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10">
-                <Search size={18} className="text-gray-500" />
-                <input className="bg-transparent border-none focus:ring-0 text-sm ml-2 placeholder:text-gray-600 outline-none" placeholder="Search reviews..." />
-              </div>
-              <button className="bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43] px-6 py-2 rounded-full text-sm font-bold shadow-lg active:scale-95 transition-all">Login</button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* MAIN CONTENT */}
       <main className="max-w-7xl mx-auto px-4 pt-32 pb-16">
         
         {/* Stats Header */}
@@ -228,7 +201,6 @@ const ReviewsPage = () => {
               </div>
             ))}
             
-            {/* Using RefreshCw here to solve the warning */}
             <button className="w-full py-5 rounded-2xl border border-white/5 hover:bg-white/5 flex items-center justify-center gap-2 font-bold transition-all text-gray-400 hover:text-white">
               <RefreshCw size={18} /> Load More Reviews
             </button>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingCart, User, Filter, Eye, Palette } from 'lucide-react';
+import AppBackground from '../layouts/AppBackground';
+import NavBar from '../components/Navbar';
 
-// --- HELPER COMPONENTS (Defined outside to prevent yellow warnings) ---
+// --- HELPER COMPONENTS (Aapka Original Design) ---
 
 const HeaderIconButton = ({ Icon, className = "" }) => (
   <button className={`flex size-10 items-center justify-center rounded-full bg-[#1F2937] text-white hover:bg-[#FF4D4D] transition-all duration-300 ${className}`}>
@@ -48,10 +50,32 @@ const ProductCard = ({ title, price, tag, img, onBtnClick }) => (
 const BrowseCatalog = () => {
   const navigate = useNavigate();
   
+  // States for Filtering
   const [selectedCategories, setSelectedCategories] = useState(['Apparel']);
   const [price, setPrice] = useState(250);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categoriesList = ['Apparel', 'Tech Accessories', 'Home & Living', 'Drinkware'];
+
+  // Mock Data (In future, this can come from Admin Panel/API)
+  const products = [
+    { id: 1, title: "Cyber Hoodie X1", price: 45, category: 'Apparel', tag: "Best Seller", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" },
+    { id: 2, title: "Holo-Tumbler 500", price: 22, category: 'Drinkware', img: "https://images.unsplash.com/photo-1517254456976-ee8682099819?w=400" },
+    { id: 3, title: "Prism RGB Mat", price: 35, category: 'Tech Accessories', tag: "New", img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400" },
+    { id: 4, title: "Gallery Canvas", price: 55, category: 'Home & Living', img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400" },
+    { id: 5, title: "Urban Tote Bag", price: 15, category: 'Apparel', img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400" },
+    { id: 6, title: "Shield Case Pro", price: 28, category: 'Tech Accessories', img: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400" },
+  ];
+
+  // Logic: Filters products based on UI selections
+  const filteredProducts = useMemo(() => {
+    return products.filter(p => {
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
+      const matchesPrice = p.price <= price;
+      const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesPrice && matchesSearch;
+    });
+  }, [selectedCategories, price, searchQuery]);
 
   const toggleCategory = (cat) => {
     if (selectedCategories.includes(cat)) {
@@ -64,59 +88,36 @@ const BrowseCatalog = () => {
   const resetFilters = () => {
     setSelectedCategories([]);
     setPrice(250);
+    setSearchQuery("");
   };
 
   return (
-    <div className="bg-[#0B0F1E] font-sans text-white overflow-x-hidden min-h-screen flex flex-col relative selection:bg-orange-500 text-left">
+    <AppBackground showGrid={false}>
+      <NavBar />
       
-      {/* Background Glows */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[#FF4D6D] rounded-full blur-[150px] opacity-10"></div>
-        <div className="absolute bottom-[10%] right-[-10%] w-[40vw] h-[40vw] bg-[#FF9F43] rounded-full blur-[130px] opacity-10"></div>
-      </div>
-
-      {/* 1. HEADER (Now with Portfolio Link Connected) */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0B0F1E]/70 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center text-white font-bold text-xl shadow-lg">C</div>
-              <span className="font-display font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-pink-200 to-[#FF9F43] tracking-tight">Colour Pix</span>
-            </div>
-            
-            {/* Navigation Links */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <button key="h-home" onClick={() => navigate('/')} className="text-gray-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Home</button>
-                <button key="h-catalog" onClick={() => navigate('/catalog')} className="text-white px-3 py-2 text-sm font-medium transition-colors relative">
-                  Products
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43]"></span>
-                </button>
-                {/* Fixed Portfolio Connection */}
-                <button key="h-portfolio" onClick={() => navigate('/portfolio')} className="text-gray-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Portfolio</button>
-                <button key="h-contact" className="text-gray-400 hover:text-white px-3 py-2 text-sm font-medium transition-colors">Contact</button>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-               <HeaderIconButton Icon={Search} className="hidden sm:flex" />
-               <HeaderIconButton Icon={ShoppingCart} />
-               <HeaderIconButton Icon={User} />
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* 2. CATALOG BODY */}
       <main className="relative z-10 flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-32 pb-8">
-        <div className="mb-8">
-          <h1 className="text-white text-4xl font-bold">Product Catalog</h1>
-          <p className="text-gray-400 mt-2">Browse our collection of premium goods.</p>
+        {/* Header Content */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="text-white text-4xl font-bold">Product Catalog</h1>
+            <p className="text-gray-400 mt-2">Browse our collection of premium goods.</p>
+          </div>
+          
+          {/* Search Input (Functional) */}
+          <div className="relative w-full md:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              className="w-full bg-[#1F2937] border border-white/5 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-[#FF4D4D] transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* SIDEBAR FILTERS */}
+          {/* SIDEBAR FILTERS (Original Design) */}
           <aside className="w-full lg:w-72 shrink-0">
             <div className="bg-[#1F2937]/50 backdrop-blur-md rounded-xl p-6 border border-white/5 sticky top-28">
               <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
@@ -146,24 +147,41 @@ const BrowseCatalog = () => {
               </div>
 
               <div className="space-y-4">
-                <h4 className="text-gray-400 text-xs font-bold uppercase tracking-widest">Max Price: ${price}</h4>
-                <input type="range" min="0" max="500" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full h-1 bg-gray-700 rounded-full appearance-none cursor-pointer accent-[#FF4D4D]" />
+                <div className="flex justify-between items-center">
+                  <h4 className="text-gray-400 text-xs font-bold uppercase tracking-widest">Max Price</h4>
+                  <span className="text-[#FF4D4D] text-sm font-bold">${price}</span>
+                </div>
+                <input 
+                  type="range" min="0" max="500" 
+                  value={price} 
+                  onChange={(e) => setPrice(e.target.value)} 
+                  className="w-full h-1 bg-gray-700 rounded-full appearance-none cursor-pointer accent-[#FF4D4D]" 
+                />
               </div>
             </div>
           </aside>
 
-          {/* PRODUCT GRID */}
+          {/* PRODUCT GRID (Original Design) */}
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            <ProductCard key="c1" title="Cyber Hoodie X1" price="45.00" tag="Best Seller" img="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" onBtnClick={() => navigate('/customize')} />
-            <ProductCard key="c2" title="Holo-Tumbler 500" price="22.00" img="https://images.unsplash.com/photo-1517254456976-ee8682099819?w=400" onBtnClick={() => navigate('/customize')} />
-            <ProductCard key="c3" title="Prism RGB Mat" price="35.00" tag="New" img="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400" onBtnClick={() => navigate('/customize')} />
-            <ProductCard key="c4" title="Gallery Canvas" price="55.00" img="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400" onBtnClick={() => navigate('/customize')} />
-            <ProductCard key="c5" title="Urban Tote" price="15.00" img="https://images.unsplash.com/photo-1544816155-12df9643f363?w=400" onBtnClick={() => navigate('/customize')} />
-            <ProductCard key="c6" title="Shield Case Pro" price="28.00" img="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400" onBtnClick={() => navigate('/customize')} />
+            {filteredProducts.map((p) => (
+              <ProductCard 
+                key={p.id} 
+                title={p.title} 
+                price={p.price} 
+                tag={p.tag} 
+                img={p.img} 
+                onBtnClick={() => navigate('/customize')} 
+              />
+            ))}
+            {filteredProducts.length === 0 && (
+              <div className="col-span-full py-20 text-center text-gray-500">
+                No products found matching your filters.
+              </div>
+            )}
           </div>
         </div>
       </main>
-    </div>
+    </AppBackground>
   );
 };
 

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Added for connectivity
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   Bolt, 
   Droplets, 
@@ -17,17 +17,24 @@ const CustomizeProduct = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Scroll to top when page opens
+  // --- FUNCTIONAL STATES ---
+  const [quantity, setQuantity] = useState(1);
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Getting dynamic data from Catalog
   const product = location.state?.product || {
     title: "Custom Neon Flex",
     img: "https://images.unsplash.com/photo-1563245332-692146974811?auto=format&fit=crop&q=80&w=800",
     price: "120.00"
   };
+
+  // --- CALCULATION LOGIC ---
+  const basePrice = parseFloat(product.price) || 0;
+  const totalPrice = (basePrice * quantity).toFixed(2);
 
   return (
     <div className="bg-[#0B0F1E] font-sans text-white min-h-screen flex flex-col selection:bg-[#00ffaa] selection:text-black">
@@ -51,8 +58,6 @@ const CustomizeProduct = () => {
           <nav className="hidden md:flex gap-8">
             <button onClick={() => navigate('/')} className="text-gray-400 hover:text-[#00ffaa] transition-colors text-sm font-medium">Home</button>
             <button onClick={() => navigate('/catalog')} className="text-[#00ffaa] transition-colors text-sm font-medium">Products</button>
-            <button className="text-gray-400 hover:text-[#00ffaa] transition-colors text-sm font-medium">About Us</button>
-            <button className="text-gray-400 hover:text-[#00ffaa] transition-colors text-sm font-medium">Contact</button>
           </nav>
         </div>
       </header>
@@ -61,39 +66,43 @@ const CustomizeProduct = () => {
       <main className="relative z-10 flex-grow w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 text-left">
           
-          {/* LEFT COLUMN: PRODUCT PREVIEW */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-[#1F2937]">
-              <img 
-                src={product.img} 
-                alt={product.title} 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              <img src={product.img} alt={product.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
-              <div className="absolute bottom-0 left-0 p-6 w-full">
-                <span className="inline-block px-3 py-1 rounded-full bg-[#00ffaa]/20 text-[#00ffaa] text-xs font-bold uppercase tracking-wider border border-[#00ffaa]/30 mb-2">
-                  Best Seller
-                </span>
+              <div className="absolute bottom-0 left-0 p-6 w-full text-left">
+                <span className="inline-block px-3 py-1 rounded-full bg-[#00ffaa]/20 text-[#00ffaa] text-xs font-bold uppercase tracking-wider border border-[#00ffaa]/30 mb-2">Best Seller</span>
                 <h1 className="text-white text-3xl md:text-4xl font-bold leading-tight mb-2">{product.title}</h1>
-                <p className="text-gray-300 text-sm max-w-md">Weather-resistant, fully programmable LED. Perfect for high-impact branding.</p>
+                <p className="text-gray-300 text-sm max-w-md">Weather-resistant, fully programmable LED.</p>
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <FeatureCard Icon={Bolt} title="Energy Efficient" desc="Low voltage 12V DC" />
               <FeatureCard Icon={Droplets} title="Waterproof" desc="IP67 rated" />
             </div>
           </div>
 
-          {/* RIGHT COLUMN: CUSTOMIZATION FORMS */}
           <div className="lg:col-span-7 flex flex-col gap-8">
-            
-            {/* Step 1: Customization */}
             <section>
               <SectionHeader number="1" title="Customization Panel" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <InputGroup label="Size (WxH)" id="size" placeholder="e.g., 24x36 inches" Icon={Ruler} />
-                <InputGroup label="Quantity" id="quantity" type="number" defaultValue="1" Icon={Hash} />
+                
+                {/* Quantity Input with Live State */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-gray-400 text-sm font-medium uppercase tracking-wider">Quantity</label>
+                  <div className="relative">
+                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                    <input 
+                      type="number" 
+                      min="1" 
+                      value={quantity} 
+                      onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                      className="w-full pl-11 pr-4 py-3 bg-[#1F2937] border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#00ffaa] transition-all"
+                    />
+                  </div>
+                </div>
+
                 <div className="flex flex-col gap-2 md:col-span-2">
                   <label className="text-gray-400 text-sm font-medium uppercase tracking-wider">Backboard Material</label>
                   <div className="relative">
@@ -106,49 +115,41 @@ const CustomizeProduct = () => {
                     </select>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 md:col-span-2">
-                  <label className="text-gray-400 text-sm font-medium uppercase tracking-wider">Additional Notes</label>
-                  <textarea className="w-full px-4 py-3 bg-[#1F2937] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffaa] min-h-[100px] transition-colors" placeholder="Specific color requirements..."></textarea>
-                </div>
               </div>
             </section>
 
-            {/* Step 2: Contact */}
             <section>
               <SectionHeader number="2" title="Contact Information" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="md:col-span-2">
-                  <InputGroup label="Email Address *" id="email" type="email" placeholder="you@company.com" Icon={Mail} />
-                </div>
-                <InputGroup label="Phone Number *" id="phone" type="tel" placeholder="+1 (555) 000-0000" Icon={Phone} />
+                <InputGroup label="Email Address *" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" Icon={Mail} />
+                <InputGroup label="Phone Number *" id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 (555) 000-0000" Icon={Phone} />
                 <InputGroup label="WhatsApp Number" id="whatsapp" type="tel" placeholder="Optional" Icon={MessageSquare} />
               </div>
             </section>
 
-            {/* QUOTATION SUMMARY */}
             <section className="mt-4">
-              <div className="bg-[#0F172A] rounded-xl border border-white/10 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+              <div className="bg-[#0F172A] rounded-xl border border-white/10 p-6 md:p-8 shadow-2xl relative overflow-hidden text-left">
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#00ffaa]/10 rounded-full blur-[50px]"></div>
                 <h3 className="text-white text-lg font-bold mb-6 flex items-center gap-2">
                   <FileText className="text-[#00ffaa]" size={20} /> Estimated Quotation
                 </h3>
                 
                 <div className="space-y-4 mb-8">
-                  <QuoteLine label={`Base Price (${product.title})`} value={`$${product.price}`} />
-                  <QuoteLine label="Customization Fee" value="$0.00" />
+                  <QuoteLine label={`Base Price (${product.title})`} value={`$${basePrice.toFixed(2)}`} />
+                  <QuoteLine label="Quantity" value={`x ${quantity}`} />
                   <div className="h-px w-full bg-white/10 my-4"></div>
                   <div className="flex justify-between items-center">
                     <span className="text-white font-medium">Estimated Total</span>
-                    <span className="text-[#00ffaa] text-3xl font-bold font-mono">${product.price}</span>
+                    <span className="text-[#00ffaa] text-3xl font-bold font-mono">${totalPrice}</span>
                   </div>
                 </div>
 
                 <button 
-  onClick={() => navigate('/design-review', { state: { product } })}
-  className="w-full py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 ..."
->
-  Submit for Design Review <ArrowRight size={20} />
-</button>
+                  onClick={() => navigate('/design-review', { state: { product, totalPrice, quantity } })}
+                  className="w-full py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
+                >
+                  Submit for Design Review <ArrowRight size={20} />
+                </button>
               </div>
             </section>
           </div>
@@ -162,9 +163,9 @@ const CustomizeProduct = () => {
   );
 };
 
-/* HELPER COMPONENTS (No changes here, kept exactly as you sent) */
+/* HELPER COMPONENTS (Original Style) */
 const FeatureCard = ({ Icon, title, desc }) => (
-  <div className="p-4 rounded-xl bg-[#1F2937]/50 border border-white/5 flex flex-col gap-2">
+  <div className="p-4 rounded-xl bg-[#1F2937]/50 border border-white/5 flex flex-col gap-2 text-left">
     <Icon className="text-[#00ffaa]" size={20} />
     <h4 className="text-white font-medium text-sm">{title}</h4>
     <p className="text-gray-400 text-xs">{desc}</p>
@@ -172,14 +173,14 @@ const FeatureCard = ({ Icon, title, desc }) => (
 );
 
 const SectionHeader = ({ number, title }) => (
-  <div className="flex items-center gap-3 mb-5 border-b border-white/10 pb-3">
+  <div className="flex items-center gap-3 mb-5 border-b border-white/10 pb-3 text-left">
     <div className="size-8 rounded-full bg-[#00ffaa]/10 flex items-center justify-center text-[#00ffaa] font-bold border border-[#00ffaa]/20">{number}</div>
     <h3 className="text-white text-xl font-bold tracking-tight">{title}</h3>
   </div>
 );
 
 const InputGroup = ({ label, id, Icon, ...props }) => (
-  <div className="flex flex-col gap-2">
+  <div className="flex flex-col gap-2 text-left">
     <label className="text-gray-400 text-sm font-medium uppercase tracking-wider" htmlFor={id}>{label}</label>
     <div className="relative">
       <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />

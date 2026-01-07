@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Loading from './pages/Loading';
+
+// Pages Import
 import HomePage from './pages/HomePage';
-// Baaki pages ko bhi yahan import karein jab wo ban jayein
-// import Catalog from './pages/Catalog';
+import BrowseCatalog from './pages/BrowseCatalog';
+import CustomizeProduct from './pages/CustomizeProduct';
+import DesignReview from './pages/DesignReview';
+import FinalOrder from './pages/FinalOrder';
+import Portfolio from './pages/Portfolio';
+import ReviewsPage from './pages/ReviewsPage';
+import ContactPage from './pages/ContactPage'; // Naya Contact Page add kiya
+
+// Aapki banayi hui Loading Screen
+import Loading from './pages/Loading';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 3 seconds ke liye loading dikhayega
+    // 5 seconds loading timer
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 5000);
+
     return () => clearTimeout(timer);
   }, []);
 
+  // Agar loading true hai to sirf Loading screen dikhao
   if (isLoading) {
     return <Loading />;
   }
@@ -23,8 +34,25 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Main Routes */}
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/catalog" element={<Catalog />} /> */}
+        
+        {/* Isko /catalog bhi rakha hai aur /products bhi taake links break na hon */}
+        <Route path="/catalog" element={<BrowseCatalog />} />
+        <Route path="/products" element={<BrowseCatalog />} />
+        
+        {/* Customizer & Orders */}
+        <Route path="/customize" element={<CustomizeProduct />} />
+        <Route path="/design-review" element={<DesignReview />} />
+        <Route path="/final-order" element={<FinalOrder />} />
+        
+        {/* Info & Community */}
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        
+        {/* Fallback for typos (Optional) */}
+        <Route path="/support" element={<ContactPage />} />
       </Routes>
     </Router>
   );

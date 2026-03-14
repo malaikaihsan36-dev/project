@@ -45,12 +45,16 @@ const AdminLayout = () => {
             <span className="font-medium">Products</span>
           </Link>
 
+          <Link to="/admin/portfolio" className={`group flex items-center gap-3 rounded-full px-4 py-3 transition-all ${isActive('/admin/portfolio') ? activeClass : inactiveClass}`}>
+            <span className="material-symbols-outlined">photo_library</span>
+            <span className="font-medium">Portfolio</span>
+          </Link>
+
           <Link to="/admin/customers" className={`group flex items-center gap-3 rounded-full px-4 py-3 transition-all ${isActive('/admin/customers') ? activeClass : inactiveClass}`}>
             <span className="material-symbols-outlined">group</span>
             <span className="font-medium">Customers</span>
           </Link>
 
-          {/* Analytics Link - NEW */}
           <Link to="/admin/analytics" className={`group flex items-center gap-3 rounded-full px-4 py-3 transition-all ${isActive('/admin/analytics') ? activeClass : inactiveClass}`}>
             <span className="material-symbols-outlined">bar_chart</span>
             <span className="font-medium">Analytics</span>
@@ -87,12 +91,6 @@ const AdminLayout = () => {
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]">search</span>
               <input className="w-full rounded-full bg-[#334155] border-none py-2.5 pl-10 pr-4 text-sm text-white placeholder-text-muted focus:ring-1 focus:ring-[#0df2a6]" placeholder="Search..." type="text"/>
             </div>
-          </div>
-          <div className="flex items-center gap-4">
-             <Link to="/admin/products" className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#0df2a6] to-emerald-500 px-4 py-2 text-sm font-bold text-[#0F172A] shadow-lg shadow-[#0df2a6]/20 hover:scale-105 transition-all">
-              <span className="material-symbols-outlined text-[18px]">add</span>
-              <span className="hidden sm:inline">New Product</span>
-            </Link>
           </div>
         </header>
 

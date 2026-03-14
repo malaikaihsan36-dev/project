@@ -5,16 +5,19 @@ const AdminOrders = () => {
   const printingRef = useRef(null);
   const completedRef = useRef(null);
 
-  // State mein wahi data hai jo aapne diya tha
   const [allOrders, setAllOrders] = useState([
-    { id: "#ORD-7360", customer: "Alice Martinez", product: "Custom Banner", designerName: "John Doe", status: "In Design", type: "design" },
-    { id: "#ORD-7358", customer: "Robert Fox", product: "Business Cards", designerName: "Sarah Wilson", status: "Revision Needed", type: "design" },
-    { id: "#ORD-7352", customer: "Sarah Wilson", product: "Custom Tee - Black", status: "Printing", estDate: "Jan 25, 2026", type: "printing" },
-    { id: "#ORD-7351", customer: "Mike Brown", product: "Logo Mug (x50)", status: "Packaging", estDate: "Jan 26, 2026", type: "printing" },
-    { id: "#ORD-7340", customer: "Emma Davis", product: "Galaxy Case", date: "Jan 18, 2026", type: "completed" },
+    { id: "ORD-7360", customer: "Alice Martinez", product: "Custom Banner", designerName: "John Doe", status: "In Design", type: "design" },
+    { id: "ORD-7358", customer: "Robert Fox", product: "Business Cards", designerName: "Sarah Wilson", status: "Revision Needed", type: "design" },
+    { id: "ORD-7352", customer: "Sarah Wilson", product: "Custom Tee - Black", status: "Printing", estDate: "Jan 25, 2026", type: "printing" },
+    { id: "ORD-7351", customer: "Mike Brown", product: "Logo Mug (x50)", status: "Packaging", estDate: "Jan 26, 2026", type: "printing" },
+    { id: "ORD-7340", customer: "Emma Davis", product: "Galaxy Case", date: "Jan 18, 2026", type: "completed" },
   ]);
 
-  // Status badalne aur table move karne ka function
+  // Nayi logic: Naye tab mein open karne ke liye
+  const openChatInNewTab = (orderId) => {
+    window.open(`/admin/chat/${orderId}`, '_blank', 'noopener,noreferrer');
+  };
+
   const handleStatusChange = (id, newStatus) => {
     let newType = "design";
     if (["Printing", "Packaging", "Ready to Ship"].includes(newStatus)) newType = "printing";
@@ -35,7 +38,6 @@ const AdminOrders = () => {
   return (
     <div className="mx-auto max-w-7xl space-y-10 animate-in fade-in duration-500 text-left pb-10">
       
-      {/* Header Section (Same as your code) */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-white tracking-tight">Orders Management</h2>
@@ -67,7 +69,6 @@ const AdminOrders = () => {
             <thead className="bg-[#334155]/30 text-[#94A3B8] uppercase text-[11px] font-bold tracking-widest">
               <tr>
                 <th className="px-6 py-4">Order Details</th>
-                <th className="px-6 py-4">Designer</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
@@ -76,10 +77,9 @@ const AdminOrders = () => {
               {allOrders.filter(o => o.type === 'design').map((order) => (
                 <tr key={order.id} className="hover:bg-[#334155]/20 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-bold text-white">{order.id}</p>
+                    <p className="font-bold text-white">#{order.id}</p>
                     <p className="text-xs text-[#94A3B8]">{order.customer} • {order.product}</p>
                   </td>
-                  <td className="px-6 py-4 text-white text-xs">{order.designerName}</td>
                   <td className="px-6 py-4">
                     <select 
                       value={order.status} 
@@ -93,7 +93,14 @@ const AdminOrders = () => {
                     </select>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-[#94A3B8] hover:text-[#0df2a6]"><span className="material-symbols-outlined">edit_square</span></button>
+                    <button 
+                      type="button"
+                      // Calling the new function here
+                      onClick={() => openChatInNewTab(order.id)}
+                      className="text-[#94A3B8] hover:text-[#0df2a6]"
+                    >
+                      <span className="material-symbols-outlined">forum</span>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -121,7 +128,7 @@ const AdminOrders = () => {
               {allOrders.filter(o => o.type === 'printing').map((order) => (
                 <tr key={order.id} className="hover:bg-[#334155]/20 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-bold text-white">{order.id}</p>
+                    <p className="font-bold text-white">#{order.id}</p>
                     <p className="text-xs text-[#94A3B8]">{order.customer} • {order.product}</p>
                   </td>
                   <td className="px-6 py-4">
@@ -161,17 +168,8 @@ const AdminOrders = () => {
             <tbody className="divide-y divide-[#334155]">
               {allOrders.filter(o => o.type === 'completed').map((order) => (
                 <tr key={order.id} className="hover:bg-emerald-500/5 transition-colors">
-                  <td className="px-6 py-4 font-bold text-white">{order.id}</td>
-                  <td className="px-6 py-4">
-                    <select 
-                      value={order.status} 
-                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      className="px-3 py-1 rounded-full text-[10px] font-bold uppercase border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 bg-transparent outline-none cursor-pointer"
-                    >
-                      <option value="Completed">Completed</option>
-                      <option value="In Design">Return to Design</option>
-                    </select>
-                  </td>
+                  <td className="px-6 py-4 font-bold text-white">#{order.id}</td>
+                  <td className="px-6 py-4 text-emerald-400 text-xs font-bold uppercase">Completed</td>
                   <td className="px-6 py-4 text-[#94A3B8] text-right">{order.date}</td>
                 </tr>
               ))}

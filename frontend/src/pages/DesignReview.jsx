@@ -69,6 +69,9 @@ const DesignReview = () => {
           </div>
 
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_center,_#1e293b_0%,_#0f172a_100%)]">
+            <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
+              <span className="text-[140px] font-bold -rotate-12 whitespace-nowrap">Colour Pix</span>
+            </div>
             <div className="absolute inset-0 z-10 pointer-events-none opacity-30" style={{backgroundImage: 'url(https://lh3.googleusercontent.com/aida-public/AB6AXuBjx7hQ39bmjEQuj4bJ65Bpe2HfvM2pPv82w4umdTjfSPzwn5qPnj_F4lNFi7xcY_5qsyPoIzTCjGbZKsvUs5n8wjWneuMmpaMQixio20EkX8gwXtbqfMvoyiwS3---LX38ExD4OwdTGFe28JhWI74cC630KySY0_UnBY5EuSQTZ5BdEBjeeYx16kE-tnSVOpZPz348FqbZijXZhsAqX9M3rfUjhqiW-zQzZE8K30KYm-PdJdv3LrJjuSRlpFXa5hfnIB2Nv1aYAUzc)', backgroundRepeat: 'repeat'}}></div>
             <div 
               className="relative z-0 transform transition-transform duration-200 ease-out"
@@ -104,7 +107,7 @@ const DesignReview = () => {
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">A</div>
               <div className="text-left">
-                <h2 className="text-white font-bold text-sm">Alex from Design Team</h2>
+                <h2 className="text-white font-bold text-sm">Design Team</h2>
                 <div className="flex items-center gap-1.5 text-[10px] text-green-400">
                   <span className="size-1.5 rounded-full bg-green-500 animate-pulse"></span> Online
                 </div>
@@ -169,7 +172,7 @@ const DesignReview = () => {
                 ${isApproved ? 'bg-[#00ffaa] text-black shadow-lg shadow-[#00ffaa]/20 cursor-pointer' : 'bg-gray-700 text-gray-500 grayscale opacity-50 cursor-not-allowed'}`}
               >
                 <span className="material-symbols-outlined mr-2 text-[18px]">shopping_cart_checkout</span>
-                Place Order
+                Finalize
               </button>
             </div>
             <button onClick={() => navigate(-1)} className="w-full mt-4 text-[10px] text-gray-500 hover:text-white transition-colors">

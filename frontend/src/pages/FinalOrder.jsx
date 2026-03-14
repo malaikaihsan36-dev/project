@@ -85,7 +85,7 @@ const FinalOrder = () => {
               onClick={handleWhatsAppOrder}
               className="mt-10 w-full bg-[#38BDF8] py-4 rounded-xl text-black font-bold text-lg hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(56,189,248,0.2)]"
             >
-              Confirm & Pay via WhatsApp
+             Place & Confirm via WhatsApp
             </button>
           </div>
         </div>

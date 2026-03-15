@@ -71,10 +71,10 @@ const NavBar = () => {
               size={20} 
               onClick={() => setIsModalOpen(true)} 
             />
-            <User 
-  className="hidden sm:block text-gray-400 cursor-pointer hover:text-white" 
+           <User 
+  className="hidden sm:block text-gray-400 cursor-pointer hover:text-white transition-colors" 
   size={20} 
-  onClick={() => navigate('/admin-dashboard')} 
+  onClick={() => navigate('/admin-login')} // <--- Yahan '/admin-login' hona chahiye
 />
             <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={24} /> : <Menu size={24} />}

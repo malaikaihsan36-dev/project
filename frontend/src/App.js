@@ -11,7 +11,7 @@ import Portfolio from './pages/Portfolio';
 import ReviewsPage from './pages/ReviewsPage';
 import ContactPage from './pages/ContactPage';
 import Loading from './pages/Loading';
-import AdminPortfolio from './pages/AdminPortfolio'; // Corrected Path
+import AdminPortfolio from './pages/AdminPortfolio'; 
 
 // Admin Components & Pages
 import AdminLayout from './components/AdminLayout';
@@ -22,6 +22,7 @@ import AdminCustomers from './pages/AdminCustomers';
 import AdminAnalytics from './pages/AdminAnalytics';
 import AdminChat from './pages/AdminChat';
 import AdminLogin from './pages/AdminLogin';
+import AdminReviews from './pages/AdminReviews'; // <--- Naya Import
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('adminAuth') === 'true';
@@ -63,6 +64,7 @@ function App() {
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="portfolio" element={<AdminPortfolio />} /> 
+          <Route path="reviews" element={<AdminReviews />} /> {/* <--- Naya Route added inside AdminLayout */}
         </Route>
 
         <Route path="/admin/chat/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />

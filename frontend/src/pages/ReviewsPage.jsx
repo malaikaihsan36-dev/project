@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Star, Send, ThumbsUp, Share2, User, CheckCircle, ChevronDown, RefreshCw } from 'lucide-react';
-import NavBar from '../components/Navbar'; // Shared NavBar import kiya
+import NavBar from '../components/Navbar';
 
 const ReviewsPage = () => {
   // States for Form
@@ -10,87 +11,81 @@ const ReviewsPage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  // States for Reviews List
-  const [allReviews, setAllReviews] = useState([
-    {
-      id: 1,
-      name: "Sarah Jenkins",
-      initials: "SJ",
-      date: "2 days ago",
-      product: "Custom Hoodie (Black, M)",
-      rating: 5,
-      title: "Print quality is insane!",
-      content: "I was a bit skeptical about how the gradient in my design would print on fabric, but COLOUR PIX absolutely nailed it. The colors are vibrant and exactly what I saw on screen.",
-      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400",
-      helpful: 12,
-      color: "from-purple-500 to-indigo-600"
-    },
-    {
-      id: 2,
-      name: "Marcus Ray",
-      initials: "MR",
-      date: "5 days ago",
-      product: "Canvas Print (24x36)",
-      rating: 4,
-      title: "Great product, slightly slow shipping",
-      content: "The canvas itself is stunning. High resolution and the frame is sturdy. It took about 2 weeks to arrive which was a bit longer than expected.",
-      image: null,
-      helpful: 4,
-      color: "from-blue-400 to-cyan-300"
-    },
-    {
-      id: 3,
-      name: "David K.",
-      initials: "DK",
-      date: "1 week ago",
-      product: "Custom Phone Case",
-      rating: 5,
-      title: "Fits perfectly!",
-      content: "I love how the matte finish feels in hand. The print wraps around the edges seamlessly. Really elevated the look of my phone.",
-      image: "https://images.unsplash.com/photo-1586810165616-94c631fc2f79?w=400",
-      helpful: 28,
-      color: "from-emerald-500 to-teal-600"
-    }
-  ]);
+  // States for Backend Data
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [productList, setProductList] = useState([]);
 
-  const handleSubmit = (e) => {
+  // Fetch approved reviews from DB
+  const fetchApprovedReviews = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/reviews/approved');
+      setReviews(res.data);
+    } catch (err) {
+      console.error("Error fetching reviews", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/product-list');
+      setProductList(res.data);
+    } catch (err) {
+      console.error("Error fetching product list", err);
+    }
+  };
+  fetchProducts();
+  fetchApprovedReviews(); // Purana wala function
+}, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !selectedRating || !comment || product === 'Select a product...') {
       alert("Please fill all fields and select a rating!");
       return;
     }
 
-    const newReview = {
-      id: Date.now(),
-      name: name,
-      initials: name.split(' ').map(n => n[0]).join('').toUpperCase(),
-      date: "Just now",
-      product: product,
-      rating: selectedRating,
-      title: "My Experience",
-      content: comment,
-      image: null,
-      helpful: 0,
-      color: "from-[#FF4D4D] to-[#FF9F43]",
-      verified: true
-    };
+    try {
+      await axios.post('http://localhost:5000/api/reviews', {
+        customer_name: name,
+        product_name: product,
+        rating: selectedRating,
+        review_text: comment
+      });
+      alert("Review submitted! Admin approval ke baad nazar aayega.");
+      // Reset Form
+      setName(''); setProduct('Select a product...'); setSelectedRating(0); setComment('');
+    } catch (err) {
+      alert("Submission failed!");
+    }
+  };
 
-    setAllReviews([newReview, ...allReviews]);
-    setName('');
-    setProduct('Select a product...');
-    setSelectedRating(0);
-    setComment('');
+  // Helper for Initials (Your original logic)
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
   return (
     <div className="bg-[#0B0F1E] text-white min-h-screen font-sans selection:bg-[#FF4D4D] text-left">
       
-      {/* SHARED NAVBAR (Purana manual header replace kar diya) */}
+      {/* --- FLOATING BACKGROUND GLIMMER EFFECT --- */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Top Left Glimmer */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#FF4D4D]/10 rounded-full blur-[120px] animate-pulse"></div>
+        {/* Center Floating Glimmer */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-[150px]"></div>
+        {/* Bottom Right Glimmer */}
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#FF9F43]/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+      
       <NavBar />
 
       <main className="max-w-7xl mx-auto px-4 pt-32 pb-16">
         
-        {/* Stats Header */}
+        {/* Stats Header (Original) */}
         <div className="mb-12 flex flex-col lg:flex-row gap-8 lg:items-end justify-between border-b border-white/5 pb-8">
           <div className="flex flex-col gap-3">
             <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white">Customer Stories</h1>
@@ -103,7 +98,7 @@ const ReviewsPage = () => {
               <div className="flex text-yellow-500 gap-0.5 my-1">
                 {[...Array(5)].map((_, i) => <Star key={i} size={14} fill={i < 4 ? "currentColor" : "none"} />)}
               </div>
-              <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">120 Reviews</p>
+              <p className="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Community Choice</p>
             </div>
             <div className="space-y-1.5">
               {[80, 12, 5].map((val, i) => (
@@ -120,7 +115,7 @@ const ReviewsPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* SIDEBAR FORM */}
+          {/* SIDEBAR FORM (Original Design) */}
           <aside className="lg:col-span-4 lg:sticky lg:top-28 h-fit">
             <div className="bg-[#141A3A]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
               <h3 className="text-2xl font-bold mb-1">Leave a Review</h3>
@@ -136,17 +131,23 @@ const ReviewsPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <span className="text-gray-400 text-sm font-medium ml-1">Product</span>
-                  <div className="relative">
-                    <select value={product} onChange={(e) => setProduct(e.target.value)} className="w-full bg-black/30 rounded-xl px-4 py-3 border border-white/10 text-white text-sm appearance-none outline-none focus:border-[#FF4D4D] transition-all">
-                      <option className="bg-[#0B0F1E]">Select a product...</option>
-                      <option className="bg-[#0B0F1E]">Custom T-Shirt</option>
-                      <option className="bg-[#0B0F1E]">Canvas Print</option>
-                      <option className="bg-[#0B0F1E]">Phone Case</option>
-                    </select>
-                    <ChevronDown size={18} className="absolute right-4 top-4 text-gray-500 pointer-events-none" />
-                  </div>
-                </div>
+  <span className="text-gray-400 text-sm font-medium ml-1">Product</span>
+  <div className="relative">
+    <select 
+      value={product} 
+      onChange={(e) => setProduct(e.target.value)} 
+      className="w-full bg-black/30 rounded-xl px-4 py-3 border border-white/10 text-white text-sm appearance-none outline-none focus:border-[#FF4D4D] transition-all"
+    >
+      <option className="bg-[#0B0F1E]">Select a product...</option>
+      {productList.map((item) => (
+        <option key={item.id} value={item.name} className="bg-[#0B0F1E]">
+          {item.name}
+        </option>
+      ))}
+    </select>
+    <ChevronDown size={18} className="absolute right-4 top-4 text-gray-500 pointer-events-none" />
+  </div>
+</div>
 
                 <div className="flex flex-col gap-2">
                   <span className="text-gray-400 text-sm font-medium ml-1">Rating</span>
@@ -171,39 +172,39 @@ const ReviewsPage = () => {
             </div>
           </aside>
 
-          {/* REVIEWS LIST */}
+          {/* REVIEWS LIST (Original Design Connected to DB) */}
           <div className="lg:col-span-8 flex flex-col gap-6">
-            {allReviews.map((rev) => (
+            {loading ? (
+                <div className="flex justify-center py-20"><RefreshCw className="animate-spin text-[#FF4D4D]" /></div>
+            ) : reviews.map((rev) => (
               <div key={rev.id} className="bg-[#141A3A]/30 border border-white/5 rounded-3xl p-8 hover:border-white/10 transition-all group">
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex items-center gap-4">
-                    <div className={`size-12 rounded-full bg-gradient-to-br ${rev.color} flex items-center justify-center font-bold text-lg`}>{rev.initials}</div>
+                    <div className={`size-12 rounded-full bg-gradient-to-br from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center font-bold text-lg`}>
+                        {getInitials(rev.customer_name)}
+                    </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-white">{rev.name}</h4>
+                        <h4 className="font-bold text-white">{rev.customer_name}</h4>
                         <span className="bg-sky-500/10 text-sky-400 px-2 py-0.5 rounded text-[10px] font-black uppercase border border-sky-500/20 flex items-center gap-1"><CheckCircle size={10} /> Verified Buyer</span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">Purchased: {rev.product}</p>
+                      <p className="text-xs text-gray-500 mt-1">Purchased: {rev.product_name}</p>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-600">{rev.date}</span>
+                  <span className="text-xs text-gray-600">{new Date(rev.created_at).toLocaleDateString()}</span>
                 </div>
                 <div className="flex text-yellow-500 gap-1 mb-3">
                   {[...Array(5)].map((_, i) => <Star key={i} size={16} fill={i < rev.rating ? "currentColor" : "none"} />)}
                 </div>
-                <h5 className="text-xl font-bold mb-3 text-white">{rev.title}</h5>
-                <p className="text-gray-400 leading-relaxed">{rev.content}</p>
-                {rev.image && <img src={rev.image} className="mt-6 h-56 w-72 rounded-2xl object-cover border border-white/10" alt="review" />}
+                <h5 className="text-xl font-bold mb-3 text-white">Experience with {rev.product_name}</h5>
+                <p className="text-gray-400 leading-relaxed">{rev.review_text}</p>
+                
                 <div className="flex gap-6 pt-6 border-t border-white/5 mt-6">
-                  <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#FF4D4D] transition-colors"><ThumbsUp size={16} /> Helpful ({rev.helpful})</button>
+                  <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#FF4D4D] transition-colors"><ThumbsUp size={16} /> Helpful</button>
                   <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"><Share2 size={16} /> Share</button>
                 </div>
               </div>
             ))}
-            
-            <button className="w-full py-5 rounded-2xl border border-white/5 hover:bg-white/5 flex items-center justify-center gap-2 font-bold transition-all text-gray-400 hover:text-white">
-              <RefreshCw size={18} /> Load More Reviews
-            </button>
           </div>
         </div>
       </main>

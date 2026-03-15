@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import navigate
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize hook
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Simple verification
+    
     if (email === "admin@colourpix.com" && password === "admin123") {
+      // 1. Set Auth
       localStorage.setItem('adminAuth', 'true');
-      window.location.href = "/admin"; // Page reload ho kar dashboard khul jaye ga
+      
+      // 2. Redirect using navigate (React Router way)
+      navigate("/admin");
     } else {
       alert("Ghalat Email ya Password!");
     }
@@ -20,7 +25,7 @@ const AdminLogin = () => {
       <div className="w-full max-w-md p-8 bg-[#1E293B] rounded-2xl border border-[#334155] shadow-2xl">
         <h2 className="text-3xl font-bold text-white text-center mb-8">Admin Access</h2>
         
-        <form onSubmit={handleLogin} className="flex flex-col gap-6">
+        <form onSubmit={handleLogin} className="flex flex-col gap-6 text-left">
           <div>
             <label className="block text-[#94A3B8] text-sm mb-2">Email Address</label>
             <input 
@@ -28,6 +33,7 @@ const AdminLogin = () => {
               required
               className="w-full p-3 rounded-xl bg-[#334155] text-white border border-transparent focus:border-[#0df2a6] outline-none"
               placeholder="admin@colourpix.com"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -39,6 +45,7 @@ const AdminLogin = () => {
               required
               className="w-full p-3 rounded-xl bg-[#334155] text-white border border-transparent focus:border-[#0df2a6] outline-none"
               placeholder="••••••••"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>

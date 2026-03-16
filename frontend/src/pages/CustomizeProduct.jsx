@@ -22,6 +22,7 @@ const CustomizeProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state for API call
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,9 +34,73 @@ const CustomizeProduct = () => {
     price: "120.00"
   };
 
+  // --- LOGIC: DYNAMIC ORDER ID GENERATION ---
+  const generateOrderID = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 4; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
   // --- CALCULATION LOGIC ---
   const basePrice = parseFloat(product.price) || 0;
   const totalPrice = (basePrice * quantity).toFixed(2);
+
+  // --- BACKEND SUBMISSION ---
+  const handleSubmit = async () => {
+    if (!email || !phone) {
+      alert("Please enter your email and phone number to proceed.");
+      return;
+    }
+
+    setLoading(true);
+    const orderId = generateOrderID();
+
+    const orderData = {
+      orderId,
+      productTitle: product.title,
+      quantity,
+      totalPrice,
+      email,
+      phone
+    };
+
+    try {
+      // API call to your Node.js backend
+      const response = await fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Database Sync Success:", result.message);
+        // Navigating with State only after successful DB save
+        navigate('/design-review', { 
+          state: { 
+            product, 
+            totalPrice, 
+            quantity, 
+            orderId, 
+            userEmail: email 
+          } 
+        });
+      } else {
+        alert("Failed to save order: " + result.error);
+      }
+    } catch (error) {
+      console.error("API Error:", error);
+      alert("Backend server is not reachable. Check if your Node.js server is running.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-[#0B0F1E] font-sans text-white min-h-screen flex flex-col selection:bg-[#00ffaa] selection:text-black">
@@ -49,11 +114,11 @@ const CustomizeProduct = () => {
       <header className="sticky top-0 z-50 w-full bg-[#0B0F1E]/90 backdrop-blur-md border-b border-white/10">
         <div className="px-6 md:px-10 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF4D4D] to-[#c813ec] flex items-center justify-center text-white">
-                      <Palette size={24} />
-                    </div>
-                    <span className="text-xl font-bold text-white">Colour Pix</span>
-                  </div>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF4D4D] to-[#c813ec] flex items-center justify-center text-white">
+              <Palette size={24} />
+            </div>
+            <span className="text-xl font-bold text-white">Colour Pix</span>
+          </div>
           <nav className="hidden md:flex gap-8">
             <button onClick={() => navigate('/')} className="text-gray-400 hover:text-[#00ffaa] transition-colors text-sm font-medium">Home</button>
             <button onClick={() => navigate('/catalog')} className="text-[#00ffaa] transition-colors text-sm font-medium">Products</button>
@@ -87,7 +152,6 @@ const CustomizeProduct = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <InputGroup label="Size (WxH)" id="size" placeholder="e.g., 24x36 inches" Icon={Ruler} />
                 
-                {/* Quantity Input with Live State */}
                 <div className="flex flex-col gap-2">
                   <label className="text-gray-400 text-sm font-medium uppercase tracking-wider">Quantity</label>
                   <div className="relative">
@@ -121,7 +185,7 @@ const CustomizeProduct = () => {
               <SectionHeader number="2" title="Contact Information" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <InputGroup label="Email Address *" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" Icon={Mail} />
-                <InputGroup label="Phone Number *" id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 (555) 000-0000" Icon={Phone} />
+                <InputGroup label="Phone Number *" id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+92 (300) 000-0000" Icon={Phone} />
                 <InputGroup label="WhatsApp Number" id="whatsapp" type="tel" placeholder="Optional" Icon={MessageSquare} />
               </div>
             </section>
@@ -144,10 +208,11 @@ const CustomizeProduct = () => {
                 </div>
 
                 <button 
-                  onClick={() => navigate('/design-review', { state: { product, totalPrice, quantity } })}
-                  className="w-full py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className={`w-full py-4 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Submit for Design Review <ArrowRight size={20} />
+                  {loading ? 'Processing...' : 'Submit for Design Review'} <ArrowRight size={20} />
                 </button>
               </div>
             </section>
@@ -162,7 +227,7 @@ const CustomizeProduct = () => {
   );
 };
 
-/* HELPER COMPONENTS (Original Style) */
+/* HELPER COMPONENTS */
 const FeatureCard = ({ Icon, title, desc }) => (
   <div className="p-4 rounded-xl bg-[#1F2937]/50 border border-white/5 flex flex-col gap-2 text-left">
     <Icon className="text-[#00ffaa]" size={20} />

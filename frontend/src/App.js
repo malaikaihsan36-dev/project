@@ -22,7 +22,7 @@ import AdminCustomers from './pages/AdminCustomers';
 import AdminAnalytics from './pages/AdminAnalytics';
 import AdminChat from './pages/AdminChat';
 import AdminLogin from './pages/AdminLogin';
-import AdminReviews from './pages/AdminReviews'; // <--- Naya Import
+import AdminReviews from './pages/AdminReviews';
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('adminAuth') === 'true';
@@ -47,7 +47,11 @@ function App() {
         <Route path="/catalog" element={<BrowseCatalog />} />
         <Route path="/products" element={<BrowseCatalog />} />
         <Route path="/customize" element={<CustomizeProduct />} />
+        
+        {/* UPDATED: Dynamic route matching NavBar navigation */}
+        <Route path="/design-page/:orderId" element={<DesignReview />} />
         <Route path="/design-review" element={<DesignReview />} />
+        
         <Route path="/final-order" element={<FinalOrder />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/reviews" element={<ReviewsPage />} />
@@ -64,7 +68,7 @@ function App() {
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="portfolio" element={<AdminPortfolio />} /> 
-          <Route path="reviews" element={<AdminReviews />} /> {/* <--- Naya Route added inside AdminLayout */}
+          <Route path="reviews" element={<AdminReviews />} />
         </Route>
 
         <Route path="/admin/chat/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />

@@ -21,20 +21,33 @@ const NavBar = () => {
     { name: 'Support', path: '/contact' },
   ];
 
+  // --- UPDATED: RESUME LOGIC (With Input Sanitization) ---
   const handleResumeSubmit = async (e) => {
     e.preventDefault();
+    
+    // Clean code: remove '#' and extra spaces so it matches DB format
+    const cleanCode = resumeCode.replace(/[#\s]/g, '').toUpperCase().trim();
+    // NavBar.jsx mein handleResumeSubmit ke andar ye console log lagayen
+console.log("Sending to Server:", { email: resumeEmail, code: resumeCode });
     try {
       const response = await axios.post('http://localhost:5000/api/orders/resume-design', { 
-        email: resumeEmail, 
-        code: resumeCode.toUpperCase() 
+        email: resumeEmail.toLowerCase().trim(), 
+        code: cleanCode 
       });
 
       if (response.data.success) {
         setIsModalOpen(false);
-        navigate('/design-page', { state: { resumedData: response.data.designData } });
+        // Navigate with full order data
+        navigate(`/design-review`, { 
+          state: { 
+            orderId: response.data.orderId, 
+            product: response.data.productData 
+          } 
+        });
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Invalid Email or Code!");
+      // Show specific backend message if available
+      alert(error.response?.data?.message || "Invalid Email or Order ID!");
     }
   };
 
@@ -72,10 +85,10 @@ const NavBar = () => {
               onClick={() => setIsModalOpen(true)} 
             />
            <User 
-  className="hidden sm:block text-gray-400 cursor-pointer hover:text-white transition-colors" 
-  size={20} 
-  onClick={() => navigate('/admin-login')} // <--- Yahan '/admin-login' hona chahiye
-/>
+              className="hidden sm:block text-gray-400 cursor-pointer hover:text-white transition-colors" 
+              size={20} 
+              onClick={() => navigate('/admin-login')}
+            />
             <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -94,7 +107,7 @@ const NavBar = () => {
         )}
       </nav>
 
-      {/* --- MODAL (Fixed Alignment) --- */}
+      {/* --- MODAL --- */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[150] w-full h-full flex items-center justify-center bg-black/90 backdrop-blur-sm overflow-y-auto px-4">
           <div className="relative bg-[#0F172A] border border-white/10 p-6 md:p-8 rounded-3xl max-w-md w-full shadow-2xl my-auto">
@@ -117,14 +130,16 @@ const NavBar = () => {
                 <input 
                   type="email" required placeholder="example@mail.com" 
                   className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-[#FF4D4D] transition-all"
+                  value={resumeEmail}
                   onChange={(e) => setResumeEmail(e.target.value)}
                 />
               </div>
               <div className="text-left">
-                <label className="text-[10px] text-gray-500 uppercase font-bold tracking-widest ml-1">Temporary Code</label>
+                <label className="text-[10px] text-gray-500 uppercase font-bold tracking-widest ml-1">Order ID / Code</label>
                 <input 
-                  type="text" required maxLength={4} placeholder="ABCD" 
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-[#FF4D4D] uppercase text-center text-2xl font-black tracking-[0.5em]"
+                  type="text" required placeholder="Order ID" 
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-[#FF4D4D] uppercase text-center text-xl font-bold"
+                  value={resumeCode}
                   onChange={(e) => setResumeCode(e.target.value)}
                 />
               </div>

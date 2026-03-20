@@ -75,7 +75,7 @@ const AdminReviews = () => {
         {/* SECTION 1: MANAGE PRODUCT DROPDOWN */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <Package className="text-[#FF4D4D]" />
+            <Package className="text-[#87CEEB]" />
             <h2 className="text-2xl font-bold">Manage Review Products</h2>
           </div>
           
@@ -115,7 +115,7 @@ const AdminReviews = () => {
         {/* SECTION 2: REVIEW MODERATION */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <MessageSquare className="text-[#FF4D4D]" />
+            <MessageSquare className="text-[#87CEEB]" />
             <h2 className="text-2xl font-bold">Review Moderation</h2>
           </div>
 
@@ -136,7 +136,7 @@ const AdminReviews = () => {
                     <tr key={rev.id} className="hover:bg-white/[0.02] transition-colors">
                       <td className="p-5">
                         <div className="font-bold text-white">{rev.customer_name}</div>
-                        <div className="text-[10px] text-[#FF4D4D] font-bold uppercase">{rev.product_name}</div>
+                        <div className="text-[10px] text-[#D3D3D3] font-bold uppercase">{rev.product_name}</div>
                       </td>
                       <td className="p-5">
                         <p className="text-sm text-gray-400 max-w-xs line-clamp-2">{rev.review_text}</p>

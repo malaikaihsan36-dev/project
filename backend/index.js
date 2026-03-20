@@ -39,18 +39,25 @@ socket.on('update_preview', (data) => {
     io.to(room).emit('update_preview', { imageUrl: data.imageUrl });
 });
 
-// Jab user approve kare
+// 1. Jab user "Approve" button dabaye, to Admin ka button glow ho
 socket.on('user_approved', (data) => {
-    const room = data.orderId.replace(/[%23#\s]/g, '');
-    io.to(room).emit('admin_button_glow', { approved: true });
+    // data contains: { orderId: '123', approved: true }
+    // Hum usi room (orderId) mein signal bhejenge
+    io.to(data.orderId).emit('admin_button_glow', { 
+        approved: data.approved 
+    });
+    console.log(`Order ${data.orderId} approval status: ${data.approved}`);
 });
 
-// Jab admin order place kare
+// 2. Jab admin "Place Order" dabaye, to User ka "Finalize" button active ho
 socket.on('admin_placed_order', (data) => {
-    const room = data.orderId.replace(/[%23#\s]/g, '');
-    io.to(room).emit('user_finalize_glow', { placed: true });
+    // Ye line admin se aane wala 'placed' (true/false) user ko bhejti hai
+    io.to(data.orderId).emit('user_finalize_glow', { 
+        placed: data.placed 
+    });
 });
 });
+
 
 
 

@@ -11,13 +11,18 @@ exports.getChatHistory = async (req, res) => {
 };
 
 exports.getOrderDetails = async (req, res) => {
+    const { orderId } = req.params;
     try {
-        const { orderId } = req.params;
-        const [result] = await db.query("SELECT expires_at, product_img FROM orders WHERE order_id = ?", [orderId]);
-        if (result.length === 0) return res.status(404).json({ message: "Not found" });
-        res.json(result[0]);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        // SELECT * se saare columns (is_approved, is_placed) aa jayenge
+        const [rows] = await db.execute("SELECT * FROM orders WHERE order_id = ?", [orderId]);
+        
+        if (rows.length > 0) {
+            res.json(rows[0]); 
+        } else {
+            res.status(404).json({ message: "Order not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 

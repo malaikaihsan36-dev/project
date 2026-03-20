@@ -3,6 +3,7 @@ const router = express.Router();
 const orderCtrl = require('../controllers/orderController');
 const chatCtrl = require('../controllers/chatController');
 const projCtrl = require('../controllers/projectController');
+const customerController = require('../controllers/customerController');
 
 // Orders
 router.post('/orders', orderCtrl.saveOrder);
@@ -17,15 +18,47 @@ router.post('/order/update-preview', orderCtrl.updateOrderPreview);
 // POST route for resuming design/chat
 router.post('/orders/resume-design', orderCtrl.resumeOrderDesign);
 
+// Status Persistence (This is the one for Approvals/Placed)
+router.post('/order/update-status', orderCtrl.updateOrderStatus);
+
 // Chat & Timer
 router.get('/chat/:orderId', chatCtrl.getChatHistory);
 router.get('/order/:orderId', chatCtrl.getOrderDetails);
 router.post('/order/extend-expiry', chatCtrl.extendExpiry);
 
-// Projects & Reviews
+// finalized order route
+router.post('/orders/finalize/:temp_order_id', orderCtrl.finalizeOrder);
+
+// GET all customers with order summary
+router.get('/admin/customers', customerController.getAllCustomers);
+
+// Portfolio Projects 
 router.get('/projects', projCtrl.getAllProjects);
 router.post('/projects', projCtrl.addProject);
+router.put('/projects/:id', projCtrl.updateProject);
+router.delete('/projects/:id', projCtrl.deleteProject);
+
+// Review Admin Routes
+router.get('/reviews', projCtrl.getAllReviews); // Line 42 (Yahan masla tha)
+router.patch('/reviews/:id/status', projCtrl.updateReviewStatus);
+
+// Product List Admin Routes
+router.get('/product-list', projCtrl.getProductList);
+router.post('/product-list', projCtrl.addProductToList);
+router.delete('/product-list/:id', projCtrl.deleteProductFromList);
+
+// User Side Reviews
 router.get('/reviews/approved', projCtrl.getApprovedReviews);
 router.post('/reviews', projCtrl.submitReview);
+
+// Portfolio Categories
+router.get('/portfolio-categories', projCtrl.getPortfolioCategories);
+router.post('/portfolio-categories', projCtrl.addPortfolioCategory);
+router.delete('/portfolio-categories/:id', projCtrl.deletePortfolioCategory);
+
+// Contact Subjects
+router.get('/contact-subjects', projCtrl.getContactSubjects);
+router.post('/contact-subjects', projCtrl.addContactSubject);
+router.delete('/contact-subjects/:id', projCtrl.deleteContactSubject);
 
 module.exports = router;

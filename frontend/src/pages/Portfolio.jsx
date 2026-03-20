@@ -8,14 +8,20 @@ const Portfolio = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('All Projects');
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state add ki hai
+  const [categories, setCategories] = useState([]); // Database se aane wali categories
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/projects');
-        console.log("Full Data from DB:", res.data); 
-        setProjects(res.data);
+        const [projRes, catRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/projects'),
+          axios.get('http://localhost:5000/api/portfolio-categories')
+        ]);
+        setProjects(projRes.data);
+        // Database categories ke start mein 'All Projects' add karna
+        const dynamicTabs = ['All Projects', ...catRes.data.map(c => c.name)];
+        setCategories(dynamicTabs);
       } catch (err) {
         console.error("Fetch Error:", err);
       } finally {
@@ -25,17 +31,13 @@ const Portfolio = () => {
     fetchData();
   }, []);
 
-  // Filter logic (Case-insensitive check for safety)
-const filteredProjects = activeTab === 'All Projects' 
-  ? projects 
-  : projects.filter(p => {
-      // Agar category null hai to ignore karein
-      if (!p.category) return false;
-      
-      // Dono side se spaces khatam karke match karein
-      return p.category.trim().toLowerCase() === activeTab.trim().toLowerCase();
-    });
-  const tabs = ['All Projects', 'Apparel', 'Mugs & Ceramics', 'Stationery', 'Large Format'];
+  // Filter logic
+  const filteredProjects = activeTab === 'All Projects' 
+    ? projects 
+    : projects.filter(p => {
+        if (!p.category) return false;
+        return p.category.trim().toLowerCase() === activeTab.trim().toLowerCase();
+      });
 
   return (
     <div className="bg-[#0B0F1E] font-sans text-white overflow-x-hidden min-h-screen flex flex-col relative text-left">
@@ -48,10 +50,10 @@ const filteredProjects = activeTab === 'All Projects'
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">Real-world examples of pixel-perfect production.</p>
         </section>
 
-        {/* Filter Bar */}
+        {/* Filter Bar - Now using dynamic categories */}
         <div className="sticky top-20 z-40 bg-[#0f1715]/95 backdrop-blur-sm border-b border-[#39564c]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex overflow-x-auto gap-8 no-scrollbar py-4">
-            {tabs.map((tab) => (
+            {categories.map((tab) => (
               <button 
                 key={tab} 
                 onClick={() => setActiveTab(tab)}
@@ -68,11 +70,11 @@ const filteredProjects = activeTab === 'All Projects'
           {loading ? (
             <div className="text-center py-20 text-[#00ffaa] font-mono">Loading Projects...</div>
           ) : filteredProjects.length === 0 ? (
-  <div className="text-center py-20">
-    <p className="text-gray-500">No projects found in "{activeTab}"</p>
-    <p className="text-xs text-gray-700">Total projects in DB: {projects.length}</p>
-  </div>
-) : (
+            <div className="text-center py-20">
+              <p className="text-gray-500">No projects found in "{activeTab}"</p>
+              <p className="text-xs text-gray-700">Total projects in DB: {projects.length}</p>
+            </div>
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((item) => (
                 <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full">
@@ -109,8 +111,7 @@ const filteredProjects = activeTab === 'All Projects'
           )}
         </div>
 
-                
-        {/* Case Study Section - Same design */}
+        {/* Case Study Section */}
         <section className="py-20 bg-[#1F2937]/30 border-t border-[#273a34]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-12 items-center text-left">
             <div className="flex-1 w-full relative h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
@@ -138,7 +139,7 @@ const filteredProjects = activeTab === 'All Projects'
           </div>
         </section>
 
-        {/* CTA Section - Same design */}
+        {/* CTA Section */}
         <section className="py-24 px-4 text-center">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#1F2937] to-[#0B0F1E] rounded-3xl p-12 border border-[#39564c]">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Start your own masterpiece?</h2>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Palette } from 'lucide-react';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -7,35 +7,46 @@ import axios from 'axios';
 const DesignReview = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { orderId: urlOrderId } = useParams(); // URL se ID uthane ke liye
     const socketRef = useRef(null);
     const chatEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
-    const { product, orderId } = location.state || {
-        product: { title: "Custom Neon Flex", img: "https://via.placeholder.com/400" },
-        orderId: "TEMP"
-    };
+    // Pehle State check karein, agar nahi hai to URL wali ID use karein
+    const initialOrderId = location.state?.orderId || urlOrderId || "TEMP";
+    const cleanId = String(initialOrderId).replace(/[%23#\s]/g, '').trim();
 
-    const cleanId = String(orderId || "").replace(/[%23#\s]/g, '').trim();
-
+    // Core States
     const [isApproved, setIsApproved] = useState(false);
+    const [isAdminPlaced, setIsAdminPlaced] = useState(false);
     const [zoom, setZoom] = useState(1);
     const [inputMessage, setInputMessage] = useState('');
+    
+    // Dynamic Product State
+    const [product, setProduct] = useState(location.state?.product || { title: "Loading...", img: "https://via.placeholder.com/400" });
     const [previewImage, setPreviewImage] = useState(product.img);
     const [messages, setMessages] = useState([{ id: 'first-msg', sender: 'admin', message: "Hi! How does this design layout look to you?", created_at: new Date().toISOString() }]);
-
+    
     const [expiresAt, setExpiresAt] = useState(null);
     const [timeLeft, setTimeLeft] = useState("Loading...");
-    const [isAdminPlaced, setIsAdminPlaced] = useState(false); // Glow logic for Finalize
 
-    // 1. Fetch Initial Order Data
+    // 1. Fetch Initial Order Data & Status (Reload & Back Navigation Persistence)
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/order/${cleanId}?t=${Date.now()}`);
                 if (res.data) {
+                    // Yahan hum product info update kar rahy hain jo DB se ayi hai
+                    setProduct({
+                        title: res.data.product_title || "Custom Order",
+                        img: res.data.product_img
+                    });
+                    
                     if (res.data.expires_at) setExpiresAt(new Date(res.data.expires_at));
                     if (res.data.product_img) setPreviewImage(res.data.product_img);
+                    
+                    setIsApproved(!!res.data.is_approved);
+                    setIsAdminPlaced(!!res.data.is_placed);
                 }
             } catch (err) {
                 console.error("Order Data Fetch Error:", err);
@@ -45,26 +56,7 @@ const DesignReview = () => {
         if (cleanId && cleanId !== "TEMP") fetchOrderData();
     }, [cleanId]);
 
-    // 2. Timer Logic
-    useEffect(() => {
-        if (!expiresAt || isNaN(expiresAt.getTime())) return;
-        const updateTimer = () => {
-            const now = new Date().getTime();
-            const distance = expiresAt.getTime() - now;
-            if (distance <= 0) {
-                setTimeLeft("EXPIRED");
-                return;
-            }
-            const h = Math.floor(distance / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
-            setTimeLeft(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`);
-        };
-        const timerId = setInterval(updateTimer, 1000);
-        updateTimer();
-        return () => clearInterval(timerId);
-    }, [expiresAt]);
-
+    // 2. Chat History Fetch
     const fetchChat = useCallback(async () => {
         try {
             const response = await fetch(`http://localhost:5000/api/chat/${cleanId}?t=${Date.now()}`);
@@ -96,32 +88,55 @@ const DesignReview = () => {
             if (data.imageUrl) setPreviewImage(data.imageUrl);
         });
 
-        // Listen for Admin's "Place Order" signal
         socket.on('user_finalize_glow', (data) => {
             setIsAdminPlaced(data.placed);
         });
 
         return () => {
-            socket.off('receive_message');
-            socket.off('update_preview');
-            socket.off('user_finalize_glow');
             socket.disconnect();
         };
     }, [cleanId, fetchChat]);
 
+    // 4. Timer Logic
+    useEffect(() => {
+        if (!expiresAt || isNaN(expiresAt.getTime())) return;
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const distance = expiresAt.getTime() - now;
+            if (distance <= 0) {
+                setTimeLeft("EXPIRED");
+                return;
+            }
+            const h = Math.floor(distance / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            setTimeLeft(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`);
+        };
+        const timerId = setInterval(updateTimer, 1000);
+        updateTimer();
+        return () => clearInterval(timerId);
+    }, [expiresAt]);
+
     useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
+    // 5. Handlers
     const handleSendMessage = () => {
         if (!inputMessage.trim()) return;
         socketRef.current.emit('send_message', { orderId: cleanId, sender: 'customer', message: inputMessage.trim(), type: 'text' });
         setInputMessage('');
     };
 
-    const handleApproveToggle = () => {
+    const handleApproveToggle = async () => {
         const nextState = !isApproved;
         setIsApproved(nextState);
-        // Signal admin to glow their "User Approved" button
-        socketRef.current.emit('user_approved', { orderId: cleanId, approved: nextState });
+        try {
+            await axios.post('http://localhost:5000/api/order/update-status', { 
+                orderId: cleanId, 
+                field: 'is_approved', 
+                value: nextState 
+            });
+            socketRef.current.emit('user_approved', { orderId: cleanId, approved: nextState });
+        } catch (err) { console.error("Update failed", err); }
     };
 
     const handleFileChange = async (e) => {
@@ -153,7 +168,7 @@ const DesignReview = () => {
                         <span className="text-[10px] text-gray-400 uppercase font-black">Expires:</span>
                         <span className={`font-mono text-sm font-bold ${timeLeft === "EXPIRED" ? 'text-red-500' : 'text-[#FF4D4D]'}`}>{timeLeft}</span>
                     </div>
-                    <span className="text-[#9abcb0] text-sm font-medium border-l border-white/10 pl-6">Order ID: #{orderId}</span>
+                    <span className="text-[#9abcb0] text-sm font-medium border-l border-white/10 pl-6">Order ID: #{cleanId}</span>
                 </div>
             </header>
 
@@ -188,7 +203,7 @@ const DesignReview = () => {
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-4 space-y-0.5 scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto p-4 space-y-1 scrollbar-hide">
                         {messages.map((msg, i) => (
                             <div key={msg.id || i} className={`flex gap-3 ${msg.sender === 'customer' ? 'flex-row-reverse' : 'flex-row'}`}>
                                 <div className={`size-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold mt-1 ${msg.sender === 'customer' ? 'bg-gray-600' : 'bg-blue-600'}`}>
@@ -216,14 +231,16 @@ const DesignReview = () => {
 
                     <div className="p-4 lg:p-6 border-t border-[#374151] bg-[#1F2937]">
                         <div className="grid grid-cols-2 gap-3">
-                            <button onClick={handleApproveToggle} className={`flex items-center justify-center rounded-xl py-3 text-sm font-bold text-white transition-all ${isApproved ? 'bg-gray-600' : 'bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg'}`}>
-                                <span className="material-symbols-outlined mr-2">{isApproved ? 'undo' : 'thumb_up'}</span> {isApproved ? 'Reset' : 'Approve'}
+                            <button onClick={handleApproveToggle} className={`flex items-center justify-center rounded-xl py-3 text-sm font-bold text-white transition-all 
+                                ${isApproved ? 'bg-gray-600' : 'bg-gradient-to-r from-purple-600 to-purple-800'}`}>
+                                {isApproved ? 'Reset' : 'Approve'}
                             </button>
+
                             <button 
                                 disabled={!isAdminPlaced} 
-                                onClick={() => navigate('/final-order', { state: { orderId, product } })} 
+                                onClick={() => navigate(`/final-order/${cleanId}`, { state: { orderId: cleanId, product } })} 
                                 className={`flex items-center justify-center rounded-xl py-3 text-sm font-bold transition-all duration-500 
-                                    ${isAdminPlaced ? 'bg-[#00ffaa] text-black shadow-[0_0_20px_#00ffaa/40] animate-pulse cursor-pointer' : 'bg-gray-700 text-gray-500 opacity-50 cursor-not-allowed'}`}
+                                    ${isAdminPlaced ? 'bg-[#00ffaa] text-black shadow-[0_0_25px_#00ffaa] animate-bounce cursor-pointer' : 'bg-gray-700 text-gray-500 opacity-50 cursor-not-allowed'}`}
                             >
                                 <span className="material-symbols-outlined mr-2">shopping_cart_checkout</span> Finalize
                             </button>

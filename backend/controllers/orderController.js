@@ -22,12 +22,15 @@ exports.saveOrder = async (req, res) => {
 // 2. Update Pricing (Line 9 Fix)
 exports.updatePricing = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; // Order ID
         const { production, design, shipping, tax } = req.body;
+        
         const sql = `UPDATE orders SET production_fee = ?, design_fee = ?, shipping_fee = ?, tax_fee = ? WHERE order_id = ?`;
-        await db.query(sql, [production, design, shipping, tax, id]);
-        res.json({ message: 'Pricing updated' });
+        
+        await db.execute(sql, [production, design, shipping, tax, id]);
+        res.json({ success: true, message: 'Pricing updated successfully' });
     } catch (error) {
+        console.error("Pricing Update Error:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -37,20 +40,70 @@ exports.updateStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        await db.query("UPDATE orders SET status = ? WHERE order_id = ?", [status, id]);
-        res.json({ success: true });
+
+        // 1. Pehle 'orders' table mein update karne ki koshish karein
+        const [result1] = await db.query(
+            "UPDATE orders SET status = ? WHERE order_id = ?", 
+            [status, id]
+        );
+
+        // 2. Agar 'orders' mein row nahi mili (affectedRows === 0), 
+        // to 'confirmed_orders' mein update karein
+        if (result1.affectedRows === 0) {
+            await db.query(
+                "UPDATE confirmed_orders SET status = ? WHERE temp_order_id = ?", 
+                [status, id]
+            );
+        }
+
+        console.log(`Status updated to ${status} for ID: ${id}`);
+        res.json({ success: true, message: "Status updated successfully" });
     } catch (error) {
+        console.error("Update Status Error:", error);
         res.status(500).json({ error: error.message });
     }
 };
 
-// 4. Get All Orders
+// Iska naam getAllOrders hi rakha hai taake frontend change na karna paray
 exports.getAllOrders = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM orders ORDER BY created_at DESC');
-        res.json(rows);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+        const query = `
+            SELECT 
+                order_id, 
+                customer_email, 
+                product_title, 
+                status, 
+                is_approved, 
+                expires_at,
+                created_at, 
+                NULL AS is_confirmed_flag 
+            FROM orders
+            
+            UNION ALL
+            
+            SELECT 
+                temp_order_id AS order_id, 
+                customer_email, 
+                product_title, 
+                status, 
+                1 AS is_approved, 
+                NULL AS expires_at,
+                approved_date AS created_at, 
+                id AS is_confirmed_flag 
+            FROM confirmed_orders
+            
+            ORDER BY created_at DESC
+        `;
+        
+        const [rows] = await db.query(query);
+        
+        // Console log taake aap terminal mein dekh saken data aa raha hai
+        console.log(`Fetched ${rows.length} combined orders.`); 
+        
+        res.status(200).json(rows);
+    } catch (err) {
+        console.error("Error in getAllOrders (Combined):", err);
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -111,7 +164,6 @@ exports.resumeOrderDesign = async (req, res) => {
 };
 
 // Order ki preview image permanent update karne ke liye
-// orderController.js
 exports.updateOrderPreview = async (req, res) => {
     const { orderId, imageUrl } = req.body;
     
@@ -135,3 +187,85 @@ exports.updateOrderPreview = async (req, res) => {
         return res.status(500).json({ success: false, error: error.message });
     }
 };
+
+// 4. Update Persistence Status (is_approved / is_placed) - FIX FOR 404
+exports.updateOrderStatus = async (req, res) => {
+    const { orderId, field, value } = req.body;
+    
+    // Sirf is_approved ya is_placed ko update karne ki ijazat dein
+    const allowedFields = ['is_approved', 'is_placed'];
+    if (!allowedFields.includes(field)) {
+        return res.status(400).json({ error: "Invalid field name" });
+    }
+
+    try {
+        const sql = `UPDATE orders SET ${field} = ? WHERE order_id = ?`;
+        // value ? 1 : 0 ensures boolean convert to tinyint
+        const [result] = await db.execute(sql, [value ? 1 : 0, orderId]);
+
+        if (result.affectedRows > 0) {
+            console.log(`Successfully updated ${field} for order ${orderId}`);
+            return res.json({ success: true });
+        } else {
+            console.log(`Order ID ${orderId} not found in database`);
+            return res.status(404).json({ error: "Order not found" });
+        }
+    } catch (error) {
+        console.error("DATABASE ERROR:", error.message);
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+// Function to finalize order
+exports.finalizeOrder = async (req, res) => {
+    const { temp_order_id } = req.params;
+    const { final_total_price } = req.body;
+
+    try {
+        // 1. Fetch data before deleting
+        const [orderRow] = await db.query(
+            "SELECT * FROM orders WHERE order_id = ?", 
+            [temp_order_id]
+        );
+
+        if (!orderRow || orderRow.length === 0) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        const o = orderRow[0];
+
+        // 2. Insert into confirmed_orders (Permanent Storage)
+        const insertQuery = `
+            INSERT INTO confirmed_orders 
+            (temp_order_id, customer_email, product_title, product_img, final_total_price, status) 
+            VALUES (?, ?, ?, ?, ?, 'Printing')
+        `;
+
+        const [insertResult] = await db.query(insertQuery, [
+            temp_order_id, 
+            o.customer_email, 
+            o.product_title, 
+            o.product_img, 
+            final_total_price
+        ]);
+
+        // 3. DELETE from temporary 'orders' table
+        // Is se wo Section 1 (Design) se gaib ho jayega
+        await db.query("DELETE FROM orders WHERE order_id = ?", [temp_order_id]);
+        
+        // Agar aapki chat table alag hai to usay bhi delete karein:
+        // await db.query("DELETE FROM messages WHERE order_id = ?", [temp_order_id]);
+
+        const newPermanentId = insertResult.insertId.toString().padStart(4, '0');
+        
+        res.status(200).json({ 
+            message: "Order Finalized & Temporary Data Cleared!", 
+            order_id: newPermanentId 
+        });
+
+    } catch (err) {
+        console.error("Finalization Error:", err.message);
+        res.status(500).json({ error: "Database error" });
+    }
+};
+

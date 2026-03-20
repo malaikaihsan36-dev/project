@@ -1,24 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // useNavigate aur Search hata diya gaya hai kyunki wo use nahi ho rahay thay
 import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import axios from 'axios';
 
 const ContactPage = () => {
+  // Dynamic Subjects State
+  const [subjects, setSubjects] = useState([]);
+  
   // Form Logic
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'General Inquiry',
+    subject: '',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Fetch subjects from admin/database
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/contact-subjects');
+        setSubjects(res.data);
+        if (res.data.length > 0) {
+          setFormData(prev => ({ ...prev, subject: res.data[0].name }));
+        }
+      } catch (err) {
+        console.error("Error fetching subjects:", err);
+      }
+    };
+    fetchSubjects();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+      setFormData({ 
+        name: '', 
+        email: '', 
+        subject: subjects[0]?.name || '', 
+        message: '' 
+      });
     }, 5000);
   };
 
@@ -77,9 +102,11 @@ const ContactPage = () => {
                     <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Subject</label>
                     <div className="relative">
                       <select name="subject" value={formData.subject} onChange={handleChange} className="w-full appearance-none rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all cursor-pointer">
-                        <option className="bg-[#0B0F1E]">General Inquiry</option>
-                        <option className="bg-[#0B0F1E]">Order Support</option>
-                        <option className="bg-[#0B0F1E]">Customization Help</option>
+                        {subjects.map((sub) => (
+                          <option key={sub.id} value={sub.name} className="bg-[#0B0F1E]">
+                            {sub.name}
+                          </option>
+                        ))}
                       </select>
                       <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
                     </div>

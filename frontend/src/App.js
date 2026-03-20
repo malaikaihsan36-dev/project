@@ -48,11 +48,15 @@ function App() {
         <Route path="/products" element={<BrowseCatalog />} />
         <Route path="/customize" element={<CustomizeProduct />} />
         
-        {/* UPDATED: Dynamic route matching NavBar navigation */}
+        {/* Design Review Routes */}
+        <Route path="/order/:orderId" element={<DesignReview />} />
         <Route path="/design-page/:orderId" element={<DesignReview />} />
         <Route path="/design-review" element={<DesignReview />} />
         
+        {/* Updated Final Order Route with Order ID support */}
+        <Route path="/final-order/:orderId" element={<FinalOrder />} />
         <Route path="/final-order" element={<FinalOrder />} />
+        
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/contact" element={<ContactPage />} />

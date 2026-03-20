@@ -1,9 +1,7 @@
 import React from 'react';
-// 1. 'Link' aur 'useLocation' ko hata diya gaya hai kyunki NavLink khud handle kar raha hai
 import { Outlet, useNavigate, NavLink } from 'react-router-dom';
 
 const AdminLayout = () => {
-  // 2. 'location' wali line delete kar di hai
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,7 +9,6 @@ const AdminLayout = () => {
     navigate('/admin-login');
   };
 
-  // Common classes for cleaner code
   const navLinkClass = ({ isActive }) => 
     `group flex items-center gap-3 rounded-full px-4 py-3 transition-all border ${
       isActive 
@@ -46,13 +43,19 @@ const AdminLayout = () => {
             <span className="font-medium">Orders</span>
           </NavLink>
 
+          {/* Products - NEW LINK ADDED HERE */}
+          <NavLink to="/admin/products" className={navLinkClass}>
+            <span className="material-symbols-outlined">inventory_2</span>
+            <span className="font-medium">Products</span>
+          </NavLink>
+
           {/* Portfolio */}
           <NavLink to="/admin/portfolio" className={navLinkClass}>
             <span className="material-symbols-outlined">photo_library</span>
             <span className="font-medium">Portfolio</span>
           </NavLink>
 
-          {/* Reviews - NEW LINK ADDED */}
+          {/* Reviews */}
           <NavLink to="/admin/reviews" className={navLinkClass}>
             <span className="material-symbols-outlined">reviews</span>
             <span className="font-medium">Reviews</span>
@@ -112,7 +115,7 @@ const AdminLayout = () => {
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#0F172A]">
-           <Outlet />
+            <Outlet />
         </main>
       </div>
     </div>

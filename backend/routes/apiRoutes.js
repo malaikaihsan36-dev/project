@@ -4,6 +4,7 @@ const orderCtrl = require('../controllers/orderController');
 const chatCtrl = require('../controllers/chatController');
 const projCtrl = require('../controllers/projectController');
 const customerController = require('../controllers/customerController');
+const productController = require('../controllers/productController');
 
 // Orders
 router.post('/orders', orderCtrl.saveOrder);
@@ -29,8 +30,22 @@ router.post('/order/extend-expiry', chatCtrl.extendExpiry);
 // finalized order route
 router.post('/orders/finalize/:temp_order_id', orderCtrl.finalizeOrder);
 
+// Cleanup expired order (Delete Chat + Order)
+router.delete('/admin/cleanup-expired-order/:id', orderCtrl.cleanupExpiredOrder);
+
 // GET all customers with order summary
 router.get('/admin/customers', customerController.getAllCustomers);
+
+// Categories Routes
+router.get('/categories', productController.getAllCategories);
+router.post('/categories', productController.addCategory);
+router.delete('/categories/:id', productController.deleteCategory);
+
+// Products Routes
+router.get('/products', productController.getAllProducts);
+router.post('/products', productController.createProduct);
+router.put('/products/:id', productController.updateProduct);
+router.delete('/products/:id', productController.deleteProduct);
 
 // Portfolio Projects 
 router.get('/projects', projCtrl.getAllProjects);

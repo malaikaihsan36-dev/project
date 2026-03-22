@@ -1,162 +1,383 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AdminProducts = () => {
-  // Demo Data State
-  const [products, setProducts] = useState([
-    { id: 1, name: "Premium Hoodie", sku: "HD-2023-BK", category: "Apparel", material: "Cotton Blend", size: "S, M, L, XL", price: "$85.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCRdWKlSF_2z_965Dkk-47IbpyQHG4ZarO-SxF_HlZgkMSP-GxKE1Nj6ukxSKNAtiVK6kRIui8TAqK01NODyGJfV_7nVgNXzRnHnZpRSVMeJDsYeCX8B9rVJGLhYDueArOcMyNBHNUOsotm0OszQ9KmZy6pvOgZP90wvdRFPTyrXY75X6Ff4mbJpBGrPmup8Ldxr6HNlDi4HLg8rNIvPvVh863ERa5VyAbiY0HRNWvUBB8dwn4U-MunfhJhi_3_EhlTnTHv7a4CRda0", materialColor: "bg-purple-400" },
-    { id: 2, name: "Ceramic Mug", sku: "MG-STD-WHT", category: "Drinkware", material: "Ceramic", size: "11oz, 15oz", price: "$22.50", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCJU0PdIeRnbatqclqOO0Zi8aEMx6N4Qis4cWUqLv9k5C7WQxEt8A7JWZbWXeuxFXPvjcc2Xt_qMFYNdAWKnSBYHz7hQIxUEmiTZZgtJy4LH0pi3_GUMmLbahOTVdPZUikJDasx7fv_Gaj-NwlsUDnQJ7naOY4chLdtuEwKtZdiQk__e1mhihKsia3UDkHgh2gy9l76VzKKD_td_HXyClVEbYVA_nVmdKGU-vXDWgu9KtkggXEmLV1tfiXzBZjaX7-Bu5LDg3F-fQUH", materialColor: "bg-orange-400" },
-    { id: 3, name: "Galaxy Case", sku: "PH-S23-GAL", category: "Accessories", material: "Polycarbonate", size: "Samsung S23", price: "$35.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFHKadq2zWGu3CTePHQO0HdFDDGO7Jxtrrr3piSSPOYR7-tTL0fs8Tkkzy8toBVrKyTzKLDqr3emhC6c9xX3ANTnsOHBeJf0-uNAbLiHMQMJP-PB9Y_wyppnR0CeMeb3gIvDovpf7wXyzzxwzsEVaFOw73nGzc1TgGr9gwCVcsoEnuoSfeJ68TMxEL6SbK4h8QQEqhpZgVm2NscKodOgQnTE0n1uEfRphER530ToadCc-mva7Dq689N3UouQiMZAmqkJ3hqkbbYbDN", materialColor: "bg-pink-400" },
-    { id: 4, name: "Custom Tee", sku: "TS-BASIC-001", category: "Apparel", material: "100% Cotton", size: "XS - XXL", price: "$45.00", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBO0TDeoVCS49MH-ez7YO_VVaxrqvrVvYDj-Gg_T4esn8rVWc_fRbGO_HP6z9lmNy8MVIWfzNOB44AJAR8mBXsZp-PsGNONpyY1BQHNhPMNd4utvJGAey1GmRBA6-BkB3wHQSCP_3uSLCTkUVb273mzc7SAXc357dNn2rgkjjDK4Fr_RrB4byS_ogag095Pg_Uvi3VEdgsrzmc8hTbhOqv92mwpmAmpqXROMkJlHF0ZgnHfjOyHG1Tj14Vi0b1COClhxI7OHfUyRtAm", materialColor: "bg-blue-400" },
-  ]);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isCatModalOpen, setIsCatModalOpen] = useState(false);
+  const [isProdModalOpen, setIsProdModalOpen] = useState(false);
+  const [selectedCat, setSelectedCat] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+
+  // Category Form State
+  const [catData, setCatData] = useState({ name: '', image: null });
+
+  const [prodData, setProdData] = useState({
+    name: '',
+    kgRate: '',
+    type: 'Formal',
+    sizes: [{ label: '', width: '', length: '' }],
+    gramages: [{ label: '', value: '' }],
+    addons: [{ label: '', value: '' }],
+    description: '',
+    previewImage: null
+  });
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProducts();
+  }, []);
+
+  const fetchCategories = async () => {
+    const res = await fetch('http://localhost:5000/api/categories');
+    const data = await res.json();
+    setCategories(data);
+  };
+
+  const fetchProducts = async () => {
+    const res = await fetch('http://localhost:5000/api/products');
+    const data = await res.json();
+    setProducts(data);
+  };
+
+  // --- SAVE CATEGORY ---
+  const saveCategory = async () => {
+    if (!catData.name || !catData.image) {
+      alert("Please provide both name and image for the category.");
+      return;
+    }
+    try {
+      const res = await fetch('http://localhost:5000/api/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: catData.name, image_url: catData.image }),
+      });
+      if (res.ok) {
+        alert("Category Added!");
+        setIsCatModalOpen(false);
+        setCatData({ name: '', image: null });
+        fetchCategories();
+      }
+    } catch (err) { console.error("Save Cat Error:", err); }
+  };
+
+  const deleteCategory = async (e, id) => {
+    e.stopPropagation(); 
+    if (!window.confirm("Are you sure? This will PERMANENTLY delete this category and ALL its products.")) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        alert("Category & Products Deleted!");
+        fetchCategories();
+        fetchProducts(); 
+      }
+    } catch (err) {
+      console.error("Delete Category Error:", err);
+    }
+  };
+
+  const deleteProduct = async () => {
+    if (!window.confirm("Delete this product permanently?")) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/products/${editingId}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        alert("Product Deleted!");
+        closeModal();
+        fetchProducts();
+      }
+    } catch (err) {
+      console.error("Delete Product Error:", err);
+    }
+  };
+
+  const handleEdit = (product) => {
+    setEditingId(product.id);
+    setSelectedCat({ id: product.category_id });
+    
+    const parsedSizes = typeof product.sizes === 'string' ? JSON.parse(product.sizes) : product.sizes;
+    const parsedGrams = typeof product.gramages === 'string' ? JSON.parse(product.gramages) : product.gramages;
+    const parsedAddons = typeof product.addons === 'string' ? JSON.parse(product.addons) : product.addons;
+
+    setProdData({
+      name: product.name,
+      kgRate: product.kg_rate,
+      type: product.type,
+      sizes: parsedSizes || [{ label: '', width: '', length: '' }],
+      gramages: parsedGrams || [{ label: '', value: '' }],
+      addons: parsedAddons || [{ label: '', value: '' }],
+      description: product.description,
+      previewImage: product.image_url
+    });
+    setIsProdModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsProdModalOpen(false);
+    setEditingId(null);
+    setProdData({
+      name: '', kgRate: '', type: 'Formal',
+      sizes: [{ label: '', width: '', length: '' }],
+      gramages: [{ label: '', value: '' }],
+      addons: [{ label: '', value: '' }],
+      description: '', previewImage: null
+    });
+  };
+
+  const saveProduct = async () => {
+    if (!prodData.name || !selectedCat) {
+        alert("Please enter product name and select a category!");
+        return;
+    }
+    const cleanSizes = prodData.sizes.filter(s => s.label && s.label.trim() !== "");
+    const cleanGramages = prodData.gramages.filter(g => g.label && g.label.trim() !== "");
+    const cleanAddons = prodData.addons.filter(a => a.label && a.label.trim() !== "");
+
+    const payload = {
+        category_id: selectedCat.id,
+        name: prodData.name,
+        kg_rate: prodData.kgRate,
+        type: prodData.type,
+        sizes: cleanSizes,
+        gramages: cleanGramages,
+        addons: prodData.type === 'Packaging' ? cleanAddons : [],
+        description: prodData.description,
+        image_url: prodData.previewImage
+    };
+
+    const url = editingId ? `http://localhost:5000/api/products/${editingId}` : 'http://localhost:5000/api/products';
+    const method = editingId ? 'PUT' : 'POST';
+
+    try {
+        const res = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            alert(editingId ? "Product Updated!" : "Product Saved!");
+            closeModal();
+            fetchProducts();
+        }
+    } catch (err) { console.error("Save Error:", err); }
+  };
+
+  const addSize = () => setProdData({...prodData, sizes: [...prodData.sizes, { label: '', width: '', length: '' }]});
+  const updateSize = (idx, f, v) => { const n = [...prodData.sizes]; n[idx][f] = v; setProdData({...prodData, sizes: n}); };
+  const removeSize = (idx) => { setProdData({...prodData, sizes: prodData.sizes.filter((_, i) => i !== idx)}) };
+  const addGramage = () => setProdData({...prodData, gramages: [...prodData.gramages, { label: '', value: '' }]});
+  const updateGramage = (idx, f, v) => { const n = [...prodData.gramages]; n[idx][f] = v; setProdData({...prodData, gramages: n}); };
+  const removeGramage = (idx) => { setProdData({...prodData, gramages: prodData.gramages.filter((_, i) => i !== idx)}) };
+  const addAddon = () => setProdData({...prodData, addons: [...prodData.addons, { label: '', value: '' }]});
+  const updateAddon = (idx, f, v) => { const n = [...prodData.addons]; n[idx][f] = v; setProdData({...prodData, addons: n}); };
+  const removeAddon = (idx) => { setProdData({...prodData, addons: prodData.addons.filter((_, i) => i !== idx)}) };
+
+  const handleProdImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setProdData({...prodData, previewImage: reader.result});
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCatImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setCatData({...catData, image: reader.result});
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
-    <div className="mx-auto max-w-8xl space-y-8 animate-in fade-in duration-500 text-left pb-10">
-      
-      {/* Stats Cards Section */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="rounded-2xl bg-[#1E293B] p-4 border border-[#334155]">
-          <p className="text-xs font-medium text-[#94A3B8]">Total Products</p>
-          <p className="text-xl font-bold text-white mt-1">1,432</p>
+    <div className="mx-auto max-w-7xl space-y-8 text-left pb-10 font-sans text-white px-4">
+      <div className="flex justify-between items-end">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight text-[#0df2a6]"> Manage Inventory</h2>
+          <p className="text-[#94A3B8] text-sm">Select a category to add products.</p>
         </div>
-        <div className="rounded-2xl bg-[#1E293B] p-4 border border-[#334155]">
-          <p className="text-xs font-medium text-[#94A3B8]">Low Stock</p>
-          <p className="text-xl font-bold text-orange-400 mt-1">12</p>
-        </div>
-        <div className="rounded-2xl bg-[#1E293B] p-4 border border-[#334155]">
-          <p className="text-xs font-medium text-[#94A3B8]">Out of Stock</p>
-          <p className="text-xl font-bold text-red-400 mt-1">5</p>
-        </div>
-        <div className="rounded-2xl bg-[#1E293B] p-4 border border-[#334155]">
-          <p className="text-xs font-medium text-[#94A3B8]">Categories</p>
-          <p className="text-xl font-bold text-blue-400 mt-1">8</p>
-        </div>
+        <button onClick={() => setIsCatModalOpen(true)} className="px-6 py-2.5 bg-[#0df2a6] text-[#0F172A] font-bold rounded-xl hover:scale-105 transition-all">
+          + Add Category
+        </button>
       </div>
 
-      {/* --- PRODUCT INVENTORY TABLE --- */}
-      <div className="rounded-2xl bg-[#1E293B] border border-[#334155] flex flex-col shadow-xl overflow-hidden">
-        <div className="p-6 border-b border-[#334155] flex justify-between items-center bg-[#1E293B]/50">
-          <h2 className="text-lg font-bold text-white">Product Inventory</h2>
-          <div className="flex gap-2">
-            <button className="p-2 text-[#94A3B8] hover:text-white transition-colors"><span className="material-symbols-outlined">filter_list</span></button>
-            <button className="p-2 text-[#94A3B8] hover:text-white transition-colors"><span className="material-symbols-outlined">sort</span></button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map((cat) => (
+          <div key={cat.id} onClick={() => { setSelectedCat(cat); setEditingId(null); setIsProdModalOpen(true); }} 
+               className="cursor-pointer group bg-[#1E293B] border border-[#334155] rounded-2xl p-4 hover:border-[#0df2a6] transition-all relative shadow-lg">
+            
+            <button 
+              onClick={(e) => deleteCategory(e, cat.id)}
+              className="absolute top-2 right-2 z-10 bg-red-500/10 text-red-500 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-red-500 hover:text-white transition-all material-symbols-outlined text-sm"
+            >
+              delete
+            </button>
+
+            <div className="h-28 w-full rounded-xl bg-cover bg-center mb-4 border border-[#334155]" style={{ backgroundImage: `url(${cat.image_url})` }}></div>
+            <h3 className="font-bold text-center group-hover:text-[#0df2a6] transition-colors">{cat.name}</h3>
           </div>
-        </div>
-        
+        ))}
+      </div>
+
+      {/* Product Table */}
+      <div className="rounded-2xl bg-[#1E293B] border border-[#334155] shadow-xl overflow-hidden">
+        <div className="p-5 bg-[#334155]/20 border-b border-[#334155]"><h2 className="text-md font-bold text-white">Product Inventory</h2></div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[#334155]/50 text-[#94A3B8] uppercase text-[11px] font-bold tracking-widest">
+            <thead className="bg-[#334155]/50 text-[#94A3B8] uppercase text-[10px] font-bold tracking-widest">
               <tr>
-                <th className="px-6 py-4">Product Name</th>
+                <th className="px-6 py-4">Product</th>
                 <th className="px-6 py-4">Category</th>
-                <th className="px-6 py-4">Material</th>
-                <th className="px-6 py-4">Size</th>
-                <th className="px-6 py-4">Price</th>
+                <th className="px-6 py-4">Type</th>
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#334155]">
-              {products.map((product) => (
-                <tr key={product.id} className="group hover:bg-[#334155]/30 transition-colors">
+              {products.map((p) => (
+                <tr key={p.id} className="hover:bg-[#334155]/30 transition-colors">
+                  <td className="px-6 py-4 font-medium">{p.name}</td>
+                  <td className="px-6 py-4 text-[#94A3B8] text-xs">{p.category_name}</td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-cover bg-center border border-[#334155]" style={{ backgroundImage: `url(${product.img})` }}></div>
-                      <div>
-                        <div className="font-medium text-white">{product.name}</div>
-                        <div className="text-xs text-[#94A3B8]">SKU: {product.sku}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-[#94A3B8]">{product.category}</td>
-                  <td className="px-6 py-4">
-                    <span className="flex items-center gap-2 text-xs text-[#94A3B8]">
-                      <span className={`w-2 h-2 rounded-full ${product.materialColor}`}></span> {product.material}
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${p.type === 'Formal' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}`}>
+                      {p.type}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-xs text-[#94A3B8]">{product.size}</td>
-                  <td className="px-6 py-4 font-bold text-white">{product.price}</td>
                   <td className="px-6 py-4 text-right">
-                    <button className="h-8 w-8 rounded-full hover:bg-[#0df2a6] hover:text-[#0F172A] text-[#94A3B8] transition-colors inline-flex items-center justify-center">
-                      <span className="material-symbols-outlined text-sm">edit</span>
-                    </button>
+                    <button onClick={() => handleEdit(p)} className="material-symbols-outlined text-[#94A3B8] hover:text-[#0df2a6] text-xl">edit</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="p-4 border-t border-[#334155] flex justify-center">
-          <button className="text-xs text-[#0df2a6] font-bold hover:underline">View All 1,432 Products</button>
-        </div>
       </div>
 
-      {/* --- ADD NEW PRODUCT FORM --- */}
-      <div className="bg-[#1E293B] border border-[#334155] rounded-2xl p-6 md:p-8 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-white mb-1">Add New Product</h2>
-            <p className="text-sm text-[#94A3B8]">Create a new item in your inventory.</p>
-          </div>
-          <div className="hidden sm:block px-3 py-1 rounded-full border border-[#334155] text-xs text-[#94A3B8] bg-[#334155]/20">
-            Draft Mode
-          </div>
-        </div>
-
-        <form className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-            <div className="space-y-1 lg:col-span-6 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Product Name</label>
-              <input className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white placeholder-[#94A3B8]/50 focus:border-[#0df2a6] focus:ring-0 text-sm transition-all" placeholder="e.g. Neon Sign Custom" type="text" />
+      {/* CATEGORY MODAL */}
+      {isCatModalOpen && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md bg-[#1E293B] border border-[#334155] rounded-3xl p-6 space-y-6 shadow-2xl">
+            <div className="flex justify-between items-center">
+              <h3 className="font-bold text-[#0df2a6] uppercase tracking-wider text-sm">Add New Category</h3>
+              <button onClick={() => setIsCatModalOpen(false)} className="text-[#94A3B8] hover:text-white material-symbols-outlined">close</button>
             </div>
-            <div className="space-y-1 lg:col-span-3 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Category</label>
-              <div className="relative">
-                <select className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white focus:border-[#0df2a6] focus:ring-0 text-sm appearance-none cursor-pointer">
-                  <option>Apparel</option>
-                  <option>Drinkware</option>
-                  <option>Tech</option>
-                  <option>Stationery</option>
-                </select>
-                <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-sm">expand_more</span>
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#94A3B8] uppercase">Category Name</label>
+                <input type="text" className="w-full bg-[#334155] rounded-xl p-3 outline-none focus:ring-1 focus:ring-[#0df2a6] text-sm" placeholder="e.g. Business Cards" value={catData.name} onChange={(e) => setCatData({ ...catData, name: e.target.value })} />
               </div>
-            </div>
-            <div className="space-y-1 lg:col-span-3 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Price ($)</label>
-              <input className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white placeholder-[#94A3B8]/50 focus:border-[#0df2a6] focus:ring-0 text-sm transition-all" placeholder="0.00" type="number" />
-            </div>
-            <div className="space-y-1 lg:col-span-6 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Material</label>
-              <input className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white placeholder-[#94A3B8]/50 focus:border-[#0df2a6] focus:ring-0 text-sm transition-all" placeholder="e.g. Cotton" type="text" />
-            </div>
-            <div className="space-y-1 lg:col-span-6 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Size Options</label>
-              <input className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white placeholder-[#94A3B8]/50 focus:border-[#0df2a6] focus:ring-0 text-sm transition-all" placeholder="e.g. S, M, L" type="text" />
-            </div>
-            <div className="space-y-1 lg:col-span-12 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Description</label>
-              <textarea className="w-full rounded-lg bg-[#334155] border-transparent py-3 px-4 text-white placeholder-[#94A3B8]/50 focus:border-[#0df2a6] focus:ring-0 text-sm transition-all min-h-[120px] resize-y" placeholder="Product details..."></textarea>
-            </div>
-            <div className="space-y-2 lg:col-span-12 text-left">
-              <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider ml-1">Product Images</label>
-              <div className="w-full border-2 border-dashed border-[#334155] hover:border-[#0df2a6]/50 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-colors bg-[#334155]/20 group">
-                <div className="h-12 w-12 rounded-full bg-[#334155] flex items-center justify-center group-hover:bg-[#0df2a6] group-hover:text-[#0F172A] transition-colors mb-3">
-                  <span className="material-symbols-outlined">cloud_upload</span>
+              <div className="space-y-1">
+                <label className="text-[11px] font-bold text-[#94A3B8] uppercase">Category Image</label>
+                <div className="relative h-32 border-2 border-dashed border-[#334155] rounded-2xl flex items-center justify-center bg-[#334155]/10 overflow-hidden">
+                  {catData.image ? <img src={catData.image} alt="preview" className="h-full w-full object-cover" /> : <span className="text-[10px] text-[#94A3B8]">CLICK TO UPLOAD</span>}
+                  <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={handleCatImage} />
                 </div>
-                <p className="text-sm font-medium text-white mb-1">Click or drag images here</p>
-                <p className="text-xs text-[#94A3B8]">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+              </div>
+            </div>
+            <button onClick={saveCategory} className="w-full py-3 bg-[#0df2a6] text-[#0F172A] font-bold rounded-xl shadow-lg hover:scale-[1.02] transition-all uppercase text-xs tracking-widest">
+              Save Category
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* PRODUCT MODAL */}
+      {isProdModalOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-2xl bg-[#1E293B] border border-[#334155] rounded-3xl overflow-hidden flex flex-col max-h-[90vh] shadow-2xl">
+            <div className="p-6 border-b border-[#334155] flex justify-between items-center">
+              <h3 className="font-bold text-[#0df2a6] uppercase tracking-wider text-sm">{editingId ? 'Edit Product' : 'Add New Product'}</h3>
+              <button onClick={closeModal} className="text-[#94A3B8] hover:text-white material-symbols-outlined">close</button>
+            </div>
+            <div className="p-6 overflow-y-auto space-y-6 custom-scrollbar">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[13px] font-bold text-[#94A3B8] uppercase">Product Name</label>
+                  <input type="text" className="w-full bg-[#334155] rounded-xl p-2.5 outline-none focus:ring-1 focus:ring-[#0df2a6] text-sm" value={prodData.name} onChange={(e)=>setProdData({...prodData, name: e.target.value})} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[13px] font-bold text-[#94A3B8] uppercase">Kilogram Rate</label>
+                  <input type="number" className="w-full bg-[#334155] rounded-xl p-2.5 outline-none text-sm" value={prodData.kgRate} onChange={(e)=>setProdData({...prodData, kgRate: e.target.value})} />
+                </div>
+              </div>
+
+              {/* Sizes, Gramages etc remain same as your provided code */}
+              <div className="space-y-3 p-4 bg-[#334155]/20 rounded-2xl border border-[#334155]">
+                <div className="flex justify-between items-center"><h4 className="text-[13px] font-bold text-[#94A3B8] uppercase">Sizes</h4><button onClick={addSize} className="text-[10px] text-[#0df2a6] font-bold hover:underline">+ ADD</button></div>
+                {prodData.sizes.map((s, idx) => (
+                  <div key={idx} className="flex gap-2 items-center">
+                    <div className="grid grid-cols-3 gap-2 flex-1">
+                      <input placeholder="Label" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={s.label} onChange={(e)=>updateSize(idx, 'label', e.target.value)} />
+                      <input placeholder="W" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={s.width} onChange={(e)=>updateSize(idx, 'width', e.target.value)} />
+                      <input placeholder="L" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={s.length} onChange={(e)=>updateSize(idx, 'length', e.target.value)} />
+                    </div>
+                    {prodData.sizes.length > 1 && <button onClick={() => removeSize(idx)} className="text-red-400 material-symbols-outlined text-lg">delete</button>}
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-3 p-4 bg-[#334155]/20 rounded-2xl border border-[#334155]">
+                <div className="flex justify-between items-center"><h4 className="text-[13px] font-bold text-[#94A3B8] uppercase">Gramages</h4><button onClick={addGramage} className="text-[10px] text-[#0df2a6] font-bold hover:underline">+ ADD</button></div>
+                {prodData.gramages.map((g, idx) => (
+                  <div key={idx} className="flex gap-2 items-center">
+                    <div className="grid grid-cols-2 gap-2 flex-1">
+                      <input placeholder="Label" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={g.label} onChange={(e)=>updateGramage(idx, 'label', e.target.value)} />
+                      <input placeholder="Value" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={g.value} onChange={(e)=>updateGramage(idx, 'value', e.target.value)} />
+                    </div>
+                    {prodData.gramages.length > 1 && <button onClick={() => removeGramage(idx)} className="text-red-400 material-symbols-outlined text-lg">delete</button>}
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex gap-4 text-xs font-bold">
+                    <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Formal'} onChange={()=>setProdData({...prodData, type: 'Formal'})} className="accent-[#0df2a6]"/> Formal</label>
+                    <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Packaging'} onChange={()=>setProdData({...prodData, type: 'Packaging'})} className="accent-[#0df2a6]"/> Packaging</label>
+                </div>
+                {prodData.type === 'Packaging' && (
+                  <div className="space-y-3 p-4 bg-purple-500/5 rounded-2xl border border-purple-500/20">
+                    <div className="flex justify-between items-center"><h4 className="text-[10px] font-bold text-purple-400 uppercase">Add-ons</h4><button onClick={addAddon} className="text-[10px] text-purple-400 font-bold hover:underline">+ ADD</button></div>
+                    {prodData.addons.map((a, idx) => (
+                      <div key={idx} className="flex gap-2 items-center">
+                        <div className="grid grid-cols-2 gap-2 flex-1">
+                          <input placeholder="Label" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none" value={a.label} onChange={(e)=>updateAddon(idx, 'label', e.target.value)} />
+                          <input placeholder="Eq" className="bg-[#1E293B] p-2 rounded-lg text-xs outline-none font-mono" value={a.value} onChange={(e)=>updateAddon(idx, 'value', e.target.value)} />
+                        </div>
+                        {prodData.addons.length > 1 && <button onClick={() => removeAddon(idx)} className="text-red-400 material-symbols-outlined text-lg">delete</button>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <textarea rows="3" className="w-full bg-[#334155] rounded-xl p-3 outline-none text-xs" placeholder="Description..." value={prodData.description} onChange={(e)=>setProdData({...prodData, description: e.target.value})}></textarea>
+                <div className="relative h-24 border-2 border-dashed border-[#334155] rounded-xl flex items-center justify-center bg-[#334155]/10 overflow-hidden">
+                  {prodData.previewImage ? <img src={prodData.previewImage} alt="preview" className="h-full w-full object-cover" /> : <span className="text-[10px] text-[#94A3B8]">UPLOAD IMAGE</span>}
+                  <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={handleProdImage} />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-[#334155] flex justify-between items-center bg-[#334155]/10">
+              <div>
+                {editingId && (
+                  <button onClick={deleteProduct} className="flex items-center gap-1.5 px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white font-bold rounded-lg text-[10px] uppercase transition-all">
+                    <span className="material-symbols-outlined text-sm">delete</span> Delete Product
+                  </button>
+                )}
+              </div>
+              <div className="flex gap-3">
+                <button onClick={closeModal} className="px-5 py-2 text-[#94A3B8] font-bold text-[10px] uppercase hover:text-white">Cancel</button>
+                <button onClick={saveProduct} className="px-8 py-2.5 bg-[#0df2a6] text-[#0F172A] font-bold rounded-lg text-[10px] uppercase shadow-lg hover:scale-105 transition-all">{editingId ? 'Update' : 'Save'}</button>
               </div>
             </div>
           </div>
-
-          <div className="pt-6 flex justify-end gap-4 border-t border-[#334155] mt-6">
-            <button className="px-6 rounded-full py-3 text-sm font-bold text-[#94A3B8] hover:text-white hover:bg-[#334155] transition-colors" type="button">
-              Save Draft
-            </button>
-            <button className="px-8 rounded-full bg-gradient-to-r from-[#0df2a6] to-emerald-500 py-3 text-sm font-bold text-[#0F172A] shadow-lg shadow-[#0df2a6]/25 hover:shadow-[#0df2a6]/40 hover:scale-[1.02] transition-all duration-300" type="button">
-              Save / Add Product
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

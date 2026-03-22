@@ -188,6 +188,31 @@ exports.updateOrderPreview = async (req, res) => {
     }
 };
 
+exports.cleanupExpiredOrder = async (req, res) => {
+    const orderId = req.params.id;
+    
+    // YAHAN SAHI NAAM LIKHEIN (Jo SHOW TABLES mein nazar aaye)
+    const CHAT_TABLE_NAME = 'chat_messages'; 
+
+    try {
+        // Step 1: Delete Chat
+        await db.query(`DELETE FROM ${CHAT_TABLE_NAME} WHERE order_id = ?`, [orderId]);
+        
+        // Step 2: Delete Order
+        const [result] = await db.query('DELETE FROM orders WHERE order_id = ?', [orderId]);
+
+        if (result.affectedRows > 0) {
+            console.log(`✅ Automated Cleanup: Order #${orderId} removed.`);
+            return res.status(200).json({ success: true });
+        } else {
+            return res.status(404).json({ message: "Already cleaned up" });
+        }
+    } catch (error) {
+        console.error("❌ Cleanup Query Error:", error.message);
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 // 4. Update Persistence Status (is_approved / is_placed) - FIX FOR 404
 exports.updateOrderStatus = async (req, res) => {
     const { orderId, field, value } = req.body;

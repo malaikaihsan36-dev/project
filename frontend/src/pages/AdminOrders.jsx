@@ -70,6 +70,20 @@ const AdminOrders = () => {
     }
   };
 
+  // --- AUTO CLEANUP FUNCTION FOR EXPIRED ORDERS ---
+  const cleanupExpiredOrder = async (db_id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/admin/cleanup-expired-order/${db_id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        fetchOrders(); // Refresh list after deletion
+      }
+    } catch (error) {
+      console.error("Cleanup error:", error);
+    }
+  };
+
   const updateStatus = async (db_id, newStatus) => {
     try {
       const response = await fetch(`http://localhost:5000/api/orders/${db_id}/status`, {
@@ -93,14 +107,26 @@ const AdminOrders = () => {
   }, []);
 
   const getTimeLeft = (expiryDate) => {
-    if (!expiryDate || isNaN(expiryDate.getTime())) return "--:--";
-    const diff = expiryDate - currentTime;
-    if (diff <= 0) return "EXPIRED";
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+  if (!expiryDate || isNaN(expiryDate.getTime())) return "--:--";
+  const diff = expiryDate - currentTime;
+  if (diff <= 0) return "EXPIRED";
+  
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
+
+// Naya useEffect jo expired orders ko detect karke delete karega
+useEffect(() => {
+  const expiredOrders = allOrders.filter(o => 
+    o.expiresAt && (o.expiresAt - currentTime <= 0) && o.status !== "Completed"
+  );
+
+  expiredOrders.forEach(order => {
+    cleanupExpiredOrder(order.db_id);
+  });
+}, [currentTime, allOrders]);
 
   const openChatInNewTab = (orderId) => {
     window.open(`/admin/chat/${orderId}`, '_blank', 'noopener,noreferrer');
@@ -111,37 +137,25 @@ const AdminOrders = () => {
   return (
     <div className="mx-auto max-w-7xl space-y-10 text-left pb-10 font-sans bg-[#0F172A]">
       
-      {/* --- HEADER WITH RIGHT-ALIGNED FILTERS --- */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pt-10 px-4 md:px-0">
         <div>
           <h2 className="text-3xl font-bold text-white tracking-tight">Orders Management</h2>
           <p className="text-[#94A3B8] mt-1 font-medium">Tracking Design Approval & Printing Status</p>
         </div>
         
-        {/* Navigation Buttons - Strictly Right Aligned */}
         <div className="flex flex-wrap gap-2 justify-end">
-          <button 
-            onClick={() => scrollToSection(designRef)}
-            className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider"
-          >
+          <button onClick={() => scrollToSection(designRef)} className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider">
             Design ({allOrders.filter(o => o.type === 'design').length})
           </button>
-          <button 
-            onClick={() => scrollToSection(printingRef)}
-            className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 border border-blue-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider"
-          >
+          <button onClick={() => scrollToSection(printingRef)} className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 border border-blue-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider">
             Approved ({allOrders.filter(o => o.type === 'printing').length})
           </button>
-          <button 
-            onClick={() => scrollToSection(completedRef)}
-            className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 border border-emerald-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider"
-          >
+          <button onClick={() => scrollToSection(completedRef)} className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 border border-emerald-500/30 rounded-xl text-[11px] font-bold transition-all uppercase tracking-wider">
             Completed ({allOrders.filter(o => o.type === 'completed').length})
           </button>
         </div>
       </div>
 
-      {/* --- SECTION 1: DESIGN & REVISIONS --- */}
       <div ref={designRef} className="rounded-2xl bg-[#1E293B] border border-[#334155] shadow-xl overflow-hidden scroll-mt-24">
         <div className="border-b border-[#334155] p-4 flex items-center gap-4 bg-[#1E293B]/50">
           <div className="rounded-xl bg-amber-500/10 p-2.5 text-amber-500"><span className="material-symbols-outlined">brush</span></div>
@@ -165,17 +179,13 @@ const AdminOrders = () => {
                     <p className="text-xs text-[#94A3B8]">{order.customer} • {order.product}</p>
                   </td>
                   <td className="px-6 py-4 font-mono text-[#0df2a6]">
-                    {getTimeLeft(order.expiresAt)}
+                    {getTimeLeft(order.expiresAt, order.db_id)}
                   </td>
                   <td className="px-6 py-4">
                     {order.status === 'DESIGN REVIEW' ? (
-                      <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-red-500/20 text-red-400 border border-red-500/30">
-                        DESIGN REVIEW
-                      </span>
+                      <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-red-500/20 text-red-400 border border-red-500/30">DESIGN REVIEW</span>
                     ) : (
-                      <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                        IN DESIGN
-                      </span>
+                      <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">IN DESIGN</span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -190,7 +200,6 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* --- SECTION 2: PRINTING & PRODUCTION --- */}
       <div ref={printingRef} className="rounded-2xl bg-[#1E293B] border border-[#334155] shadow-xl overflow-hidden scroll-mt-24">
         <div className="border-b border-[#334155] p-4 flex items-center gap-4 bg-[#1E293B]/50">
           <div className="rounded-xl bg-blue-500/10 p-2.5 text-blue-500"><span className="material-symbols-outlined">print</span></div>
@@ -231,7 +240,6 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* --- SECTION 3: COMPLETED --- */}
       <div ref={completedRef} className="rounded-2xl bg-[#1E293B] border border-[#334155] shadow-xl overflow-hidden scroll-mt-24">
         <div className="border-b border-[#334155] p-4 flex items-center gap-4 bg-[#1E293B]/50">
           <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-500"><span className="material-symbols-outlined">task_alt</span></div>
@@ -254,9 +262,7 @@ const AdminOrders = () => {
                     <p className="text-xs text-[#94A3B8]">{order.customer} • {order.product}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                       Completed
-                    </span>
+                    <span className="px-3 py-1.5 rounded-lg text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Completed</span>
                   </td>
                   <td className="px-6 py-4 text-[#94A3B8] text-right">{order.date}</td>
                 </tr>

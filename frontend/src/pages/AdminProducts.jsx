@@ -15,6 +15,7 @@ const AdminProducts = () => {
     name: '',
     kgRate: '',
     type: 'Formal',
+    is_popular: false, // Added is_popular state
     sizes: [{ label: '', width: '', length: '' }],
     gramages: [{ label: '', value: '' }],
     addons: [{ label: '', value: '' }],
@@ -37,6 +38,19 @@ const AdminProducts = () => {
     const res = await fetch('http://localhost:5000/api/products');
     const data = await res.json();
     setProducts(data);
+  };
+
+  // --- Quick Toggle Popular Status in Table ---
+  const togglePopular = async (product) => {
+    try {
+      const newStatus = !product.is_popular;
+      const res = await fetch(`http://localhost:5000/api/products/${product.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...product, is_popular: newStatus }),
+      });
+      if (res.ok) fetchProducts();
+    } catch (err) { console.error("Toggle Popular Error:", err); }
   };
 
   // --- SAVE CATEGORY ---
@@ -106,6 +120,7 @@ const AdminProducts = () => {
       name: product.name,
       kgRate: product.kg_rate,
       type: product.type,
+      is_popular: product.is_popular === 1 || product.is_popular === true, // Handle boolean/bit
       sizes: parsedSizes || [{ label: '', width: '', length: '' }],
       gramages: parsedGrams || [{ label: '', value: '' }],
       addons: parsedAddons || [{ label: '', value: '' }],
@@ -119,7 +134,7 @@ const AdminProducts = () => {
     setIsProdModalOpen(false);
     setEditingId(null);
     setProdData({
-      name: '', kgRate: '', type: 'Formal',
+      name: '', kgRate: '', type: 'Formal', is_popular: false,
       sizes: [{ label: '', width: '', length: '' }],
       gramages: [{ label: '', value: '' }],
       addons: [{ label: '', value: '' }],
@@ -141,6 +156,7 @@ const AdminProducts = () => {
         name: prodData.name,
         kg_rate: prodData.kgRate,
         type: prodData.type,
+        is_popular: prodData.is_popular, // Added to payload
         sizes: cleanSizes,
         gramages: cleanGramages,
         addons: prodData.type === 'Packaging' ? cleanAddons : [],
@@ -233,6 +249,7 @@ const AdminProducts = () => {
                 <th className="px-6 py-4">Product</th>
                 <th className="px-6 py-4">Category</th>
                 <th className="px-6 py-4">Type</th>
+                <th className="px-6 py-4">Popular</th> {/* Added Table Header */}
                 <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
@@ -245,6 +262,14 @@ const AdminProducts = () => {
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${p.type === 'Formal' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20'}`}>
                       {p.type}
                     </span>
+                  </td>
+                  <td className="px-6 py-4"> {/* Added Popular Checkbox in Table */}
+                    <input 
+                      type="checkbox" 
+                      checked={p.is_popular === 1 || p.is_popular === true} 
+                      onChange={() => togglePopular(p)}
+                      className="w-4 h-4 accent-[#0df2a6] cursor-pointer"
+                    />
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button onClick={() => handleEdit(p)} className="material-symbols-outlined text-[#94A3B8] hover:text-[#0df2a6] text-xl">edit</button>
@@ -304,7 +329,6 @@ const AdminProducts = () => {
                 </div>
               </div>
 
-              {/* Sizes, Gramages etc remain same as your provided code */}
               <div className="space-y-3 p-4 bg-[#334155]/20 rounded-2xl border border-[#334155]">
                 <div className="flex justify-between items-center"><h4 className="text-[13px] font-bold text-[#94A3B8] uppercase">Sizes</h4><button onClick={addSize} className="text-[10px] text-[#0df2a6] font-bold hover:underline">+ ADD</button></div>
                 {prodData.sizes.map((s, idx) => (
@@ -333,10 +357,18 @@ const AdminProducts = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="flex gap-4 text-xs font-bold">
-                    <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Formal'} onChange={()=>setProdData({...prodData, type: 'Formal'})} className="accent-[#0df2a6]"/> Formal</label>
-                    <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Packaging'} onChange={()=>setProdData({...prodData, type: 'Packaging'})} className="accent-[#0df2a6]"/> Packaging</label>
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-4 text-xs font-bold">
+                      <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Formal'} onChange={()=>setProdData({...prodData, type: 'Formal'})} className="accent-[#0df2a6]"/> Formal</label>
+                      <label className="flex items-center gap-2 cursor-pointer"><input type="radio" checked={prodData.type === 'Packaging'} onChange={()=>setProdData({...prodData, type: 'Packaging'})} className="accent-[#0df2a6]"/> Packaging</label>
+                  </div>
+                  {/* Added Popular Toggle in Modal */}
+                  <label className="flex items-center gap-2 cursor-pointer text-[#0df2a6] font-bold text-[11px] uppercase border border-[#0df2a6]/20 px-3 py-1.5 rounded-lg bg-[#0df2a6]/5">
+                    <input type="checkbox" checked={prodData.is_popular} onChange={(e)=>setProdData({...prodData, is_popular: e.target.checked})} className="accent-[#0df2a6]"/>
+                    Mark as Popular
+                  </label>
                 </div>
+
                 {prodData.type === 'Packaging' && (
                   <div className="space-y-3 p-4 bg-purple-500/5 rounded-2xl border border-purple-500/20">
                     <div className="flex justify-between items-center"><h4 className="text-[10px] font-bold text-purple-400 uppercase">Add-ons</h4><button onClick={addAddon} className="text-[10px] text-purple-400 font-bold hover:underline">+ ADD</button></div>

@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import AppBackground from '../layouts/AppBackground';
 import NavBar from '../components/Navbar';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [popularProducts, setPopularProducts] = useState([]);
+  const [categories, setCategories] = useState([]); // State for real-time categories
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch Products
+        const prodRes = await fetch('http://localhost:5000/api/products');
+        const prodData = await prodRes.json();
+        const popular = prodData.filter(p => p.is_popular === 1 || p.is_popular === true);
+        setPopularProducts(popular);
+
+        // Fetch Categories
+        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catData = await catRes.json();
+        setCategories(catData.slice(0, 4)); // Pehli 4 categories dikhane ke liye
+      } catch (err) {
+        console.error(" Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    // showGrid={true} rakha hai kyunki aapne kaha tha kisi page par grid chahiye
     <AppBackground showGrid={true}>
       <NavBar />
 
-      {/* 1. MAIN WRAPPER (Original Classes kept) */}
       <div className="text-text-light antialiased overflow-x-hidden selection:bg-primary selection:text-white font-sans min-h-screen relative text-left">
         
-        {/* 2. HERO SECTION (Aapka Original Design) */}
-        <main className="relative pt-32 pb-16 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* 2. HERO SECTION */}
+        <main className="relative pt-32 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 animate-float drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
               Bring Your Visions to <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-300 to-white">Life!</span>
@@ -34,45 +54,126 @@ const HomePage = () => {
           </div>
         </main>
 
-        {/* 3. QUICK CATEGORY CARDS (Aapka Original Design) */}
-        <section className="relative z-10 -mt-10 mb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* 3. QUICK CATEGORY CARDS (Real-time) */}
+        <section className="relative z-10 -mt-6 mb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {['Labels', 'Flyers', 'Packaging', 'Cards'].map((cat, i) => (
-              <div 
-                key={cat} 
-                onClick={() => navigate('/catalog')}
-                className="group relative rounded-2xl bg-[#141A3A]/40 backdrop-blur-sm overflow-hidden h-64 border border-white/5 hover:border-[#FF4D4D]/30 transition-all hover:-translate-y-2 cursor-pointer"
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10" />
-                <img src={`https://picsum.photos/seed/print${i}/400/600`} alt={cat} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-center">
-                  <h3 className="text-xl font-bold text-white group-hover:text-[#FF9F43] transition-colors">{cat}</h3>
-                  <div className="h-1 w-12 bg-[#FF4D4D] mx-auto rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+            {categories.length > 0 ? (
+              categories.map((cat, i) => (
+                <div 
+                  key={cat.id} 
+                  onClick={() => navigate('/catalog')}
+                  className="group relative rounded-2xl bg-[#141A3A]/40 backdrop-blur-sm overflow-hidden h-60 border border-white/5 hover:border-[#FF4D4D]/30 transition-all hover:-translate-y-2 cursor-pointer"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10" />
+                  <img 
+                    src={cat.image_url || `https://picsum.photos/seed/${cat.id}/400/600`} 
+                    alt={cat.name} 
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500" 
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-center">
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#FF9F43] transition-colors">{cat.name}</h3>
+                    <div className="h-1 w-12 bg-[#FF4D4D] mx-auto rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              // Fallback cards agar categories load na hon
+              [1, 2, 3, 4].map((n) => (
+                <div key={n} className="h-60 rounded-2xl bg-[#141A3A]/40 animate-pulse border border-white/5" />
+              ))
+            )}
           </div>
         </section>
 
-        {/* 4. POPULAR PRODUCTS */}
-        <section className="py-20 relative border-t border-white/5">
+        {/* 4. HOW IT WORKS */}
+        <section className="py-16 relative border-t border-white/5 font-sans text-left">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      {/* Upper gradient line changed to Orange Glow */}
+      <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#f97316] to-transparent mx-auto mb-8 opacity-60 shadow-[0_0_10px_rgba(249,115,22,0.4)]" />
+      
+      <h2 className="text-3xl font-bold text-white mb-4">How It Works</h2>
+      <p className="text-[#B8C1EC]">Simple steps to get your perfect print</p>
+    </div>
+    
+    <div className="relative">
+      {/* Connecting Line - remains green for contrast, or you can change to orange if you prefer */}
+      <div className="hidden lg:block absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#00ffaa]/30 to-transparent -translate-y-1/2 z-0"></div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
+        
+        {/* Step 1 - Orange Glow */}
+        <div className="flex flex-col items-center text-center group">
+          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-orange-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(249,115,22,0.1)] group-hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] transition-all duration-300">
+            <span className="material-symbols-outlined text-4xl text-orange-400">upload_file</span>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">1. Choose Material</h3>
+          <p className="text-sm text-[#B8C1EC] leading-relaxed">Select from our premium paper stocks and finishes.</p>
+        </div>
+
+        {/* Step 2 - Blue Glow */}
+        <div className="flex flex-col items-center text-center group">
+          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-blue-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300">
+            <span className="material-symbols-outlined text-4xl text-blue-400">style</span>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">2. Design Review</h3>
+          <p className="text-sm text-[#B8C1EC] leading-relaxed">Submit your artwork or work with our designers.</p>
+        </div>
+
+        {/* Step 3 - Purple Glow */}
+        <div className="flex flex-col items-center text-center group">
+          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-purple-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(168,85,247,0.1)] group-hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] transition-all duration-300">
+            <span className="material-symbols-outlined text-4xl text-purple-400">print_connect</span>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">3. Printing</h3>
+          <p className="text-sm text-[#B8C1EC] leading-relaxed">We use state-of-the-art tech for precise colors.</p>
+        </div>
+
+        {/* Step 4 - Green Glow */}
+        <div className="flex flex-col items-center text-center group">
+          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-green-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all duration-300">
+            <span className="material-symbols-outlined text-4xl text-green-400">local_shipping</span>
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">4. Delivery</h3>
+          <p className="text-sm text-[#B8C1EC] leading-relaxed">Fast and secure shipping to your doorstep.</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+        {/* 5. POPULAR PRODUCTS */}
+        <section className="py-16 relative border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#FF9F43] to-transparent mx-auto mb-8 opacity-50" />
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Popular Products</h2>
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <ProductCard onCardClick={() => navigate('/catalog')} title="Premium Business Cards" price="29.99" imgId="7" badge="BEST SELLER" desc="High-quality cardstock with various finishes like matte, gloss, and spot UV." />
-              <ProductCard onCardClick={() => navigate('/catalog')} title="Custom Packaging" price="99.00" imgId="8" desc="Durable and stylish boxes to elevate your brand's unboxing experience." />
-              <ProductCard onCardClick={() => navigate('/catalog')} title="Promotional Stickers" price="15.50" imgId="9" desc="Vinyl stickers cut to any shape, perfect for giveaways and branding." />
+              {popularProducts.length > 0 ? (
+                popularProducts.map((product) => (
+                  <ProductCard 
+                    key={product.id}
+                    onCardClick={() => navigate(`/customize/${product.id}`)} 
+                    title={product.name} 
+                    imgUrl={product.image_url} 
+                    badge="POPULAR" 
+                    desc={product.description} 
+                  />
+                ))
+              ) : (
+                <p className="text-gray-500 col-span-full text-center">No popular products found.</p>
+              )}
             </div>
           </div>
         </section>
 
-        {/* 5. TESTIMONIALS */}
-        <section className="py-20 border-t border-white/5 bg-gradient-to-b from-transparent to-black/40">
+        {/* 6. TESTIMONIALS */}
+        <section className="py-16 border-t border-white/5 bg-gradient-to-b from-transparent to-black/40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-8 opacity-50" />
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
             </div>
@@ -83,8 +184,8 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* 6. FOOTER (Aapka Original Design Wapis) */}
-        <footer className="bg-[#050810] border-t border-white/5 pt-16 pb-8">
+        {/* 7. FOOTER */}
+        <footer className="bg-[#050810] border-t border-white/5 pt-12 pb-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
               <div>
@@ -111,10 +212,7 @@ const HomePage = () => {
               </div>
               <div>
                 <h4 className="text-white font-semibold mb-6">Stay Connected</h4>
-                <div className="flex space-x-4">
-                  {/* Social Icons logic remains same */}
-                  <div className="w-10 h-10 rounded-full bg-[#141A3A] flex items-center justify-center border border-white/10">S</div>
-                </div>
+                
               </div>
             </div>
             <div className="border-t border-white/5 pt-8 text-center text-xs text-gray-500">
@@ -127,18 +225,21 @@ const HomePage = () => {
   );
 };
 
-/* Helper Components wahi jo aapne diye thay */
-const ProductCard = ({ title, price, imgId, desc, badge, onCardClick }) => (
+/* Helper Components */
+const ProductCard = ({ title, imgUrl, desc, badge, onCardClick }) => (
   <div onClick={onCardClick} className="rounded-xl overflow-hidden bg-[#141A3A] border border-white/5 hover:shadow-[#FF4D4D]/20 hover:-translate-y-1 transition-all cursor-pointer group">
     <div className="h-64 overflow-hidden relative">
-      <img src={`https://picsum.photos/seed/${imgId}/600/400`} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <img 
+        src={imgUrl || `https://picsum.photos/seed/placeholder/600/400`} 
+        alt={title} 
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+      />
       {badge && <div className="absolute bottom-4 left-4 z-20"><span className="bg-[#FF4D4D]/90 text-white text-xs font-bold px-2 py-1 rounded">{badge}</span></div>}
     </div>
     <div className="p-6 text-left text-white">
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-400 text-sm mb-4">{desc}</p>
-      <div className="flex items-center justify-between mt-4">
-        <span className="font-medium">From ${price}</span>
+      <h3 className="text-xl font-semibold mb-2 line-clamp-1">{title}</h3>
+      <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10">{desc}</p>
+      <div className="flex items-center justify-end mt-4">
         <span className="text-[#FF9F43] flex items-center gap-1 text-sm font-semibold">View Details</span>
       </div>
     </div>

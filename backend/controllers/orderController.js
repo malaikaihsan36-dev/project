@@ -3,18 +3,64 @@ const db = require('../config/db');
 // 1. Save New Order
 exports.saveOrder = async (req, res) => {
     try {
-        const { orderId, productTitle, quantity, totalPrice, email, phone } = req.body;
+        const { 
+            orderId, // CamelCase use karein (Frontend se yahi aayega)
+            productTitle, quantity, totalPrice, 
+            email, whatsapp, size, material, selectedAddons,
+            specialRequest, productId 
+        } = req.body;
         
-        // --- FIX: 72 HOURS DEFAULT TIMER ---
         const expiresAt = new Date();
-        expiresAt.setHours(expiresAt.getHours() + 72); // 3 din ka time
+        expiresAt.setHours(expiresAt.getHours() + 72);
 
-        const sql = `INSERT INTO orders (order_id, product_title, quantity, total_price, customer_email, customer_phone, expires_at) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        // SQL Query mein variable orderId use karein
+        const orderSql = `INSERT INTO orders 
+            (order_id, product_title, quantity, total_price, customer_email, customer_phone, expires_at, is_approved, is_placed) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)`;
         
-        await db.query(sql, [orderId, productTitle, quantity, totalPrice, email, phone, expiresAt]);
-        res.status(201).json({ success: true, message: "Order saved with 72h expiry" });
+        await db.query(orderSql, [orderId, productTitle, quantity, totalPrice, email, whatsapp, expiresAt]);
+
+        const chatSql = `INSERT INTO chat_messages (order_id, sender, message, type) VALUES (?, ?, ?, ?)`;
+
+        if (productId === 'CONTACT_FORM') {
+            const contactSummary = `📩 Contact Inquiry\n` +
+                `• Subject: ${productTitle.replace('Inquiry: ', '')}\n` +
+                `• Email: ${email}\n` +
+                `• Phone: ${whatsapp}`;
+
+            await db.query(chatSql, [orderId, 'customer', contactSummary, 'text']);
+
+            if (specialRequest && specialRequest.trim() !== "") {
+                const instructionsMessage = `📝 Message Details:\n${specialRequest.trim()}`;
+                await db.query(chatSql, [orderId, 'customer', instructionsMessage, 'text']);
+            }
+
+            const adminContactMessage = `Welcome to Colour Pix Support!\n\n` +
+                `Your Order ID is displayed in the top-right corner—please keep it save/secure for future reference. To resume your design and chat later, simply enter the same email address along with your Order ID via the cart icon in the homepage navigation bar.\n\n` +
+                `Hi! Thank you for reaching out. I’ve received your inquiry. How can I assist you further?`;
+
+            await db.query(chatSql, [orderId, 'admin', adminContactMessage, 'text']);
+
+        } else {
+            const addonsText = (selectedAddons && selectedAddons.length > 0) ? selectedAddons.join(', ') : 'None';
+            const summaryMessage = `📦 Order Details\n• Product: ${productTitle}\n• Size: ${size || 'Standard'}\n• Material: ${material || 'Standard'}\n• Quantity: ${quantity}\n• Add-ons: ${addonsText}\n• Total Price: $${totalPrice} • Email: ${email}\n +• Phone: ${whatsapp}`;
+
+            await db.query(chatSql, [orderId, 'customer', summaryMessage, 'text']);
+
+            if (specialRequest && specialRequest.trim() !== "") {
+                const instructionsMessage = `📝 Special Instructions:\n${specialRequest.trim()}`;
+                await db.query(chatSql, [orderId, 'customer', instructionsMessage, 'text']);
+            }
+
+            const adminWelcomeMessage = `Welcome to Colour Pix!\n\nYour Order ID is displayed in the top-right corner—please keep it save/secure for future reference. To resume your design and chat later, simply enter the same email address along with your Order ID via the cart icon in the homepage navigation bar.\n\nHi! I’ve reviewed your design request. How does this layout look to you? Feel free to share your ideas—let’s refine it together and turn your vision into reality.`;
+
+            await db.query(chatSql, [orderId, 'admin', adminWelcomeMessage, 'text']);
+        }
+        
+        res.status(201).json({ success: true, orderId: orderId });
+
     } catch (error) {
+        console.error("Order Save Error:", error.message);
         res.status(500).json({ error: error.message });
     }
 };

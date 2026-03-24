@@ -83,13 +83,14 @@ exports.createProduct = async (req, res) => {
 
 // Update existing product
 exports.updateProduct = async (req, res) => {
-    const { id } = req.params; // URL se ID nikalna
-    const { category_id, name, kg_rate, type, sizes, gramages, addons, description, image_url } = req.body;
+    const { id } = req.params;
+    // 1. req.body se is_popular nikalna hai
+    const { category_id, name, kg_rate, type, is_popular, sizes, gramages, addons, description, image_url } = req.body;
 
     try {
         const query = `
             UPDATE products 
-            SET category_id = ?, name = ?, kg_rate = ?, type = ?, 
+            SET category_id = ?, name = ?, kg_rate = ?, type = ?, is_popular = ?, 
                 sizes = ?, gramages = ?, addons = ?, description = ?, image_url = ?
             WHERE id = ?
         `;
@@ -99,12 +100,13 @@ exports.updateProduct = async (req, res) => {
             name,
             kg_rate,
             type,
+            is_popular ? 1 : 0, // 2. Boolean ko 1 ya 0 mein convert karna
             JSON.stringify(sizes),
             JSON.stringify(gramages),
             JSON.stringify(addons),
             description,
             image_url,
-            id // WHERE clause ke liye
+            id
         ];
 
         const [result] = await db.query(query, values);
@@ -159,5 +161,33 @@ exports.deleteProduct = async (req, res) => {
             message: "Internal Server Error", 
             error: error.message 
         });
+    }
+};
+
+// Backend Controller (productController.js)
+// Example: getProductById in productController.js
+exports.getProductById = async (req, res) => {
+    try {
+        const [product] = await db.execute(
+            `SELECT p.*, c.name as category_name 
+             FROM products p 
+             JOIN categories c ON p.category_id = c.id 
+             WHERE p.id = ?`, 
+            [req.params.id]
+        );
+
+        if (product.length === 0) return res.status(404).json({ error: "Not found" });
+
+        // Frontend ko JSON bhejne se pehle parse karne ki zaroorat nahi agar 
+        // aapne database mein JSON type rakha hai, warna yahan parse karein:
+        const p = product[0];
+        res.json({
+            ...p,
+            sizes: typeof p.sizes === 'string' ? JSON.parse(p.sizes) : p.sizes,
+            gramages: typeof p.gramages === 'string' ? JSON.parse(p.gramages) : p.gramages,
+            addons: typeof p.addons === 'string' ? JSON.parse(p.addons) : p.addons,
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };

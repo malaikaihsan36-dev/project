@@ -46,6 +46,7 @@ router.get('/products', productController.getAllProducts);
 router.post('/products', productController.createProduct);
 router.put('/products/:id', productController.updateProduct);
 router.delete('/products/:id', productController.deleteProduct);
+router.get('/products/:id', productController.getProductById);
 
 // Portfolio Projects 
 router.get('/projects', projCtrl.getAllProjects);

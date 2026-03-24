@@ -25,7 +25,9 @@ const DesignReview = () => {
     // Dynamic Product State
     const [product, setProduct] = useState(location.state?.product || { title: "Loading...", img: "https://via.placeholder.com/400" });
     const [previewImage, setPreviewImage] = useState(product.img);
-    const [messages, setMessages] = useState([{ id: 'first-msg', sender: 'admin', message: "Hi! How does this design layout look to you?", created_at: new Date().toISOString() }]);
+    
+    // FIXED: Initial messages empty rakha hai taake DB wala welcome message hi show ho
+    const [messages, setMessages] = useState([]);
     
     const [expiresAt, setExpiresAt] = useState(null);
     const [timeLeft, setTimeLeft] = useState("Loading...");
@@ -36,7 +38,6 @@ const DesignReview = () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/order/${cleanId}?t=${Date.now()}`);
                 if (res.data) {
-                    // Yahan hum product info update kar rahy hain jo DB se ayi hai
                     setProduct({
                         title: res.data.product_title || "Custom Order",
                         img: res.data.product_img
@@ -62,7 +63,8 @@ const DesignReview = () => {
             const response = await fetch(`http://localhost:5000/api/chat/${cleanId}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
-                setMessages(prev => [prev[0], ...data]);
+                // FIXED: Direct data set kar rahe hain bina purane hardcoded message ke
+                setMessages(data);
             }
         } catch (err) { console.error("Chat load fail:", err); }
     }, [cleanId]);
@@ -212,7 +214,12 @@ const DesignReview = () => {
                                 <div className={`max-w-[80%] space-y-1 ${msg.sender === 'customer' ? 'text-right' : 'text-left'}`}>
                                     <div className={`px-4 py-3 rounded-2xl shadow-md ${msg.sender === 'customer' ? 'bg-[#374151] rounded-tr-sm' : 'bg-blue-600 rounded-tl-sm'}`}>
                                         {(msg.imageUrl || msg.image_url) && <img src={msg.imageUrl || msg.image_url} className="rounded-lg mb-1 max-w-full cursor-pointer" onClick={() => window.open(msg.imageUrl || msg.image_url)} alt="Attached" />}
-                                        {(msg.message || msg.text) && <p className="text-sm leading-relaxed">{msg.message || msg.text}</p>}
+                                        
+                                        {(msg.message || msg.text) && (
+                                            <div className="text-sm leading-relaxed whitespace-pre-wrap text-left">
+                                                {msg.message || msg.text}
+                                            </div>
+                                        )}
                                     </div>
                                     <p className="text-[10px] text-gray-500">{new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                 </div>

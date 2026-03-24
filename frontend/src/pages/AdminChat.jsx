@@ -35,15 +35,21 @@ useEffect(() => {
     const fetchInitialData = async () => {
         if (!cleanId) return;
         try {
-            // Order details fetch karein (expiry, image etc)
             const res = await axios.get(`http://localhost:5000/api/order/${cleanId}`);
             if (res.data) {
                 if (res.data.expires_at) setExpiresAt(new Date(res.data.expires_at));
                 if (res.data.product_img) setPreviewImage(res.data.product_img);
                 
-                // Persistence: DB se status load karein
                 setIsUserApproved(!!res.data.is_approved);
                 setIsOrderPlaced(!!res.data.is_placed);
+
+                // NEW: Chat wali total price ko production field mein default set karna
+                if (res.data.total_price) {
+                    setPriceData(prev => ({
+                        ...prev,
+                        production: parseFloat(res.data.total_price) || 0
+                    }));
+                }
             }
         } catch (err) {
             console.error("Initial Fetch Error:", err);
@@ -268,21 +274,28 @@ useEffect(() => {
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-4 space-y-1 bg-[#1f1f3a] scrollbar-hide pb-44">
-                        {messages.map((msg, index) => (
-                            <div key={msg.id || index} className={`flex gap-3 ${msg.sender === 'customer' ? '' : 'flex-row-reverse'}`}>
-                                <div className={`size-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold text-white mt-1 ${msg.sender === 'admin' ? 'bg-[#8a2be2]' : 'bg-[#2e2e3f]'}`}>
-                                    {msg.sender === 'admin' ? 'A' : 'C'}
-                                </div>
-                                <div className={`max-w-[85%] space-y-1 ${msg.sender === 'admin' ? 'text-right' : 'text-left'}`}>
-                                    <div className={`px-4 py-3 rounded-2xl shadow-md ${msg.sender === 'admin' ? 'bg-[#8a2be2] rounded-tr-sm' : 'bg-[#2e2e3f] rounded-tl-sm'}`}>
-                                        {msg.imageUrl ? <img src={msg.imageUrl} className="max-w-full rounded-lg cursor-pointer" alt="upload" onClick={() => window.open(msg.imageUrl, '_blank')} /> : <p className="text-sm">{msg.text}</p>}
-                                    </div>
-                                    <p className="text-[10px] text-gray-500">{msg.time}</p>
-                                </div>
-                            </div>
-                        ))}
-                        <div ref={messagesEndRef} />
-                    </div>
+    {messages.map((msg, index) => (
+        <div key={msg.id || index} className={`flex gap-3 ${msg.sender === 'customer' ? '' : 'flex-row-reverse'}`}>
+            <div className={`size-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold text-white mt-1 ${msg.sender === 'admin' ? 'bg-[#8a2be2]' : 'bg-[#2e2e3f]'}`}>
+                {msg.sender === 'admin' ? 'A' : 'C'}
+            </div>
+            <div className={`max-w-[85%] space-y-1 ${msg.sender === 'admin' ? 'text-right' : 'text-left'}`}>
+                <div className={`px-4 py-3 rounded-2xl shadow-md ${msg.sender === 'admin' ? 'bg-[#8a2be2] rounded-tr-sm' : 'bg-[#2e2e3f] rounded-tl-sm'}`}>
+                    {msg.imageUrl ? (
+                        <img src={msg.imageUrl} className="max-w-full rounded-lg cursor-pointer" alt="upload" onClick={() => window.open(msg.imageUrl, '_blank')} />
+                    ) : (
+                        /* FIXED: Added whitespace-pre-wrap and text-left for alignment */
+                        <div className="text-sm whitespace-pre-wrap text-left leading-relaxed">
+                            {msg.text || msg.message}
+                        </div>
+                    )}
+                </div>
+                <p className="text-[10px] text-gray-500">{msg.time || new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+            </div>
+        </div>
+    ))}
+    <div ref={messagesEndRef} />
+</div>
 
                     {/* Bottom Input & Action Buttons */}
                     <div className="absolute bottom-0 left-0 right-0 z-30 flex flex-col bg-[#1f1f3a]/95 border-t border-[#2e2e3f] backdrop-blur">

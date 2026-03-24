@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-// useNavigate aur Search hata diya gaya hai kyunki wo use nahi ho rahay thay
+import { useNavigate } from 'react-router-dom'; 
 import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import axios from 'axios';
 
 const ContactPage = () => {
-  // Dynamic Subjects State
+  const navigate = useNavigate(); 
   const [subjects, setSubjects] = useState([]);
   
-  // Form Logic
   const [formData, setFormData] = useState({
-    name: '',
+    phone: '',
     email: '',
     subject: '',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch subjects from admin/database
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -33,19 +32,58 @@ const ContactPage = () => {
     fetchSubjects();
   }, []);
 
-  const handleSubmit = (e) => {
+  // Order ID generator (Same as CustomizeProduct)
+  const generateOrderID = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 4; i++) { // Change from 6 to 4
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+};
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ 
-        name: '', 
-        email: '', 
-        subject: subjects[0]?.name || '', 
-        message: '' 
-      });
-    }, 5000);
-  };
+    setLoading(true);
+    
+    const orderId = generateOrderID(); 
+    
+    const contactData = {
+      orderId, // Matches backend now
+      productTitle: `Inquiry: ${formData.subject}`,
+      productId: 'CONTACT_FORM', 
+      quantity: 0,
+      totalPrice: "0.00",
+      email: formData.email,
+      whatsapp: formData.phone,
+      size: 'N/A',
+      material: 'N/A',
+      selectedAddons: [],
+      specialRequest: formData.message 
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/orders', contactData);
+
+      if (response.status === 201 || response.status === 200) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          navigate('/design-review', { 
+            state: { 
+              orderId, // Clean variable
+              userEmail: formData.email,
+              isFromContact: true
+            } 
+          });
+        }, 2000);
+      }
+    } catch (error) {
+      alert("Connection failed.");
+    } finally {
+      setLoading(false);
+    }
+};
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,13 +92,11 @@ const ContactPage = () => {
   return (
     <div className="bg-[#0B0F1E] text-white antialiased overflow-x-hidden selection:bg-[#10B981] selection:text-white font-sans min-h-screen relative text-left">
       
-      {/* Background Green Glows */}
       <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-[#10B981]/5 to-transparent"></div>
         <div className="absolute -left-[10%] top-[20%] w-[40%] h-[40%] bg-[#10B981]/10 blur-[120px] rounded-full"></div>
       </div>
 
-      {/* SHARED NAVBAR */}
       <NavBar />
 
       <main className="relative pt-32 pb-16 px-4 max-w-7xl mx-auto z-10">
@@ -74,15 +110,14 @@ const ContactPage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Form Section */}
           <div className="lg:col-span-7 bg-[#141A3A]/40 backdrop-blur-md border border-white/5 rounded-3xl p-8 shadow-xl">
             {isSubmitted ? (
               <div className="h-full flex flex-col items-center justify-center py-12 text-center">
                 <div className="size-20 bg-[#10B981]/20 text-[#10B981] rounded-full flex items-center justify-center mb-6">
                   <CheckCircle size={40} />
                 </div>
-                <h3 className="text-3xl font-bold mb-2 text-white">Message Sent!</h3>
-                <p className="text-gray-400">We will get back to you within 24 hours.</p>
+                <h3 className="text-3xl font-bold mb-2 text-white">Connecting to Chat...</h3>
+                <p className="text-gray-400">Please wait while we transfer your inquiry.</p>
               </div>
             ) : (
               <>
@@ -90,8 +125,8 @@ const ContactPage = () => {
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Your Name</label>
-                      <input required name="name" value={formData.name} onChange={handleChange} className="w-full rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all" placeholder="John Doe" type="text" />
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Phone Number</label>
+                      <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all" placeholder="+1 234 567 890" type="tel" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Email Address</label>
@@ -115,15 +150,18 @@ const ContactPage = () => {
                     <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Message</label>
                     <textarea required name="message" value={formData.message} onChange={handleChange} className="w-full rounded-2xl border border-white/10 bg-[#0B0F1E]/50 min-h-[160px] p-6 focus:border-[#10B981] outline-none transition-all resize-none" placeholder="Tell us how we can help..."></textarea>
                   </div>
-                  <button type="submit" className="w-full md:w-auto px-10 h-14 rounded-xl bg-gradient-to-r from-[#10B981] to-[#34D399] text-[#060A14] font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all active:scale-95">
-                    Send Message <Send size={18} />
+                  <button 
+                    type="submit" 
+                    disabled={loading}
+                    className={`w-full md:w-auto px-10 h-14 rounded-xl bg-gradient-to-r from-[#10B981] to-[#34D399] text-[#060A14] font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all active:scale-95 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {loading ? 'Processing...' : 'Send Message'} <Send size={18} />
                   </button>
                 </form>
               </>
             )}
           </div>
 
-          {/* Info Section */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#141A3A] rounded-3xl overflow-hidden h-64 relative group border border-white/5">
               <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=800" alt="Map" className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" />
@@ -146,7 +184,6 @@ const ContactPage = () => {
         </div>
       </main>
 
-      {/* WhatsApp Floating Button */}
       <a href="https://wa.me/123" target="_blank" rel="noreferrer" className="fixed bottom-8 right-8 z-50 group flex items-center gap-3 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white p-4 pr-6 rounded-full shadow-lg hover:-translate-y-1 transition-all">
         <div className="bg-white/20 p-2 rounded-full"><MessageCircle size={24} /></div>
         <div className="flex flex-col items-start text-left leading-none">

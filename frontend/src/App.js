@@ -46,14 +46,21 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/catalog" element={<BrowseCatalog />} />
         <Route path="/products" element={<BrowseCatalog />} />
+        
+        {/* Dynamic ID support for Customization */}
+        <Route path="/customize/:id" element={<CustomizeProduct />} />
         <Route path="/customize" element={<CustomizeProduct />} />
         
-        {/* Design Review Routes */}
+        {/* Design Review Routes with Order ID support */}
         <Route path="/order/:orderId" element={<DesignReview />} />
         <Route path="/design-page/:orderId" element={<DesignReview />} />
         <Route path="/design-review" element={<DesignReview />} />
+        <Route path="/design-review/:orderId" element={<DesignReview />} />
         
-        {/* Updated Final Order Route with Order ID support */}
+        {/* New Chat Route mapping to DesignReview */}
+        <Route path="/chat" element={<DesignReview />} />
+        
+        {/* Final Order Route with Order ID support */}
         <Route path="/final-order/:orderId" element={<FinalOrder />} />
         <Route path="/final-order" element={<FinalOrder />} />
         
@@ -75,6 +82,7 @@ function App() {
           <Route path="reviews" element={<AdminReviews />} />
         </Route>
 
+        {/* Admin Chat Dynamic Route */}
         <Route path="/admin/chat/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
         
         {/* --- FALLBACK --- */}

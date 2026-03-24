@@ -33,13 +33,34 @@ const CustomizeProduct = () => {
   const [fetching, setFetching] = useState(!product);
 
   const displayProduct = useMemo(() => {
-    if (!product) return { title: "Loading...", sizes: [], materials: [], type: 'Formal', addons: [] };
+    // Agar product null hai ya loading hai, to default empty arrays return karein
+    if (!product) return { 
+      title: "Loading...", 
+      parsedSizes: [], 
+      parsedMaterials: [], 
+      parsedAddons: [], 
+      type: 'Formal', 
+      description: "" 
+    };
     
+    // Helper function to safely parse JSON or return array
+    const safeParse = (data) => {
+      if (Array.isArray(data)) return data;
+      if (typeof data === 'string') {
+        try {
+          return JSON.parse(data);
+        } catch (e) {
+          return [];
+        }
+      }
+      return [];
+    };
+
     return {
       ...product,
-      parsedSizes: Array.isArray(product.sizes) ? product.sizes : (typeof product.sizes === 'string' ? JSON.parse(product.sizes) : []),
-      parsedMaterials: Array.isArray(product.gramages) ? product.gramages : (typeof product.gramages === 'string' ? JSON.parse(product.gramages) : []),
-      parsedAddons: Array.isArray(product.addons) ? product.addons : (typeof product.addons === 'string' ? JSON.parse(product.addons) : [])
+      parsedSizes: safeParse(product.sizes),
+      parsedMaterials: safeParse(product.gramages),
+      parsedAddons: safeParse(product.addons)
     };
   }, [product]);
 

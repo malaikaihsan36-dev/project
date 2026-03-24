@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Plus } from 'lucide-react';
 
 const AdminProducts = () => {
   const [categories, setCategories] = useState([]);
@@ -216,9 +217,25 @@ const AdminProducts = () => {
           <h2 className="text-2xl font-bold tracking-tight text-[#0df2a6]"> Manage Inventory</h2>
           <p className="text-[#94A3B8] text-sm">Select a category to add products.</p>
         </div>
-        <button onClick={() => setIsCatModalOpen(true)} className="px-6 py-2.5 bg-[#0df2a6] text-[#0F172A] font-bold rounded-xl hover:scale-105 transition-all">
-          + Add Category
-        </button>
+        <button 
+  onClick={() => setIsCatModalOpen(true)} 
+  className="relative h-[48px] px-6 rounded-xl font-bold overflow-hidden transition-all active:scale-95 group shadow-[0_0_15px_rgba(13,242,166,0.2)]"
+>
+  {/* Two-Tone Gradient (Teal to Cyan) */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#0df2a6] to-[#00d4ff] transition-all duration-300 group-hover:opacity-90"></div>
+  
+  {/* Hover Glimmer/Shine Effect */}
+  <div className="absolute inset-0 opacity-0 group-hover:opacity-25 bg-white transition-opacity duration-300"></div>
+
+  {/* Button Content */}
+  <div className="relative flex items-center justify-center gap-2 text-[#0F172A]">
+    <Plus size={18} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
+    <span className="tracking-wide">Add Category</span>
+  </div>
+
+  {/* Outer Glow on Hover */}
+  <div className="absolute inset-0 rounded-xl group-hover:shadow-[0_0_20px_rgba(13,242,166,0.4)] transition-all pointer-events-none"></div>
+</button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

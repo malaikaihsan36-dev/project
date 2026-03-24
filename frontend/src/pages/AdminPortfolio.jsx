@@ -133,9 +133,25 @@ const AdminPortfolio = () => {
     <div className="p-8 bg-[#0F172A] min-h-screen text-white text-left">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold">Manage Portfolio</h2>
-        <button onClick={() => setIsModalOpen(true)} className="bg-[#00ffaa] text-black px-6 py-2 font-bold rounded-lg flex items-center gap-2">
-          <Plus size={20} /> Add Project
-        </button>
+        <button 
+  onClick={() => setIsModalOpen(true)} 
+  className="relative h-[44px] px-6 rounded-xl font-bold overflow-hidden transition-all active:scale-95 group shadow-[0_0_15px_rgba(0,255,170,0.2)]"
+>
+  {/* Two-Tone Gradient (Cyan to Emerald) */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#00ffaa] to-[#00d4ff] transition-all duration-300 group-hover:opacity-90"></div>
+  
+  {/* Hover Glimmer Effect */}
+  <div className="absolute inset-0 opacity-0 group-hover:opacity-25 bg-white transition-opacity duration-300"></div>
+
+  {/* Button Content */}
+  <div className="relative flex items-center justify-center gap-2 text-[#060A14]">
+    <Plus size={20} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-500 ease-in-out" />
+    <span className="tracking-wide">Add Project</span>
+  </div>
+
+  {/* Outer Glow on Hover */}
+  <div className="absolute inset-0 rounded-xl group-hover:shadow-[0_0_25px_rgba(0,255,170,0.4)] transition-all pointer-events-none"></div>
+</button>
       </div>
 
       {/* Subject Manager Section */}

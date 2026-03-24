@@ -43,7 +43,7 @@ const AdminLayout = () => {
             <span className="font-medium">Orders</span>
           </NavLink>
 
-          {/* Products - NEW LINK ADDED HERE */}
+          {/* Products */}
           <NavLink to="/admin/products" className={navLinkClass}>
             <span className="material-symbols-outlined">inventory_2</span>
             <span className="font-medium">Products</span>
@@ -76,10 +76,11 @@ const AdminLayout = () => {
           <div className="my-4 border-t border-[#334155]/50"></div>
           <p className="px-4 text-xs font-semibold text-[#94A3B8] uppercase tracking-wider mb-2">Settings</p>
           
-          <button className="w-full group flex items-center gap-3 rounded-full px-4 py-3 text-[#94A3B8] hover:bg-[#334155] hover:text-white transition-all text-left">
+          {/* General Settings - Updated to NavLink */}
+          <NavLink to="/admin/settings" className={navLinkClass}>
             <span className="material-symbols-outlined">settings</span>
             <span className="font-medium">General Settings</span>
-          </button>
+          </NavLink>
         </nav>
 
         {/* PROFILE / LOGOUT */}

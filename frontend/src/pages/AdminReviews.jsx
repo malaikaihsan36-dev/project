@@ -87,9 +87,25 @@ const AdminReviews = () => {
                 className="flex-1 bg-black/20 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-[#FF4D4D] transition-all"
                 placeholder="Add new product name (e.g. Stickers, Posters...)"
               />
-              <button type="submit" className="bg-[#FF4D4D] hover:bg-[#ff3535] px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all">
-                <Plus size={18} /> Add Product
-              </button>
+              <button 
+  type="submit" 
+  className="relative h-[48px] px-6 rounded-xl font-bold flex items-center gap-2 overflow-hidden transition-all active:scale-95 group shadow-[0_0_15px_rgba(255,77,77,0.2)]"
+>
+  {/* Two-Tone Gradient (Red to Orange) */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D4D] to-[#F97316] transition-all duration-300 group-hover:opacity-90"></div>
+  
+  {/* Hover Glimmer Effect */}
+  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white transition-opacity duration-300"></div>
+
+  {/* Button Content */}
+  <div className="relative flex items-center gap-2 text-white">
+    <Plus size={18} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
+    <span>Add Product</span>
+  </div>
+
+  {/* Subtle Outer Glow on Hover */}
+  <div className="absolute inset-0 rounded-xl group-hover:shadow-[0_0_20px_rgba(255,77,77,0.4)] transition-all pointer-events-none"></div>
+</button>
             </form>
 
             <div className="flex flex-wrap gap-3">

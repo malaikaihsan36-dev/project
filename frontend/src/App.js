@@ -23,6 +23,7 @@ import AdminAnalytics from './pages/AdminAnalytics';
 import AdminChat from './pages/AdminChat';
 import AdminLogin from './pages/AdminLogin';
 import AdminReviews from './pages/AdminReviews';
+import AdminSettings from './pages/AdminSettings'; // New Import Added
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('adminAuth') === 'true';
@@ -80,6 +81,7 @@ function App() {
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="portfolio" element={<AdminPortfolio />} /> 
           <Route path="reviews" element={<AdminReviews />} />
+          <Route path="settings" element={<AdminSettings />} /> {/* New Settings Route Added */}
         </Route>
 
         {/* Admin Chat Dynamic Route */}

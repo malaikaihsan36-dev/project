@@ -19,7 +19,7 @@ exports.getOrderDetails = async (req, res) => {
         if (rows.length > 0) {
             res.json(rows[0]); 
         } else {
-            res.status(404).json({ message: "Order not found" });
+            res.status(404).json({ chat_messages: "Order not found" });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -34,5 +34,47 @@ exports.extendExpiry = async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+};
+
+// controllers/chatController.js
+exports.getUnreadNotifications = async (req, res) => {
+    try {
+        const [countResult] = await db.execute(
+            "SELECT COUNT(*) as total FROM chat_messages WHERE sender = 'customer' AND is_read = 0"
+        );
+
+        const [details] = await db.execute(`
+            SELECT m.order_id, m.message, m.created_at, o.product_title 
+            FROM chat_messages m
+            JOIN orders o ON m.order_id = o.order_id
+            WHERE m.sender = 'customer' AND m.is_read = 0
+            ORDER BY m.created_at DESC
+        `);
+
+        res.json({ success: true, total: countResult[0].total, details });
+    } catch (err) {
+        console.error("SQL Error:", err.message);
+        res.status(500).json({ success: false, error: err.message });
+    }
+};
+
+// controllers/chatController.js
+exports.markAsRead = async (req, res) => {
+    const { orderId } = req.body;
+    try {
+        // Column name aur table name match hona chahiye
+        const [result] = await db.query(
+            "UPDATE chat_messages SET is_read = 1 WHERE order_id = ? AND sender = 'customer'",
+            [orderId]
+        );
+        
+        res.status(200).json({ 
+            success: true, 
+            message: "Messages marked as read",
+            affectedRows: result.affectedRows 
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
     }
 };

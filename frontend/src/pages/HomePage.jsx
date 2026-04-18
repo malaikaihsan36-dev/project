@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react'; 
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AppBackground from '../layouts/AppBackground';
 import NavBar from '../components/Navbar';
+// Optimized image helper import kiya
+import { getOptimizedImage } from '../components/imageHelper';
 
 const HomePage = () => {
-  const navigate = useNavigate();
   const [popularProducts, setPopularProducts] = useState([]);
-  const [categories, setCategories] = useState([]); // State for real-time categories
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch Products
         const prodRes = await fetch('http://localhost:5000/api/products');
         const prodData = await prodRes.json();
+        // Popular products filter (1 for true in MySQL)
         const popular = prodData.filter(p => p.is_popular === 1 || p.is_popular === true);
         setPopularProducts(popular);
 
-        // Fetch Categories
         const catRes = await fetch('http://localhost:5000/api/categories');
         const catData = await catRes.json();
-        setCategories(catData.slice(0, 4)); // Pehli 4 categories dikhane ke liye
+        setCategories(catData);
       } catch (err) {
         console.error(" Error fetching data:", err);
       }
@@ -34,7 +34,7 @@ const HomePage = () => {
 
       <div className="text-text-light antialiased overflow-x-hidden selection:bg-primary selection:text-white font-sans min-h-screen relative text-left">
         
-        {/* 2. HERO SECTION */}
+        {/* HERO SECTION */}
         <main className="relative pt-32 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 animate-float drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
@@ -44,40 +44,41 @@ const HomePage = () => {
               Premium printing solutions for brands that demand excellence. From labels to packaging, we turn your creative vision into tangible reality.
             </p>
             <div className="mt-10 flex justify-center">
-              <button 
-                onClick={() => navigate('/catalog')}
-                className="bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43] text-white px-10 py-4 rounded-xl text-lg font-bold shadow-lg shadow-red-500/20 hover:scale-105 transition-transform active:scale-95"
+              <Link 
+                to="/catalog"
+                className="bg-gradient-to-r from-[#FF4D4D] to-[#FF9F43] text-white px-10 py-4 rounded-xl text-lg font-bold shadow-lg shadow-red-500/20 hover:scale-105 transition-transform active:scale-95 inline-block"
               >
                 Start Designing Now
-              </button>
+              </Link>
             </div>
           </div>
         </main>
 
-        {/* 3. QUICK CATEGORY CARDS (Real-time) */}
+        {/* QUICK CATEGORY CARDS */}
         <section className="relative z-10 -mt-6 mb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.length > 0 ? (
-              categories.map((cat, i) => (
-                <div 
+              categories.map((cat) => (
+                <Link 
                   key={cat.id} 
-                  onClick={() => navigate('/catalog')}
-                  className="group relative rounded-2xl bg-[#141A3A]/40 backdrop-blur-sm overflow-hidden h-60 border border-white/5 hover:border-[#FF4D4D]/30 transition-all hover:-translate-y-2 cursor-pointer"
+                  to={`/catalog?category=${encodeURIComponent(cat.name)}`}
+                  className="group relative rounded-2xl bg-[#141A3A]/40 backdrop-blur-sm overflow-hidden h-60 border border-white/5 hover:border-[#FF4D4D]/30 transition-all hover:-translate-y-2 block"
                 >
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10" />
+                  {/* Category Image: Optimized for 500px width as it's a small card */}
                   <img 
-                    src={cat.image_url || `https://picsum.photos/seed/${cat.id}/400/600`} 
+                    src={getOptimizedImage(cat.image_url, 500) || `https://picsum.photos/seed/${cat.id}/400/600`} 
                     alt={cat.name} 
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500" 
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-center">
                     <h3 className="text-xl font-bold text-white group-hover:text-[#FF9F43] transition-colors">{cat.name}</h3>
                     <div className="h-1 w-12 bg-[#FF4D4D] mx-auto rounded-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
-              // Fallback cards agar categories load na hon
               [1, 2, 3, 4].map((n) => (
                 <div key={n} className="h-60 rounded-2xl bg-[#141A3A]/40 animate-pulse border border-white/5" />
               ))
@@ -85,80 +86,39 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* 4. HOW IT WORKS */}
-        <section className="py-16 relative border-t border-white/5 font-sans text-left">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-12">
-      {/* Upper gradient line changed to Orange Glow */}
-      <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#f97316] to-transparent mx-auto mb-8 opacity-60 shadow-[0_0_10px_rgba(249,115,22,0.4)]" />
-      
-      <h2 className="text-3xl font-bold text-white mb-4">How It Works</h2>
-      <p className="text-[#B8C1EC]">Simple steps to get your perfect print</p>
-    </div>
-    
-    <div className="relative">
-      {/* Connecting Line - remains green for contrast, or you can change to orange if you prefer */}
-      <div className="hidden lg:block absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#00ffaa]/30 to-transparent -translate-y-1/2 z-0"></div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
-        
-        {/* Step 1 - Orange Glow */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-orange-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(249,115,22,0.1)] group-hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] transition-all duration-300">
-            <span className="material-symbols-outlined text-4xl text-orange-400">upload_file</span>
+        {/* HOW IT WORKS */}
+        <section className="py-2 relative border-t border-white/5 font-sans text-left">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#f97316] to-transparent mx-auto mb-8 opacity-60 shadow-[0_0_10px_rgba(249,115,22,0.4)]" />
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
+              <p className="text-[#B8C1EC]">Simple steps to get your perfect print</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
+              <HowItWorksStep icon="upload_file" color="orange" step="1. Choose Material" desc="Select from our premium paper stocks and finishes." />
+              <HowItWorksStep icon="style" color="blue" step="2. Design Review" desc="Submit your artwork or work with our designers." />
+              <HowItWorksStep icon="print_connect" color="purple" step="3. Printing" desc="We use state-of-the-art tech for precise colors." />
+              <HowItWorksStep icon="local_shipping" color="green" step="4. Delivery" desc="Fast and secure shipping to your doorstep." />
+            </div>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">1. Choose Material</h3>
-          <p className="text-sm text-[#B8C1EC] leading-relaxed">Select from our premium paper stocks and finishes.</p>
-        </div>
+        </section>
 
-        {/* Step 2 - Blue Glow */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-blue-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-300">
-            <span className="material-symbols-outlined text-4xl text-blue-400">style</span>
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2">2. Design Review</h3>
-          <p className="text-sm text-[#B8C1EC] leading-relaxed">Submit your artwork or work with our designers.</p>
-        </div>
-
-        {/* Step 3 - Purple Glow */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-purple-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(168,85,247,0.1)] group-hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] transition-all duration-300">
-            <span className="material-symbols-outlined text-4xl text-purple-400">print_connect</span>
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2">3. Printing</h3>
-          <p className="text-sm text-[#B8C1EC] leading-relaxed">We use state-of-the-art tech for precise colors.</p>
-        </div>
-
-        {/* Step 4 - Green Glow */}
-        <div className="flex flex-col items-center text-center group">
-          <div className="w-20 h-20 rounded-2xl bg-[#1F2937] border border-green-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all duration-300">
-            <span className="material-symbols-outlined text-4xl text-green-400">local_shipping</span>
-          </div>
-          <h3 className="text-xl font-bold text-white mb-2">4. Delivery</h3>
-          <p className="text-sm text-[#B8C1EC] leading-relaxed">Fast and secure shipping to your doorstep.</p>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-</section>
-
-        {/* 5. POPULAR PRODUCTS */}
-        <section className="py-16 relative border-t border-white/5">
+        {/* POPULAR PRODUCTS */}
+        <section className="py-20 relative border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#FF9F43] to-transparent mx-auto mb-8 opacity-50" />
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Popular Products</h2>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {popularProducts.length > 0 ? (
                 popularProducts.map((product) => (
                   <ProductCard 
                     key={product.id}
-                    onCardClick={() => navigate(`/customize/${product.id}`)} 
+                    to={`/customize/${product.id}`}
                     title={product.name} 
-                    imgUrl={product.image_url} 
+                    // Product Image: Optimized for 600px width
+                    imgUrl={getOptimizedImage(product.image_url, 600)} 
                     badge="POPULAR" 
                     desc={product.description} 
                   />
@@ -170,8 +130,8 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* 6. TESTIMONIALS */}
-        <section className="py-16 border-t border-white/5 bg-gradient-to-b from-transparent to-black/40">
+        {/* TESTIMONIALS */}
+        <section className="py-2 border-t border-white/5 bg-gradient-to-b from-transparent to-black/40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-8 opacity-50" />
@@ -184,35 +144,33 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* 7. FOOTER */}
+        {/* FOOTER */}
         <footer className="bg-[#050810] border-t border-white/5 pt-12 pb-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
               <div>
-                <div className="flex items-center gap-2 mb-6 cursor-pointer" onClick={() => navigate('/')}>
+                <Link to="/" className="flex items-center gap-2 mb-6">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FF4D4D] to-[#FF9F43] flex items-center justify-center text-white font-bold text-sm">C</div>
                   <span className="font-display font-bold text-xl text-white">Colour Pix</span>
-                </div>
+                </Link>
                 <p className="text-gray-400 text-sm leading-relaxed">Your trusted partner for premium printing solutions.</p>
               </div>
               <div>
                 <h4 className="text-white font-semibold mb-6">Quick Links</h4>
                 <ul className="space-y-3 text-sm text-gray-400">
-                  <li><button onClick={() => navigate('/')}>Home</button></li>
-                  <li><button onClick={() => navigate('/catalog')}>Products</button></li>
-                  <li><button>Portfolio</button></li>
+                  <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+                  <li><Link to="/catalog" className="hover:text-white transition-colors">Products</Link></li>
+                  <li><Link to="/portfolio" className="hover:text-white transition-colors">Portfolio</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="text-white font-semibold mb-6">Contact Us</h4>
                 <ul className="space-y-3 text-sm text-gray-400">
-                  <li className="flex items-center gap-2">support@colourpix.com</li>
-                  <li className="flex items-center gap-2">+1 (555) 123-4567</li>
+                  <li>colourpix.official@gmail.com</li>
+                  <li>colourpix.socials@gmail.com</li>
+                  <li>+92 370 4123327</li>
+                  <li>+92 301 0144611</li>
                 </ul>
-              </div>
-              <div>
-                <h4 className="text-white font-semibold mb-6">Stay Connected</h4>
-                
               </div>
             </div>
             <div className="border-t border-white/5 pt-8 text-center text-xs text-gray-500">
@@ -226,12 +184,13 @@ const HomePage = () => {
 };
 
 /* Helper Components */
-const ProductCard = ({ title, imgUrl, desc, badge, onCardClick }) => (
-  <div onClick={onCardClick} className="rounded-xl overflow-hidden bg-[#141A3A] border border-white/5 hover:shadow-[#FF4D4D]/20 hover:-translate-y-1 transition-all cursor-pointer group">
+const ProductCard = ({ title, imgUrl, desc, badge, to }) => (
+  <Link to={to} className="rounded-xl overflow-hidden bg-[#141A3A] border border-white/5 hover:shadow-[#FF4D4D]/20 hover:-translate-y-1 transition-all block group">
     <div className="h-64 overflow-hidden relative">
       <img 
         src={imgUrl || `https://picsum.photos/seed/placeholder/600/400`} 
         alt={title} 
+        loading="lazy"
         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
       />
       {badge && <div className="absolute bottom-4 left-4 z-20"><span className="bg-[#FF4D4D]/90 text-white text-xs font-bold px-2 py-1 rounded">{badge}</span></div>}
@@ -243,6 +202,16 @@ const ProductCard = ({ title, imgUrl, desc, badge, onCardClick }) => (
         <span className="text-[#FF9F43] flex items-center gap-1 text-sm font-semibold">View Details</span>
       </div>
     </div>
+  </Link>
+);
+
+const HowItWorksStep = ({ icon, color, step, desc }) => (
+  <div className="flex flex-col items-center text-center group">
+    <div className={`w-20 h-20 rounded-2xl bg-[#1F2937] border border-${color}-500/20 flex items-center justify-center mb-6 shadow-sm group-hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300`}>
+      <span className={`material-symbols-outlined text-4xl text-${color}-400`}>{icon}</span>
+    </div>
+    <h3 className="text-xl font-bold text-white mb-2">{step}</h3>
+    <p className="text-sm text-[#B8C1EC] leading-relaxed">{desc}</p>
   </div>
 );
 

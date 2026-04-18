@@ -177,8 +177,27 @@ const ContactPage = () => {
 
             <div className="space-y-4">
               <ContactInfoCard icon={<Clock className="text-[#10B981]" />} title="Working Hours" info="Mon-Fri, 9am - 6pm EST" />
-              <ContactInfoCard icon={<Mail className="text-[#10B981]" />} title="Email Support" info="support@colourpix.com" isLink link="mailto:support@colourpix.com" />
-              <ContactInfoCard icon={<Phone className="text-[#10B981]" />} title="Phone Support" info="+1 (555) 123-4567" isLink link="tel:+1234567890" />
+              <ContactInfoCard 
+    icon={<Mail className="text-[#10B981]" />} 
+    title="Email Support" 
+    info={
+        <div className="flex flex-col">
+            <span>colourpix.official@gmail.com</span>
+            <span>colourpix.socials@gmail.com</span>
+        </div>
+    }  
+/>
+
+<ContactInfoCard 
+    icon={<Phone className="text-[#10B981]" />} 
+    title="Phone Support" 
+    info={
+        <div className="flex flex-col">
+            <span>+92 370 4123327</span>
+            <span>+92 301 0144611</span>
+        </div>
+    }  
+/>
             </div>
           </div>
         </div>

@@ -84,6 +84,9 @@ function App() {
           <Route path="settings" element={<AdminSettings />} /> {/* New Settings Route Added */}
         </Route>
 
+        {/* Notification click karne par ye route khulay ga */}
+  <Route path="/admin/order-review/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
+
         {/* Admin Chat Dynamic Route */}
         <Route path="/admin/chat/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
         

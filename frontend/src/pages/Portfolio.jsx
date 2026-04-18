@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import NavBar from '../components/Navbar'; 
 import axios from 'axios'; 
+// Optimization helper ko import kiya
+import { getOptimizedImage } from '../components/imageHelper';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const Portfolio = () => {
   const [categories, setCategories] = useState([]); // Database se aane wali categories
   const [loading, setLoading] = useState(true);
 
+  // Database se projects aur categories fetch karne ka logic
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +34,7 @@ const Portfolio = () => {
     fetchData();
   }, []);
 
-  // Filter logic
+  // Filter logic: Selected tab ke mutabiq projects dikhana
   const filteredProjects = activeTab === 'All Projects' 
     ? projects 
     : projects.filter(p => {
@@ -45,12 +48,13 @@ const Portfolio = () => {
 
       <main className="flex-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1f302a] via-[#0f1715] to-[#000000] pt-32 pb-0">
         
+        {/* Hero Section */}
         <section className="relative pb-12 px-4 md:px-10 text-center max-w-7xl mx-auto">
           <h1 className="text-white text-4xl md:text-6xl font-black mb-4">Crafting Your Vision</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">Real-world examples of pixel-perfect production.</p>
         </section>
 
-        {/* Filter Bar - Now using dynamic categories */}
+        {/* Filter Bar - Dynamic tabs from database */}
         <div className="sticky top-20 z-40 bg-[#0f1715]/95 backdrop-blur-sm border-b border-[#39564c]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex overflow-x-auto gap-8 no-scrollbar py-4">
             {categories.map((tab) => (
@@ -79,10 +83,12 @@ const Portfolio = () => {
               {filteredProjects.map((item) => (
                 <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full">
                   <div className="relative h-64 overflow-hidden bg-gray-800">
+                    {/* OPTIMIZED IMAGE: 600px width used for grid cards */}
                     <img 
-                      src={item.image_url || item.img || 'https://via.placeholder.com/400x300?text=No+Image'} 
+                      src={getOptimizedImage(item.image_url || item.img || '', 600)} 
                       alt={item.title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      loading="lazy"
                       onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300?text=Error+Loading+Image' }}
                     />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
@@ -97,6 +103,7 @@ const Portfolio = () => {
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                       {item.description || item.desc || "High-quality custom production for our clients."}
                     </p>
+                    {/* Dynamic Tags */}
                     <div className="mt-auto flex flex-wrap gap-2">
                       {item.tags && (typeof item.tags === 'string' ? item.tags.split(',') : item.tags).map((tag, i) => (
                         <span key={i} className="px-2 py-1 bg-[#0f1715] text-[#9abcb0] text-[10px] uppercase font-black rounded border border-[#39564c] tracking-widest">
@@ -111,11 +118,17 @@ const Portfolio = () => {
           )}
         </div>
 
-        {/* Case Study Section */}
+        {/* Case Study Section - Featured Content */}
         <section className="py-20 bg-[#1F2937]/30 border-t border-[#273a34]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-12 items-center text-left">
             <div className="flex-1 w-full relative h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800" className="w-full h-full object-cover" alt="Case Study" />
+              {/* External Image Optimization (Unsplash supports similar params, but function handles cloudinary) */}
+              <img 
+                src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80" 
+                className="w-full h-full object-cover" 
+                alt="Case Study" 
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 flex items-center p-10">
                 <div>
                   <span className="bg-[#00ffaa] text-black text-[10px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">Success Story</span>
@@ -124,6 +137,7 @@ const Portfolio = () => {
                 </div>
               </div>
             </div>
+            {/* Testimonial Card */}
             <div className="flex-1 bg-[#101816] p-8 rounded-2xl border border-[#39564c]">
               <div className="flex text-yellow-400 mb-4 gap-1">
                 {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" />)}
@@ -139,7 +153,7 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - Lead Generation */}
         <section className="py-24 px-4 text-center">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#1F2937] to-[#0B0F1E] rounded-3xl p-12 border border-[#39564c]">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Start your own masterpiece?</h2>

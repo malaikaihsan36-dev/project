@@ -33,6 +33,12 @@ router.get('/chat/:orderId', chatCtrl.getChatHistory);
 router.get('/order/:orderId', chatCtrl.getOrderDetails);
 router.post('/order/extend-expiry', chatCtrl.extendExpiry);
 
+// Route for getting unread notification stats
+router.get('/notifications', chatCtrl.getUnreadNotifications);
+
+// Route to mark messages as read when chat opens
+router.post('/mark-read', chatCtrl.markAsRead);
+
 // --- CUSTOMERS ---
 router.get('/admin/customers', customerController.getAllCustomers);
 
@@ -40,6 +46,7 @@ router.get('/admin/customers', customerController.getAllCustomers);
 router.get('/categories', productController.getAllCategories);
 router.post('/categories', productController.addCategory);
 router.delete('/categories/:id', productController.deleteCategory);
+router.put('/categories/:id', productController.updateCategory);
 
 // --- PRODUCTS ---
 router.get('/products', productController.getAllProducts);

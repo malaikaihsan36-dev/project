@@ -14,7 +14,7 @@ const AdminLogin = () => {
     
     try {
       // Backend API call jo humne banayi thi (ya banayenge)
-      const response = await axios.post('http://localhost:5000/api/admins/login', {
+      const response = await axios.post('http://localhost:5000/api/admin/login', {
         email,
         password
       });

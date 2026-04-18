@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
+// Image optimization helper import kiya gaya hai
+import { getOptimizedImage } from '../components/imageHelper'; 
 import { 
   Bolt, 
   Droplets, 
@@ -116,7 +118,7 @@ const CustomizeProduct = () => {
           }
         }
       });
-      basePriceCalculated = (cardPrice + 5900 + dyeMaking + dyeCutting + addonsTotal) * 1.35;
+      basePriceCalculated = ((cardPrice + 5900 + dyeMaking + dyeCutting + addonsTotal) * 1.35)/1000;
     }
 
     const unit = basePriceCalculated;
@@ -141,7 +143,7 @@ const CustomizeProduct = () => {
   const generateOrderID = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
-    for (let i = 0; i < 4; i++) { // Change from 6 to 4
+    for (let i = 0; i < 4; i++) { 
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
@@ -156,7 +158,6 @@ const CustomizeProduct = () => {
     setLoading(true);
     const orderId = generateOrderID();
     
-    // Updated orderData to match your new Controller requirements
     const orderData = { 
       orderId, 
       productTitle: displayProduct.title || displayProduct.name, 
@@ -164,10 +165,10 @@ const CustomizeProduct = () => {
       quantity, 
       size, 
       material, 
-      selectedAddons, // Ab ye array backend ko jayega summary message banane ke liye
+      selectedAddons, 
       totalPrice, 
       email, 
-      whatsapp, // Controller expects 'whatsapp' or 'phone' based on your req.body
+      whatsapp, 
       specialRequest: specialRequest 
     };
 
@@ -179,8 +180,6 @@ const CustomizeProduct = () => {
       });
 
       if (response.ok) {
-        // Ab humein yahan socket emit karne ki zaroorat nahi kyunki 
-        // aapka backend controller khud hi chat table mein summary save kar raha hai.
         navigate('/design-review', { 
           state: { 
             product: displayProduct, 
@@ -222,7 +221,6 @@ const CustomizeProduct = () => {
             <span className="text-xl font-bold text-white">Colour Pix</span>
           </div>
 
-          {/* Navigation Links - Right Side */}
           <nav className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-gray-300 hover:text-[#00ffaa] transition-colors font-medium">Home</Link>
             <Link to="/products" className="text-gray-300 hover:text-[#00ffaa] transition-colors font-medium">Products</Link>
@@ -235,10 +233,12 @@ const CustomizeProduct = () => {
           
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-[#1F2937] flex items-center justify-center">
+              {/* getOptimizedImage function yahan apply kiya gaya hai */}
               <img 
-                src={displayProduct.img || displayProduct.image_url} 
+                src={getOptimizedImage(displayProduct.img || displayProduct.image_url, 1000)} 
                 alt={displayProduct.title} 
                 className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-105" 
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
               <div className="absolute bottom-0 left-0 p-6 w-full">
@@ -387,6 +387,7 @@ const CustomizeProduct = () => {
   );
 };
 
+// ... Baqi helper components same hain ...
 const FeatureCard = ({ Icon, title, desc, isActive, onClick }) => (
   <div onClick={onClick} className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col gap-2 text-left group ${isActive ? 'bg-[#00ffaa]/10 border-[#00ffaa] shadow-[0_0_15px_rgba(0,255,170,0.2)]' : 'bg-[#1F2937]/50 border-white/5 hover:border-white/20'}`}>
     <Icon className={`transition-colors ${isActive ? 'text-[#00ffaa]' : 'text-gray-500 group-hover:text-white'}`} size={20} />

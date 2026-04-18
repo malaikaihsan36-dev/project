@@ -36,6 +36,32 @@ exports.deleteCategory = async (req, res) => {
     }
 };
 
+
+// productController.js mein updateCategory
+exports.updateCategory = async (req, res) => {
+    const { id } = req.params;
+    const { name, image_url } = req.body;
+
+    try {
+        const sql = "UPDATE categories SET name = ?, image_url = ? WHERE id = ?";
+        // Use [result] with await, not a callback
+        const [result] = await db.query(sql, [name, image_url, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Category not found" });
+        }
+
+        console.log("Category updated successfully");
+        return res.status(200).json({ 
+            success: true, 
+            message: "Updated successfully" 
+        });
+    } catch (err) {
+        console.error("Update Category Error:", err);
+        return res.status(500).json({ error: "Database error: " + err.message });
+    }
+};
+
 // --- PRODUCT LOGIC ---
 exports.getAllProducts = async (req, res) => {
     try {
@@ -51,21 +77,22 @@ exports.getAllProducts = async (req, res) => {
 
 // Add New Product
 exports.createProduct = async (req, res) => {
-    const { category_id, name, kg_rate, type, sizes, gramages, addons, description, image_url } = req.body;
+    // 1. is_popular yahan add karein
+    const { category_id, name, kg_rate, type, is_popular, sizes, gramages, addons, description, image_url } = req.body;
 
     try {
         const query = `
             INSERT INTO products 
-            (category_id, name, kg_rate, type, sizes, gramages, addons, description, image_url) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (category_id, name, kg_rate, type, is_popular, sizes, gramages, addons, description, image_url) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         
-        // JSON objects ko stringify karna zaroori hai MySQL ke liye
         const values = [
             category_id, 
             name, 
             kg_rate, 
             type, 
+            is_popular ? 1 : 0, // 2. Convert boolean to 1/0
             JSON.stringify(sizes), 
             JSON.stringify(gramages), 
             JSON.stringify(addons || []), 
@@ -76,7 +103,7 @@ exports.createProduct = async (req, res) => {
         await db.query(query, values);
         res.status(201).json({ message: "Product saved successfully!" });
     } catch (err) {
-        console.error(err);
+        console.error("Create Product Error:", err);
         res.status(500).json({ error: err.message });
     }
 };
@@ -190,4 +217,14 @@ exports.getProductById = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+// Ek utility file mein ye function bana lein
+export const getOptimizedImage = (url) => {
+  if (!url) return "";
+  // Agar image Cloudinary ki hai, toh transformations add karein
+  if (url.includes("cloudinary.com")) {
+    return url.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
+  }
+  return url;
 };

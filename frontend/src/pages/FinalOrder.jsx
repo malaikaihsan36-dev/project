@@ -26,7 +26,7 @@ const FinalOrder = () => {
         return;
       }
       try {
-        // Backend se finalized order details mangwana
+        // Backend se finalized order details mangwana (Direct Link Connection)
         const res = await axios.get(`http://localhost:5000/api/order/${cleanId}`);
         if (res.data) setOrderData(res.data);
       } catch (err) {
@@ -54,7 +54,7 @@ const FinalOrder = () => {
   const handleFinalConfirm = async () => {
     setIsConfirming(true); // Button ko processing mode mein dalna
     try {
-      // API hit karke order status update karna aur total price save karna
+      // API hit karke order status update karna aur total price save karna (Direct Link Connection)
       const res = await axios.post(`http://localhost:5000/api/orders/finalize/${cleanId}`, {
         final_total_price: grandTotal
       });

@@ -29,17 +29,17 @@ const ReviewsPage = () => {
   };
 
   useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/product-list');
-      setProductList(res.data);
-    } catch (err) {
-      console.error("Error fetching product list", err);
-    }
-  };
-  fetchProducts();
-  fetchApprovedReviews(); // Purana wala function
-}, []);
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/product-list');
+        setProductList(res.data);
+      } catch (err) {
+        console.error("Error fetching product list", err);
+      }
+    };
+    fetchProducts();
+    fetchApprovedReviews(); // Purana wala function
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -131,23 +131,23 @@ const ReviewsPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-  <span className="text-gray-400 text-sm font-medium ml-1">Product</span>
-  <div className="relative">
-    <select 
-      value={product} 
-      onChange={(e) => setProduct(e.target.value)} 
-      className="w-full bg-black/30 rounded-xl px-4 py-3 border border-white/10 text-white text-sm appearance-none outline-none focus:border-[#FF4D4D] transition-all"
-    >
-      <option className="bg-[#0B0F1E]">Select a product...</option>
-      {productList.map((item) => (
-        <option key={item.id} value={item.name} className="bg-[#0B0F1E]">
-          {item.name}
-        </option>
-      ))}
-    </select>
-    <ChevronDown size={18} className="absolute right-4 top-4 text-gray-500 pointer-events-none" />
-  </div>
-</div>
+                  <span className="text-gray-400 text-sm font-medium ml-1">Product</span>
+                  <div className="relative">
+                    <select 
+                      value={product} 
+                      onChange={(e) => setProduct(e.target.value)} 
+                      className="w-full bg-black/30 rounded-xl px-4 py-3 border border-white/10 text-white text-sm appearance-none outline-none focus:border-[#FF4D4D] transition-all"
+                    >
+                      <option className="bg-[#0B0F1E]">Select a product...</option>
+                      {productList.map((item) => (
+                        <option key={item.id} value={item.name} className="bg-[#0B0F1E]">
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown size={18} className="absolute right-4 top-4 text-gray-500 pointer-events-none" />
+                  </div>
+                </div>
 
                 <div className="flex flex-col gap-2">
                   <span className="text-gray-400 text-sm font-medium ml-1">Rating</span>

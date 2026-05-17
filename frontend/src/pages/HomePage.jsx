@@ -12,6 +12,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Direct safe connection strings bina kisi variable ke
         const prodRes = await fetch('http://localhost:5000/api/products');
         const prodData = await prodRes.json();
         // Popular products filter (1 for true in MySQL)

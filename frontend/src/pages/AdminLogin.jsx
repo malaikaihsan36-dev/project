@@ -13,7 +13,7 @@ const AdminLogin = () => {
     setLoading(true);
     
     try {
-      // Backend API call jo humne banayi thi (ya banayenge)
+      // Direct safe connection string setup bina kisi variables ki warning ke
       const response = await axios.post('http://localhost:5000/api/admin/login', {
         email,
         password

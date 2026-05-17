@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, ExternalLink } from 'lucide-react';
 import NavBar from '../components/Navbar'; 
 import axios from 'axios'; 
 // Optimization helper ko import kiya
@@ -17,6 +17,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Direct safe localhost server calls bina kisi environment variable dependency ke
         const [projRes, catRes] = await Promise.all([
           axios.get('http://localhost:5000/api/projects'),
           axios.get('http://localhost:5000/api/portfolio-categories')
@@ -41,6 +42,13 @@ const Portfolio = () => {
         if (!p.category) return false;
         return p.category.trim().toLowerCase() === activeTab.trim().toLowerCase();
       });
+
+  // Helper function to safely open links in a new tab
+  const handleProjectClick = (url) => {
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+};
 
   return (
     <div className="bg-[#0B0F1E] font-sans text-white overflow-x-hidden min-h-screen flex flex-col relative text-left">
@@ -81,7 +89,11 @@ const Portfolio = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((item) => (
-                <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full">
+                <div 
+                  key={item.id} 
+                  onClick={() => handleProjectClick(item.project_url)}
+                  className={`group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full ${item.project_url ? 'cursor-pointer' : ''}`}
+                >
                   <div className="relative h-64 overflow-hidden bg-gray-800">
                     {/* OPTIMIZED IMAGE: 600px width used for grid cards */}
                     <img 
@@ -92,12 +104,18 @@ const Portfolio = () => {
                       onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300?text=Error+Loading+Image' }}
                     />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
-                      <span className="text-[#00ffaa] text-sm font-medium mb-4 font-mono">Premium Quality</span>
+                      {item.project_url ? (
+                        <span className="text-[#00ffaa] text-sm font-medium mb-4 font-mono flex items-center gap-1 bg-[#0f1715]/80 px-3 py-1.5 rounded-full border border-[#00ffaa]/30">
+                          <ExternalLink size={14} /> Open Live Project
+                        </span>
+                      ) : (
+                        <span className="text-[#00ffaa] text-sm font-medium mb-4 font-mono">Premium Quality</span>
+                      )}
                     </div>
                   </div>
                   <div className="p-5 flex flex-col flex-1">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-bold text-white uppercase tracking-tight">{item.title}</h3>
+                      <h3 className="text-xl font-bold text-white uppercase tracking-tight group-hover:text-[#FF7F50] transition-colors">{item.title}</h3>
                       <div className="flex text-yellow-400 gap-0.5"><Star size={14} fill="currentColor" /></div>
                     </div>
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed">
@@ -122,7 +140,7 @@ const Portfolio = () => {
         <section className="py-20 bg-[#1F2937]/30 border-t border-[#273a34]">
           <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-12 items-center text-left">
             <div className="flex-1 w-full relative h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              {/* External Image Optimization (Unsplash supports similar params, but function handles cloudinary) */}
+              {/* External Image Optimization */}
               <img 
                 src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80" 
                 className="w-full h-full object-cover" 

@@ -31,6 +31,7 @@ const AdminSettings = () => {
   // 1. Fetch Admins
   const fetchAdmins = async () => {
     try {
+      // Direct connection string setup ki bina kisi external changes ke
       const res = await axios.get('http://localhost:5000/api/admin-list');
       setAdmins(res.data);
     } catch (err) {
@@ -55,6 +56,7 @@ const AdminSettings = () => {
 
     setLoading(true);
     try {
+      // Direct connection string setup ki bina kisi external changes ke
       const res = await axios.post('http://localhost:5000/api/admin/add', {
         email: formData.email,
         password: formData.password
@@ -81,6 +83,7 @@ const AdminSettings = () => {
 
     if (window.confirm(`Are you sure you want to remove ${email}?`)) {
       try {
+        // Direct connection string setup ki bina kisi external changes ke
         await axios.delete(`http://localhost:5000/api/admin/${id}`);
         setAdmins(admins.filter(admin => admin.id !== id));
       } catch (err) {

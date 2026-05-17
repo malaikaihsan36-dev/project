@@ -20,7 +20,11 @@ const ContactPage = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/contact-subjects');
+        // Environment variable access kiya taake localhost secure ho jaye
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+        
+        // Dynamic link setup bina kisi single/double quotes ki galti ke
+        const res = await axios.get(`${apiBaseUrl}/api/contact-subjects`);
         setSubjects(res.data);
         if (res.data.length > 0) {
           setFormData(prev => ({ ...prev, subject: res.data[0].name }));
@@ -40,7 +44,7 @@ const ContactPage = () => {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +67,10 @@ const ContactPage = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/orders', contactData);
+      // Environment variable access kiya taake orders link secure ho jaye
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      
+      const response = await axios.post(`${apiBaseUrl}/api/orders`, contactData);
 
       if (response.status === 201 || response.status === 200) {
         setIsSubmitted(true);
@@ -83,7 +90,7 @@ const ContactPage = () => {
     } finally {
       setLoading(false);
     }
-};
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -178,26 +185,26 @@ const ContactPage = () => {
             <div className="space-y-4">
               <ContactInfoCard icon={<Clock className="text-[#10B981]" />} title="Working Hours" info="Mon-Fri, 9am - 6pm EST" />
               <ContactInfoCard 
-    icon={<Mail className="text-[#10B981]" />} 
-    title="Email Support" 
-    info={
-        <div className="flex flex-col">
-            <span>colourpix.official@gmail.com</span>
-            <span>colourpix.socials@gmail.com</span>
-        </div>
-    }  
-/>
+                icon={<Mail className="text-[#10B981]" />} 
+                title="Email Support" 
+                info={
+                    <div className="flex flex-col">
+                        <span>colourpix.official@gmail.com</span>
+                        <span>colourpix.socials@gmail.com</span>
+                    </div>
+                }  
+              />
 
-<ContactInfoCard 
-    icon={<Phone className="text-[#10B981]" />} 
-    title="Phone Support" 
-    info={
-        <div className="flex flex-col">
-            <span>+92 370 4123327</span>
-            <span>+92 301 0144611</span>
-        </div>
-    }  
-/>
+              <ContactInfoCard 
+                icon={<Phone className="text-[#10B981]" />} 
+                title="Phone Support" 
+                info={
+                    <div className="flex flex-col">
+                        <span>+92 370 4123327</span>
+                        <span>+92 301 0144611</span>
+                    </div>
+                }  
+              />
             </div>
           </div>
         </div>
@@ -220,7 +227,7 @@ const ContactInfoCard = ({ icon, title, info, isLink, link }) => {
       <div className="size-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#10B981]/20 transition-colors">{icon}</div>
       <div className="text-left">
         <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">{title}</p>
-        <p className="text-white text-lg font-bold">{info}</p>
+        <div className="text-white text-lg font-bold">{info}</div>
       </div>
     </div>
   );

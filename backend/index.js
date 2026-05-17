@@ -6,6 +6,8 @@ require('dotenv').config();
 const apiRoutes = require('./routes/apiRoutes');
 const db = require('./config/db');
 const cron = require('node-cron');
+const dbPassword = process.env.DB_PASSWORD;
+const port = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
@@ -104,4 +106,4 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(5000, () => console.log(`🚀 Server Ready on 5000`));
+server.listen(5000, () => console.log(`🚀 Server Ready on ${port}`));

@@ -14,6 +14,9 @@ const DesignReview = () => {
     const chatEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
+    // Dynamic backend connection string check bina code alteration ke
+    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
     // ID cleaning logic to prevent URL encoding issues
     const initialOrderId = location.state?.orderId || urlOrderId || "TEMP";
     const cleanId = String(initialOrderId).replace(/[%23#\s]/g, '').trim();
@@ -39,7 +42,8 @@ const DesignReview = () => {
 
     // 1. SOCKET: Global Admin Online/Offline Status
     useEffect(() => {
-        const socket = io('http://localhost:5000', { transports: ['websocket'] });
+        // Dynamic socket URL pass kiya template string ke sath
+        const socket = io(`${apiBaseUrl}`, { transports: ['websocket'] });
         socketRef.current = socket;
 
         socket.on('global_admin_status', (status) => {
@@ -49,13 +53,14 @@ const DesignReview = () => {
         socket.emit('check_global_admin');
 
         return () => socket.disconnect();
-    }, []);
+    }, [apiBaseUrl]);
 
     // 2. DATA: Initial Fetch for Order, Expiry, and Approval status
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/order/${cleanId}?t=${Date.now()}`);
+                // Hardcoded local URL ki jagah template literal backticks dynamic string use kiya
+                const res = await axios.get(`${apiBaseUrl}/api/order/${cleanId}?t=${Date.now()}`);
                 if (res.data) {
                     setProduct({
                         title: res.data.product_title || "Custom Order",
@@ -72,18 +77,19 @@ const DesignReview = () => {
             }
         };
         if (cleanId && cleanId !== "TEMP") fetchOrderData();
-    }, [cleanId]);
+    }, [cleanId, apiBaseUrl]);
 
     // 3. CHAT: Fetch historical messages
     const fetchChat = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/chat/${cleanId}?t=${Date.now()}`);
+            // Dynamic backtick API setup bina kisi code alteration ke
+            const response = await fetch(`${apiBaseUrl}/api/chat/${cleanId}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
                 setMessages(data);
             }
         } catch (err) { console.error("Chat load fail:", err); }
-    }, [cleanId]);
+    }, [cleanId, apiBaseUrl]);
 
     // 4. SOCKET: Real-time Chat and Design Update listeners
     useEffect(() => {
@@ -145,7 +151,8 @@ const DesignReview = () => {
         const nextState = !isApproved;
         setIsApproved(nextState);
         try {
-            await axios.post('http://localhost:5000/api/order/update-status', { 
+            // Dynamic secure API URL integration
+            await axios.post(`${apiBaseUrl}/api/order/update-status`, { 
                 orderId: cleanId, 
                 field: 'is_approved', 
                 value: nextState 

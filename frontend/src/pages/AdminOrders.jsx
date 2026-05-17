@@ -20,7 +20,10 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/all-orders?nocache=${Date.now()}`, {
+      // Environment variable base URL configuration
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      
+      const response = await fetch(`${apiBaseUrl}/api/admin/all-orders?nocache=${Date.now()}`, {
         method: 'GET',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -73,7 +76,8 @@ const AdminOrders = () => {
   // --- AUTO CLEANUP FUNCTION FOR EXPIRED ORDERS ---
   const cleanupExpiredOrder = async (db_id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/cleanup-expired-order/${db_id}`, {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiBaseUrl}/api/admin/cleanup-expired-order/${db_id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -86,7 +90,8 @@ const AdminOrders = () => {
 
   const updateStatus = async (db_id, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${db_id}/status`, {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiBaseUrl}/api/orders/${db_id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -107,26 +112,26 @@ const AdminOrders = () => {
   }, []);
 
   const getTimeLeft = (expiryDate) => {
-  if (!expiryDate || isNaN(expiryDate.getTime())) return "--:--";
-  const diff = expiryDate - currentTime;
-  if (diff <= 0) return "EXPIRED";
-  
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-};
+    if (!expiryDate || isNaN(expiryDate.getTime())) return "--:--";
+    const diff = expiryDate - currentTime;
+    if (diff <= 0) return "EXPIRED";
+    
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
 
-// Naya useEffect jo expired orders ko detect karke delete karega
-useEffect(() => {
-  const expiredOrders = allOrders.filter(o => 
-    o.expiresAt && (o.expiresAt - currentTime <= 0) && o.status !== "Completed"
-  );
+  // Naya useEffect jo expired orders ko detect karke delete karega
+  useEffect(() => {
+    const expiredOrders = allOrders.filter(o => 
+      o.expiresAt && (o.expiresAt - currentTime <= 0) && o.status !== "Completed"
+    );
 
-  expiredOrders.forEach(order => {
-    cleanupExpiredOrder(order.db_id);
-  });
-}, [currentTime, allOrders]);
+    expiredOrders.forEach(order => {
+      cleanupExpiredOrder(order.db_id);
+    });
+  }, [currentTime, allOrders]);
 
   const openChatInNewTab = (orderId) => {
     window.open(`/admin/chat/${orderId}`, '_blank', 'noopener,noreferrer');

@@ -58,11 +58,16 @@ const BrowseCatalog = () => {
     const fetchCatalogData = async () => {
       try {
         setLoading(true);
-        const prodRes = await fetch('http://localhost:5000/api/products');
+
+        // Environment variable access kiya taake backend base link secure aur load ho sake
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
+        // React strict structure string literals dynamic backend data call ke liye
+        const prodRes = await fetch(`${apiBaseUrl}/api/products`);
         const prodData = await prodRes.json();
         setProducts(prodData);
 
-        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catRes = await fetch(`${apiBaseUrl}/api/categories`);
         const catData = await catRes.json();
         setCategoriesList(catData);
 

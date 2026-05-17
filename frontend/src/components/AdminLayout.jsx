@@ -7,33 +7,36 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const socketRef = useRef(null);
   
+  // Safe base URL configuration bina purani working logic ko chhere
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+  
   // Notification States
   const [notifications, setNotifications] = useState({ total: 0, details: [] });
   const [showDropdown, setShowDropdown] = useState(false);
 
   // Function to fetch notifications from backend
   const loadNotifications = async () => {
-  try {
-    const res = await axios.get('http://localhost:5000/api/notifications', {
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-      },
-      // Ek random parameter add karne se browser cache bypass ho jata hai
-      params: { _t: Date.now() } 
-    });
-    
-    if (res.data.success) {
-      setNotifications({ total: res.data.total, details: res.data.details });
+    try {
+      const res = await axios.get(`${apiBaseUrl}/api/notifications`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+        // Ek random parameter add karne se browser cache bypass ho jata hai
+        params: { _t: Date.now() } 
+      });
+      
+      if (res.data.success) {
+        setNotifications({ total: res.data.total, details: res.data.details });
+      }
+    } catch (err) {
+      console.error("Error loading notifications:", err);
     }
-  } catch (err) {
-    console.error("Error loading notifications:", err);
-  }
-};
+  };
 
   useEffect(() => {
-    const socket = io('http://localhost:5000', { transports: ['websocket'] });
+    const socket = io(apiBaseUrl, { transports: ['websocket'] });
     socketRef.current = socket;
 
     socket.emit('admin_login');
@@ -54,7 +57,7 @@ const AdminLayout = () => {
     });
 
     return () => socket.disconnect();
-}, []);
+  }, [apiBaseUrl]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminAuth');
@@ -68,23 +71,23 @@ const AdminLayout = () => {
         : "text-[#94A3B8] hover:bg-[#334155] hover:text-white border-transparent"
     }`;
 
-    const handleNotificationClick = async (orderId) => {
-  try {
-    // 1. Backend API call takay is_read = 1 ho jaye
-    await axios.post('http://localhost:5000/api/mark-read', { orderId });
-    
-    // 2. Dropdown band karein
-    setShowDropdown(false);
-    
-    // 3. Page redirect karein (AdminLayout ke andar hai isliye /admin/ lagaeyn)
-    window.open(`/admin/order-review/${orderId}`, '_blank', 'noopener,noreferrer');
-    
-    // 4. Notifications dobara load karein takay count update ho jaye
-    loadNotifications(); 
-  } catch (err) {
-    console.error("Navigation error:", err);
-  }
-};
+  const handleNotificationClick = async (orderId) => {
+    try {
+      // 1. Backend API call takay is_read = 1 ho jaye
+      await axios.post(`${apiBaseUrl}/api/mark-read`, { orderId });
+      
+      // 2. Dropdown band karein
+      setShowDropdown(false);
+      
+      // 3. Page redirect karein (AdminLayout ke andar hai isliye /admin/ lagaeyn)
+      window.open(`/admin/order-review/${orderId}`, '_blank', 'noopener,noreferrer');
+      
+      // 4. Notifications dobara load karein takay count update ho jaye
+      loadNotifications(); 
+    } catch (err) {
+      console.error("Navigation error:", err);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#0F172A] text-white font-['Space_Grotesk'] text-left">

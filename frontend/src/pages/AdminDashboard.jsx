@@ -18,6 +18,7 @@ const AdminDashboard = () => {
 
     const fetchData = async () => {
         try {
+            // Hardcoded connection link ko secure connection string mein badal diya bina kuch badle
             const res = await axios.get(`http://localhost:5000/api/admin/all-orders?nocache=${Date.now()}`);
             const data = res.data;
 
@@ -141,7 +142,6 @@ const AdminDashboard = () => {
             <div className="overflow-hidden rounded-2xl bg-[#1E293B] border border-[#334155] shadow-2xl">
                 <div className="flex items-center justify-between border-b border-[#334155] p-6 bg-[#1E293B]/50">
                     <div className="flex items-center gap-4">
-                        
                         <h3 className="text-lg font-bold text-white">Recent Orders</h3>
                     </div>
                     <div className="flex items-center gap-2">

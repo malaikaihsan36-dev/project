@@ -13,6 +13,7 @@ const AdminAnalytics = () => {
 
   const fetchDatabaseMetrics = async () => {
     try {
+      // Direct hardcoded paths lagaye bina kisi environment variable ke lafde ke
       const [ordersRes, catsRes, productsRes] = await Promise.all([
         axios.get(`http://localhost:5000/api/admin/all-orders?nocache=${Date.now()}`),
         axios.get(`http://localhost:5000/api/categories`),

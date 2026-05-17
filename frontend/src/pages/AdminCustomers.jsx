@@ -8,6 +8,7 @@ const AdminCustomers = () => {
 
   const fetchCustomers = async () => {
     try {
+      // Direct safe connection string bina kisi variable ya template quotes ki galti ke
       const response = await fetch('http://localhost:5000/api/admin/customers');
       const data = await response.json();
       // Ensure data is an array before setting state

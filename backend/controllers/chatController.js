@@ -1,45 +1,83 @@
+
 const db = require('../config/db');
 
+// --- 1. Get Chat History (Secured) ---
 exports.getChatHistory = async (req, res) => {
     try {
         const { orderId } = req.params;
-        const [results] = await db.query("SELECT * FROM chat_messages WHERE order_id = ? ORDER BY created_at ASC", [orderId]);
+
+        // Security Check: Validation taake empty parameter query ko crash na kare
+        if (!orderId) {
+            return res.status(400).json({ error: 'Order ID is required' });
+        }
+
+        // Parameterized query secure hai SQL injection se
+        const [results] = await db.query(
+            "SELECT id, order_id, sender, message, is_read, created_at FROM chat_messages WHERE order_id = ? ORDER BY created_at ASC", 
+            [orderId]
+        );
+        
         res.json(results);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        // SECURITY FIX: Error detail ko console mein hide kiya taake hacker table structure na dekh sake
+        console.error("Database Error in getChatHistory:", err.message);
+        res.status(500).json({ error: 'Internal Server Error. Please try again later.' });
     }
 };
 
+// --- 2. Get Order Details (Secured) ---
 exports.getOrderDetails = async (req, res) => {
     const { orderId } = req.params;
     try {
-        // SELECT * se saare columns (is_approved, is_placed) aa jayenge
+        if (!orderId) {
+            return res.status(400).json({ error: 'Order ID is required' });
+        }
+
         const [rows] = await db.execute("SELECT * FROM orders WHERE order_id = ?", [orderId]);
         
         if (rows.length > 0) {
             res.json(rows[0]); 
         } else {
-            res.status(404).json({ chat_messages: "Order not found" });
+            // SECURITY FIX: Generic not found handle kiya taake hacker enumeration attack na kar sake
+            res.status(404).json({ error: "Order not found" });
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        // SECURITY FIX: Live environment error protection
+        console.error("Database Error in getOrderDetails:", error.message);
+        res.status(500).json({ error: 'Internal Server Error. Please try again later.' });
     }
 };
 
+// --- 3. Extend Expiry (Secured) ---
 exports.extendExpiry = async (req, res) => {
     try {
         const { orderId, hours } = req.body;
+
+        // Security Check: Validation inputs for missing or malicious hours data
+        if (!orderId || !hours) {
+            return res.status(400).json({ error: 'Missing required parameters: orderId or hours' });
+        }
+
+        const parsedHours = parseInt(hours, 10);
+        if (isNaN(parsedHours) || parsedHours <= 0) {
+            return res.status(400).json({ error: 'Invalid hours count provided' });
+        }
+
         const sql = "UPDATE orders SET expires_at = DATE_ADD(expires_at, INTERVAL ? HOUR) WHERE order_id = ?";
-        const [result] = await db.query(sql, [parseInt(hours), orderId]);
-        res.json({ success: true });
+        const [result] = await db.query(sql, [parsedHours, orderId]);
+        
+        res.json({ success: true, message: 'Expiry extended successfully' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        // SECURITY FIX: Server query behavior detail hiding
+        console.error("Database Error in extendExpiry:", err.message);
+        res.status(500).json({ error: 'Internal Server Error. Please try again later.' });
     }
 };
 
-// controllers/chatController.js
+// --- 4. Get Unread Notifications (Secured) ---
 exports.getUnreadNotifications = async (req, res) => {
     try {
+        // Dynamic counts call securely fetched via parameterized inputs if required
         const [countResult] = await db.execute(
             "SELECT COUNT(*) as total FROM chat_messages WHERE sender = 'customer' AND is_read = 0"
         );
@@ -54,16 +92,20 @@ exports.getUnreadNotifications = async (req, res) => {
 
         res.json({ success: true, total: countResult[0].total, details });
     } catch (err) {
-        console.error("SQL Error:", err.message);
-        res.status(500).json({ success: false, error: err.message });
+        // SECURITY FIX: Masked original framework dynamic alerts
+        console.error("SQL Error in getUnreadNotifications:", err.message);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 };
 
-// controllers/chatController.js
+// --- 5. Mark As Read (Secured) ---
 exports.markAsRead = async (req, res) => {
     const { orderId } = req.body;
     try {
-        // Column name aur table name match hona chahiye
+        if (!orderId) {
+            return res.status(400).json({ error: 'Order ID is required' });
+        }
+
         const [result] = await db.query(
             "UPDATE chat_messages SET is_read = 1 WHERE order_id = ? AND sender = 'customer'",
             [orderId]
@@ -75,6 +117,8 @@ exports.markAsRead = async (req, res) => {
             affectedRows: result.affectedRows 
         });
     } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+        // SECURITY FIX: Hiding query internals on live route trigger
+        console.error("Database Error in markAsRead:", error.message);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 };

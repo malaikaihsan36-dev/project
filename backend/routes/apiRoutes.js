@@ -8,6 +8,18 @@ const projCtrl = require('../controllers/projectController');
 const customerController = require('../controllers/customerController');
 const productController = require('../controllers/productController');
 const adminController = require('../controllers/adminController');
+const whatsappCtrl = require('../controllers/whatsappController');
+
+// --- WHATSAPP TESTING ROUTE ---
+// Is se aap check kar saken ge ke backend se message ja raha hai ya nahi
+router.post('/test-whatsapp', async (req, res) => {
+    try {
+        await whatsappCtrl.sendOrderAlert("TEST-123", "500");
+        res.status(200).json({ success: true, message: "WhatsApp Alert Sent!" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // --- ADMIN MANAGEMENT ROUTES ---
 // Inhe upar rakhein aur paths ko specific karein

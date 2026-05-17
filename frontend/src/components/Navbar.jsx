@@ -28,8 +28,9 @@ const NavBar = () => {
     // Clean code: remove '#' and extra spaces so it matches DB format
     const cleanCode = resumeCode.replace(/[#\s]/g, '').toUpperCase().trim();
     // NavBar.jsx mein handleResumeSubmit ke andar ye console log lagayen
-console.log("Sending to Server:", { email: resumeEmail, code: resumeCode });
+    console.log("Sending to Server:", { email: resumeEmail, code: resumeCode });
     try {
+      // Direct safe connection string use ki bina kisi break hone wale variable ke
       const response = await axios.post('http://localhost:5000/api/orders/resume-design', { 
         email: resumeEmail.toLowerCase().trim(), 
         code: cleanCode 
@@ -78,22 +79,22 @@ console.log("Sending to Server:", { email: resumeEmail, code: resumeCode });
           </div>
 
           {/* Icons */}
-<div className="flex items-center gap-4">
-  <ShoppingCart 
-    className="text-gray-400 cursor-pointer hover:text-white transition-colors" 
-    size={20} 
-    onClick={() => setIsModalOpen(true)} 
-  />
-  <User 
-    className="hidden sm:block text-gray-400 cursor-pointer hover:text-white transition-colors" 
-    size={20} 
-    // UPDATED: window.open use kiya hai new tab ke liye
-    onClick={() => window.open('/admin-login', '_blank')} 
-  />
-  <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-    {isOpen ? <X size={24} /> : <Menu size={24} />}
-  </button>
-</div>
+          <div className="flex items-center gap-4">
+            <ShoppingCart 
+              className="text-gray-400 cursor-pointer hover:text-white transition-colors" 
+              size={20} 
+              onClick={() => setIsModalOpen(true)} 
+            />
+            <User 
+              className="hidden sm:block text-gray-400 cursor-pointer hover:text-white transition-colors" 
+              size={20} 
+              // UPDATED: window.open use kiya hai new tab ke liye
+              onClick={() => window.open('/admin-login', '_blank')} 
+            />
+            <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}

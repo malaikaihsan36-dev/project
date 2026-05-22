@@ -10,16 +10,21 @@ const productController = require('../controllers/productController');
 const adminController = require('../controllers/adminController');
 const whatsappCtrl = require('../controllers/whatsappController');
 
-// --- WHATSAPP TESTING ROUTE ---
-// Is se aap check kar saken ge ke backend se message ja raha hai ya nahi
-router.post('/test-whatsapp', async (req, res) => {
-    try {
-        await whatsappCtrl.sendOrderAlert("TEST-123", "500");
-        res.status(200).json({ success: true, message: "WhatsApp Alert Sent!" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+// --- WHATSAPP ROUTES ---
+// 1. Manually test karne ke liye route
+router.post('/test-whatsapp-send', async (req, res) => {
+    const { number, orderId } = req.body;
+    const success = await whatsappCtrl.sendCustomerNotification(number, orderId);
+    if (success) {
+        res.status(200).json({ message: "Notification sent successfully!" });
+    } else {
+        res.status(500).json({ error: "Failed to send WhatsApp message." });
     }
 });
+
+// 2. Meta Webhook Route (Tarika 1 ke liye)
+router.get('/whatsapp-webhook', whatsappCtrl.handleIncomingWebhook);
+router.post('/whatsapp-webhook', whatsappCtrl.handleIncomingWebhook);
 
 // --- ADMIN MANAGEMENT ROUTES ---
 // Inhe upar rakhein aur paths ko specific karein

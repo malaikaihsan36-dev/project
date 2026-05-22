@@ -341,10 +341,20 @@ exports.finalizeOrder = async (req, res) => {
         
         // CRITICAL BUG FIX: WhatsApp Notification logic executed before return block inside try-catch context safely
         try {
-            if (whatsappCtrl && typeof whatsappCtrl.sendOrderAlert === 'function') {
-                // Fixed broken variables: Passing correct data fields
-                await whatsappCtrl.sendOrderAlert(newPermanentId, final_total_price);
-                console.log(`WhatsApp notification dispatched for permanent order reference: #${newPermanentId}`);
+            // Hum check kar rahe hain ke hamara naya function 'sendCustomerNotification' sahi se import hua hai
+            if (whatsappCtrl && typeof whatsappCtrl.sendCustomerNotification === 'function') {
+                
+                // Zaroori Note: Yahan 'o.customer_phone' fetch ho raha hai jo customer ka real number hoga.
+                // Agar aapke table mein column ka naam sirf 'phone' ya 'phone_number' hai, toh 'o.customer_phone' ko us mutabiq change kar lein.
+                const customerPhone = o.customer_phone || o.phone; 
+
+                if (customerPhone) {
+                    // Naye function ko call kiya jo customer ko automated template notification bhejega
+                    await whatsappCtrl.sendCustomerNotification(customerPhone, newPermanentId);
+                    console.log(`WhatsApp notification dispatched for permanent order reference: #${newPermanentId}`);
+                } else {
+                    console.log("WhatsApp Notification Skipped: Customer phone number not found in order record.");
+                }
             }
         } catch (wsErr) {
             console.error("WhatsApp Integration Error (Non-blocking):", wsErr.message);

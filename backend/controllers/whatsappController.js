@@ -73,7 +73,8 @@ exports.handleIncomingWebhook = async (req, res) => {
                 to: customerNumber,
                 type: "text",
                 text: {
-                    body: "🚫 This is an automated no-reply notification channel. For any queries, pricing changes, or to chat live with our team, please visit your ColourPix Web Dashboard."
+
+                    body: "⚠️ Please note that this is an automated no-reply notification channel.\n\nMessages sent here are not monitored and will not be received by our team.\n\nIf you have any questions, need pricing information, want to discuss your order, or would like to chat with an admin, please visit the ColourPix website and use the communication page, or contact us directly on WhatsApp:\n\n📱 WhatsApp: 0304-0583327\n\nOur team will be happy to assist you. ✨"
                 }
             };
 

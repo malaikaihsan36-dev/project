@@ -19,7 +19,7 @@ const ReviewsPage = () => {
   // Fetch approved reviews from DB
   const fetchApprovedReviews = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/reviews/approved');
+      const res = await axios.get('process.env.REACT_APP_API_BASE_URL/api/reviews/approved');
       setReviews(res.data);
     } catch (err) {
       console.error("Error fetching reviews", err);
@@ -31,7 +31,7 @@ const ReviewsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/product-list');
+        const res = await axios.get('process.env.REACT_APP_API_BASE_URL/api/product-list');
         setProductList(res.data);
       } catch (err) {
         console.error("Error fetching product list", err);
@@ -49,7 +49,7 @@ const ReviewsPage = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/reviews', {
+      await axios.post('process.env.REACT_APP_API_BASE_URL/api/reviews', {
         customer_name: name,
         product_name: product,
         rating: selectedRating,

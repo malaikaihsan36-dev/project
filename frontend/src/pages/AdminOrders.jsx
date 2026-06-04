@@ -21,7 +21,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       // Environment variable base URL configuration
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       
       const response = await fetch(`${apiBaseUrl}/api/admin/all-orders?nocache=${Date.now()}`, {
         method: 'GET',
@@ -76,7 +76,7 @@ const AdminOrders = () => {
   // --- AUTO CLEANUP FUNCTION FOR EXPIRED ORDERS ---
   const cleanupExpiredOrder = async (db_id) => {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       const response = await fetch(`${apiBaseUrl}/api/admin/cleanup-expired-order/${db_id}`, {
         method: 'DELETE'
       });
@@ -90,7 +90,7 @@ const AdminOrders = () => {
 
   const updateStatus = async (db_id, newStatus) => {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       const response = await fetch(`${apiBaseUrl}/api/orders/${db_id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },

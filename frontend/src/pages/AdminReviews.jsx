@@ -14,8 +14,8 @@ const AdminReviews = () => {
       setLoading(true);
       // Hardcoded links ko fetch variables ke through update kiya bina kisi brackets ki galti ke
       const [reviewsRes, productsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/reviews'),
-        axios.get('http://localhost:5000/api/product-list')
+        axios.get('process.env.REACT_APP_API_BASE_URL/api/reviews'),
+        axios.get('process.env.REACT_APP_API_BASE_URL/api/product-list')
       ]);
       setReviews(reviewsRes.data);
       setProductList(productsRes.data);
@@ -34,7 +34,7 @@ const AdminReviews = () => {
   const updateStatus = async (id, newStatus) => {
     try {
       // String dynamic interpolation ko clear format mein set kiya
-      await axios.patch('http://localhost:5000/api/reviews/' + id + '/status', { status: newStatus });
+      await axios.patch('process.env.REACT_APP_API_BASE_URL/api/reviews/' + id + '/status', { status: newStatus });
       fetchData(); // Refresh list
     } catch (err) {
       alert("Status Update Failed");
@@ -46,7 +46,7 @@ const AdminReviews = () => {
     e.preventDefault();
     if (!newProductName.trim()) return;
     try {
-      await axios.post('http://localhost:5000/api/product-list', { name: newProductName });
+      await axios.post('process.env.REACT_APP_API_BASE_URL/api/product-list', { name: newProductName });
       setNewProductName('');
       fetchData(); // Refresh list to show new product
     } catch (err) {
@@ -58,7 +58,7 @@ const AdminReviews = () => {
     if (!window.confirm("Are you sure? This will remove it from the User's dropdown.")) return;
     try {
       // Dynamic link bina single/double quotes ki syntax warning ke concat kiya
-      await axios.delete('http://localhost:5000/api/product-list/' + id);
+      await axios.delete('process.env.REACT_APP_API_BASE_URL/api/product-list/' + id);
       fetchData();
     } catch (err) {
       alert("Delete failed");

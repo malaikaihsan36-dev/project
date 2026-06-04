@@ -21,7 +21,7 @@ const ContactPage = () => {
     const fetchSubjects = async () => {
       try {
         // Environment variable access kiya taake localhost secure ho jaye
-        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
         
         // Dynamic link setup bina kisi single/double quotes ki galti ke
         const res = await axios.get(`${apiBaseUrl}/api/contact-subjects`);
@@ -68,7 +68,7 @@ const ContactPage = () => {
 
     try {
       // Environment variable access kiya taake orders link secure ho jaye
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       
       const response = await axios.post(`${apiBaseUrl}/api/orders`, contactData);
 

@@ -72,7 +72,7 @@ const CustomizeProduct = () => {
       if (id) {
         try {
           // Direct fixed URL safe dynamic check k sath bina kisi variable issue k
-          const response = await fetch(`http://localhost:5000/api/products/${id}`);
+          const response = await fetch(`process.env.REACT_APP_API_BASE_URL/api/products/${id}`);
           if (response.ok) {
             const data = await response.json();
             setProduct(data);
@@ -175,7 +175,7 @@ const CustomizeProduct = () => {
 
     try {
       // Direct post method URL set kiya bina kisi environment variable k complex load k
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch('process.env.REACT_APP_API_BASE_URL/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),

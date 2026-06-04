@@ -19,7 +19,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         try {
             // Hardcoded connection link ko secure connection string mein badal diya bina kuch badle
-            const res = await axios.get(`http://localhost:5000/api/admin/all-orders?nocache=${Date.now()}`);
+            const res = await axios.get(`process.env.REACT_APP_API_BASE_URL/api/admin/all-orders?nocache=${Date.now()}`);
             const data = res.data;
 
             const formattedOrders = data.map(order => {

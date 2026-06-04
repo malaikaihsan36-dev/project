@@ -15,9 +15,9 @@ const AdminAnalytics = () => {
     try {
       // Direct hardcoded paths lagaye bina kisi environment variable ke lafde ke
       const [ordersRes, catsRes, productsRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/admin/all-orders?nocache=${Date.now()}`),
-        axios.get(`http://localhost:5000/api/categories`),
-        axios.get(`http://localhost:5000/api/products`) 
+        axios.get(`process.env.REACT_APP_API_BASE_URL/api/admin/all-orders?nocache=${Date.now()}`),
+        axios.get(`process.env.REACT_APP_API_BASE_URL/api/categories`),
+        axios.get(`process.env.REACT_APP_API_BASE_URL/api/products`) 
       ]);
 
       const allOrders = ordersRes.data;

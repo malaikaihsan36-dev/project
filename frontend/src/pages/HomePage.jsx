@@ -8,18 +8,20 @@ import { getOptimizedImage } from '../components/imageHelper';
 const HomePage = () => {
   const [popularProducts, setPopularProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Direct safe connection strings bina kisi variable ke
-        const prodRes = await fetch('http://localhost:5000/api/products');
+        const prodRes = await fetch('${API_BASE_URL}/api/products');
         const prodData = await prodRes.json();
         // Popular products filter (1 for true in MySQL)
         const popular = prodData.filter(p => p.is_popular === 1 || p.is_popular === true);
         setPopularProducts(popular);
 
-        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catRes = await fetch('${API_BASE_URL}/api/categories');
         const catData = await catRes.json();
         setCategories(catData);
       } catch (err) {

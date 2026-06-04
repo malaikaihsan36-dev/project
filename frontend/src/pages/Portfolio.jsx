@@ -19,8 +19,8 @@ const Portfolio = () => {
       try {
         // Direct safe localhost server calls bina kisi environment variable dependency ke
         const [projRes, catRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/portfolio-categories')
+          axios.get('process.env.REACT_APP_API_BASE_URL/api/projects'),
+          axios.get('process.env.REACT_APP_API_BASE_URL/api/portfolio-categories')
         ]);
         setProjects(projRes.data);
         // Database categories ke start mein 'All Projects' add karna

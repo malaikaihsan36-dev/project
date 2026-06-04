@@ -38,7 +38,7 @@ const AdminChat = () => {
         const fetchAndMarkRead = async () => {
             if (!cleanId) return;
             try {
-                const res = await axios.get(`http://localhost:5000/api/order/${cleanId}`);
+                const res = await axios.get(`process.env.REACT_APP_API_BASE_URL/api/order/${cleanId}`);
                 if (res.data) {
                     if (res.data.expires_at) setExpiresAt(new Date(res.data.expires_at));
                     if (res.data.product_img) setPreviewImage(res.data.product_img);
@@ -49,7 +49,7 @@ const AdminChat = () => {
                     }
                 }
                 // Admin page par aate hi notification count zero karne ke liye
-                await axios.post('http://localhost:5000/api/mark-read', { orderId: cleanId });
+                await axios.post('process.env.REACT_APP_API_BASE_URL/api/mark-read', { orderId: cleanId });
             } catch (err) {
                 console.error("Initial Load Error:", err);
             }
@@ -77,7 +77,7 @@ const AdminChat = () => {
     // 3. Messages Fetching: Database se purani chat load karna
     const fetchMessages = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/chat/${cleanId}?t=${Date.now()}`);
+            const res = await axios.get(`process.env.REACT_APP_API_BASE_URL/api/chat/${cleanId}?t=${Date.now()}`);
             setMessages(res.data.map(m => ({
                 id: m.id, sender: m.sender, text: m.message, imageUrl: m.image_url,
                 time: new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -88,7 +88,7 @@ const AdminChat = () => {
     // 4. Socket Connection: Real-time messaging aur live updates
     useEffect(() => {
         fetchMessages();
-        const socket = io('http://localhost:5000', { transports: ['websocket'] });
+        const socket = io('process.env.REACT_APP_API_BASE_URL', { transports: ['websocket'] });
         socketRef.current = socket;
 
         socket.on('connect', () => socket.emit('join_order', cleanId));
@@ -103,7 +103,7 @@ const AdminChat = () => {
             });
             // Agar customer message kare aur admin live hai, toh auto mark-read
             if(data.sender === 'customer') {
-                axios.post('http://localhost:5000/api/mark-read', { orderId: cleanId }).catch(e => {});
+                axios.post('process.env.REACT_APP_API_BASE_URL/api/mark-read', { orderId: cleanId }).catch(e => {});
             }
         });
 
@@ -133,7 +133,7 @@ const AdminChat = () => {
         const nextState = !isOrderPlaced;
         try {
             setIsOrderPlaced(nextState);
-            await axios.post('http://localhost:5000/api/order/update-status', { 
+            await axios.post('process.env.REACT_APP_API_BASE_URL/api/order/update-status', { 
                 orderId: cleanId, field: 'is_placed', value: nextState 
             });
             if (socketRef.current) {
@@ -149,7 +149,7 @@ const AdminChat = () => {
     const handleExtend = async () => {
         if (!extendHours || isNaN(extendHours)) return;
         try {
-            await axios.post('http://localhost:5000/api/order/extend-expiry', { orderId: cleanId, hours: parseInt(extendHours) });
+            await axios.post('process.env.REACT_APP_API_BASE_URL/api/order/extend-expiry', { orderId: cleanId, hours: parseInt(extendHours) });
             setExpiresAt(prev => new Date((prev ? prev.getTime() : new Date().getTime()) + parseInt(extendHours) * 60 * 60 * 1000));
             setExtendHours("");
         } catch (err) { alert("Extension failed"); }
@@ -158,7 +158,7 @@ const AdminChat = () => {
     // Final Pricing update karna
     const handleSavePricing = async () => {
         try {
-            await axios.patch(`http://localhost:5000/api/orders/${cleanId}/pricing`, priceData);
+            await axios.patch(`process.env.REACT_APP_API_BASE_URL/api/orders/${cleanId}/pricing`, priceData);
             setIsModalOpen(false);
             alert("Pricing Saved!");
         } catch (err) { alert("Error saving pricing"); }
@@ -188,7 +188,7 @@ const AdminChat = () => {
             } else {
                 setPreviewImage(data.secure_url);
                 socketRef.current.emit('update_preview', { orderId: cleanId, imageUrl: data.secure_url });
-                await axios.post('http://localhost:5000/api/order/update-preview', { orderId: cleanId, imageUrl: data.secure_url });
+                await axios.post('process.env.REACT_APP_API_BASE_URL/api/order/update-preview', { orderId: cleanId, imageUrl: data.secure_url });
             }
         } catch (err) { 
             alert("Upload failed"); 

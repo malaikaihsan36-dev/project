@@ -31,7 +31,7 @@ const NavBar = () => {
     console.log("Sending to Server:", { email: resumeEmail, code: resumeCode });
     try {
       // Direct safe connection string use ki bina kisi break hone wale variable ke
-      const response = await axios.post('http://localhost:5000/api/orders/resume-design', { 
+      const response = await axios.post('process.env.REACT_APP_API_BASE_URL/api/orders/resume-design', { 
         email: resumeEmail.toLowerCase().trim(), 
         code: cleanCode 
       });

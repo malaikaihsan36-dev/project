@@ -15,7 +15,7 @@ const DesignReview = () => {
     const fileInputRef = useRef(null);
 
     // Dynamic backend connection string check bina code alteration ke
-    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
 
     // ID cleaning logic to prevent URL encoding issues
     const initialOrderId = location.state?.orderId || urlOrderId || "TEMP";

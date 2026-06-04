@@ -49,12 +49,21 @@ app.use('/api', apiRoutes);
 // ==========================================
 const io = new Server(server, { 
     cors: { 
-        origin: allowedOrigins, // Transmissions layer authentication protocols[cite: 1]
+        origin: allowedOrigins,
         methods: ["GET", "POST", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true
     },
-    transports: ['websocket', 'polling'] // Connection fallback optimization strategy
+    path: '/api/socket.io',
+    
+    // 🔥 CRITICAL FIX: Polling ko number 1 standard mechanism banayein.
+    // Shared hosting par websocket freeze ho jata hai, polling hamesha zinda rehti hai.
+    transports: ['polling', 'websocket'],
+    
+    // Performance telemetry adjustments for unstable network nodes
+    pingTimeout: 60000,   // Server kitni der check karega client active hai (60 seconds)
+    pingInterval: 25000,  // Har 25 seconds baad heartbeat signal bhejega
+    allowEIO3: true       // Older protocol variations capability backward integration
 });
 
 // Admin tracking mechanism instance
@@ -133,5 +142,31 @@ io.on('connection', (socket) => {
     });
 });
 
+// ====================================================================
+// 🚀 COMMERCIAL MAINTENANCE: AUTOMATIC EXPIRED ORDERS CLEAN-UP
+// ====================================================================
+
+// Yeh Task har raat 12:00 baje (0 0 * * *) automatic chalega
+cron.schedule('0 0 * * *', async () => {
+    console.log('🧹 Maintenance Lifecycle Triggered: Cleaning expired/temporary orders...');
+    try {
+        // Assume karte hain ke temporary orders ka status 'temporary' ya 'pending_expired' hai
+        // Aur wo 48 ghante se purani hain (Aap apne business logic ke mutabiq status/time badal sakti hain)
+        const expiryThresholdHours = 48;
+        
+        const query = `
+            DELETE FROM orders 
+            WHERE status = 'temporary' 
+            AND created_at < NOW() - INTERVAL ? HOUR
+        `;
+        
+        const [result] = await db.query(query, [expiryThresholdHours]);
+        console.log(`✅ Maintenance Complete! Cleaned up ${result.affectedRows} expired orders from the database.`);
+        
+    } catch (error) {
+        console.error('❌ CRITICAL: Failed to execute automatic order clean-up routine:', error.message);
+    }
+});
+
 // Port configuration initialization listen handler
-server.listen(PORT, () => console.log(`🚀 Production Server Ready on port ${port}`));
+server.listen(PORT, () => console.log(`🚀 Production Server Ready on port ${PORT}`));

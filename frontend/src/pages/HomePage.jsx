@@ -9,7 +9,7 @@ const HomePage = () => {
   const [popularProducts, setPopularProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   useEffect(() => {
     const fetchData = async () => {

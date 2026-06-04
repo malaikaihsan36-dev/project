@@ -11,7 +11,7 @@ const AdminLayout = () => {
   const [notifications, setNotifications] = useState({ total: 0, details: [] });
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   // Function to fetch notifications from backend
   const loadNotifications = async () => {
@@ -35,7 +35,19 @@ const AdminLayout = () => {
   };
 
   useEffect(() => {
-    const socket = io(API_BASE_URL, { transports: ['websocket'] });
+    // ✅ Fixed: Added cPanel compatible real-time routing path and custom transport layers
+    const socket = io("https://colourpix.pk", {
+    path: "/api/socket.io",
+    // Forcefully use polling first to instantly break through cPanel firewall limits
+    transports: ["polling", "websocket"],
+    withCredentials: true,
+    autoConnect: true,
+    reconnection: true,            // Agar connection drop ho toh khud dubara connect kare
+    reconnectionAttempts: Infinity, // Jab tak net chal raha hai, try karta rahe
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000
+});
     socketRef.current = socket;
 
     socket.emit('admin_login');

@@ -13,7 +13,7 @@ const AdminProducts = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingCatId, setEditingCatId] = useState(null); 
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   // Category Form State
   const [catData, setCatData] = useState({ name: '', image: null });

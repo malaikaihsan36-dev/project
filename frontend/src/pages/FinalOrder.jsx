@@ -18,7 +18,7 @@ const FinalOrder = () => {
   const orderId = location.state?.orderId;
   const cleanId = orderId ? orderId.replace(/[%23#\s]/g, '').trim() : "";
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   useEffect(() => {
     window.scrollTo(0, 0); // Page load par top par scroll karna

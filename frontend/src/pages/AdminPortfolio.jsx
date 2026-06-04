@@ -18,7 +18,7 @@ const AdminPortfolio = () => {
   // formData state mein project_url field add kiya
   const [formData, setFormData] = useState({ title: '', desc: '', img: '', tags: '', category: '', project_url: '' });
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   // --- Data Fetching Logic ---
   const fetchData = async () => {
@@ -89,7 +89,7 @@ const AdminPortfolio = () => {
     data.append('file', acceptedFiles[0]);
     data.append('upload_preset', 'my_portfolio_preset'); 
     try {
-      const res = await axios.post('https://api.cloudinary.com/v1_1/dxduylcez/image/upload', data);
+      const res = await axios.post('https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload', data);
       setFormData({ ...formData, img: res.data.secure_url });
     } catch (err) { 
       alert("Upload failed."); 

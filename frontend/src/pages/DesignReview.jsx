@@ -37,12 +37,23 @@ const DesignReview = () => {
     const [isDragging, setIsDragging] = useState(false);
     const dragStart = useRef({ x: 0, y: 0 });
 
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
     // 1. SOCKET: Global Admin Online/Offline Status
     useEffect(() => {
         // Dynamic socket URL pass kiya template string ke sath
-        const socket = io(`${API_BASE_URL}`, { transports: ['websocket'] });
+        const socket = io("https://colourpix.pk", {
+    path: "/api/socket.io",
+    // Forcefully use polling first to instantly break through cPanel firewall limits
+    transports: ["polling", "websocket"],
+    withCredentials: true,
+    autoConnect: true,
+    reconnection: true,            // Agar connection drop ho toh khud dubara connect kare
+    reconnectionAttempts: Infinity, // Jab tak net chal raha hai, try karta rahe
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000
+});
         socketRef.current = socket;
 
         socket.on('global_admin_status', (status) => {
@@ -167,7 +178,7 @@ const DesignReview = () => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", "my_portfolio_preset");
-            const res = await fetch("https://api.cloudinary.com/v1_1/dxduylcez/image/upload", { method: "POST", body: formData });
+            const res = await fetch('https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload', { method: "POST", body: formData });
             const imageData = await res.json();
             socketRef.current.emit('send_message', {
                 orderId: cleanId, sender: 'customer', message: "Sent an image", imageUrl: imageData.secure_url, type: 'image'

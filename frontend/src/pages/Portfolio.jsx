@@ -13,7 +13,7 @@ const Portfolio = () => {
   const [categories, setCategories] = useState([]); // Database se aane wali categories
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   // Database se projects aur categories fetch karne ka logic
   useEffect(() => {

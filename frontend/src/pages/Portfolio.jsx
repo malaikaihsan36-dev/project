@@ -13,14 +13,16 @@ const Portfolio = () => {
   const [categories, setCategories] = useState([]); // Database se aane wali categories
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   // Database se projects aur categories fetch karne ka logic
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Direct safe localhost server calls bina kisi environment variable dependency ke
         const [projRes, catRes] = await Promise.all([
-          axios.get('process.env.REACT_APP_API_BASE_URL/api/projects'),
-          axios.get('process.env.REACT_APP_API_BASE_URL/api/portfolio-categories')
+          axios.get('${API_BASE_URL}/api/projects'),
+          axios.get('${API_BASE_URL}/api/portfolio-categories')
         ]);
         setProjects(projRes.data);
         // Database categories ke start mein 'All Projects' add karna

@@ -21,6 +21,8 @@ const AdminSettings = () => {
   // Password visibility states
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
   
   const [formData, setFormData] = useState({
     email: '',
@@ -32,7 +34,7 @@ const AdminSettings = () => {
   const fetchAdmins = async () => {
     try {
       // Direct connection string setup ki bina kisi external changes ke
-      const res = await axios.get('process.env.REACT_APP_API_BASE_URL/api/admin-list');
+      const res = await axios.get('${API_BASE_URL}/api/admin-list');
       setAdmins(res.data);
     } catch (err) {
       console.error("Error fetching admins:", err);
@@ -57,7 +59,7 @@ const AdminSettings = () => {
     setLoading(true);
     try {
       // Direct connection string setup ki bina kisi external changes ke
-      const res = await axios.post('process.env.REACT_APP_API_BASE_URL/api/admin/add', {
+      const res = await axios.post('${API_BASE_URL}/api/admin/add', {
         email: formData.email,
         password: formData.password
       });
@@ -84,7 +86,7 @@ const AdminSettings = () => {
     if (window.confirm(`Are you sure you want to remove ${email}?`)) {
       try {
         // Direct connection string setup ki bina kisi external changes ke
-        await axios.delete(`process.env.REACT_APP_API_BASE_URL/api/admin/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/admin/${id}`);
         setAdmins(admins.filter(admin => admin.id !== id));
       } catch (err) {
         alert(err.response?.data?.error || "Failed to delete admin");

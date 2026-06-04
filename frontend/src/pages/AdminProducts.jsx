@@ -13,6 +13,8 @@ const AdminProducts = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingCatId, setEditingCatId] = useState(null); 
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   // Category Form State
   const [catData, setCatData] = useState({ name: '', image: null });
 
@@ -33,14 +35,14 @@ const AdminProducts = () => {
 
   const fetchCategories = async () => {
     // Direct safe connection strings bina kisi variable ke
-    const res = await fetch('process.env.REACT_APP_API_BASE_URL/api/categories');
+    const res = await fetch('${API_BASE_URL}/api/categories');
     const data = await res.json();
     setCategories(data);
   };
 
   const fetchProducts = async () => {
     // Direct safe connection strings bina kisi variable ke
-    const res = await fetch('process.env.REACT_APP_API_BASE_URL/api/products');
+    const res = await fetch('${API_BASE_URL}/api/products');
     const data = await res.json();
     setProducts(data);
   };
@@ -59,8 +61,8 @@ const AdminProducts = () => {
   const saveCategory = async () => {
     // Direct safe connection strings bina kisi variable ke
     const url = editingCatId 
-      ? `process.env.REACT_APP_API_BASE_URL/api/categories/${editingCatId}` 
-      : 'process.env.REACT_APP_API_BASE_URL/api/categories';
+      ? `${API_BASE_URL}/api/categories/${editingCatId}` 
+      : '${API_BASE_URL}/api/categories';
     
     const method = editingCatId ? 'PUT' : 'POST';
 
@@ -97,7 +99,7 @@ const AdminProducts = () => {
     if (!window.confirm("Are you sure? This will PERMANENTLY delete this category and ALL its products.")) return;
     try {
       // Direct safe connection strings bina kisi variable ke
-      const res = await fetch(`process.env.REACT_APP_API_BASE_URL/api/categories/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/categories/${id}`, { method: 'DELETE' });
       if (res.ok) {
         alert("Category & Products Deleted!");
         fetchCategories();
@@ -113,7 +115,7 @@ const AdminProducts = () => {
     try {
       const newStatus = !product.is_popular;
       // Direct safe connection strings bina kisi variable ke
-      const res = await fetch(`process.env.REACT_APP_API_BASE_URL/api/products/${product.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${product.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...product, is_popular: newStatus }),
@@ -126,7 +128,7 @@ const AdminProducts = () => {
     if (!window.confirm("Delete this product permanently?")) return;
     try {
       // Direct safe connection strings bina kisi variable ke
-      const res = await fetch(`process.env.REACT_APP_API_BASE_URL/api/products/${editingId}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/products/${editingId}`, { method: 'DELETE' });
       if (res.ok) {
         alert("Product Deleted!");
         closeModal();
@@ -182,7 +184,7 @@ const AdminProducts = () => {
     };
 
     // Direct safe connection strings bina kisi variable ke
-    const url = editingId ? `process.env.REACT_APP_API_BASE_URL/api/products/${editingId}` : 'process.env.REACT_APP_API_BASE_URL/api/products';
+    const url = editingId ? `${API_BASE_URL}/api/products/${editingId}` : '${API_BASE_URL}/api/products';
     try {
       const res = await fetch(url, {
         method: editingId ? 'PUT' : 'POST',

@@ -11,6 +11,8 @@ const AdminDashboard = () => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const currentMonthIndex = new Date().getMonth();
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
@@ -19,7 +21,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         try {
             // Hardcoded connection link ko secure connection string mein badal diya bina kuch badle
-            const res = await axios.get(`process.env.REACT_APP_API_BASE_URL/api/admin/all-orders?nocache=${Date.now()}`);
+            const res = await axios.get(`${API_BASE_URL}/api/admin/all-orders?nocache=${Date.now()}`);
             const data = res.data;
 
             const formattedOrders = data.map(order => {

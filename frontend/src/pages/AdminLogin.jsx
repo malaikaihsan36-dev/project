@@ -8,13 +8,15 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false); // Loading state add ki
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     
     try {
       // Direct safe connection string setup bina kisi variables ki warning ke
-      const response = await axios.post('process.env.REACT_APP_API_BASE_URL/api/admin/login', {
+      const response = await axios.post('${API_BASE_URL}/api/admin/login', {
         email,
         password
       });

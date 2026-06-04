@@ -18,6 +18,8 @@ const FinalOrder = () => {
   const orderId = location.state?.orderId;
   const cleanId = orderId ? orderId.replace(/[%23#\s]/g, '').trim() : "";
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   useEffect(() => {
     window.scrollTo(0, 0); // Page load par top par scroll karna
     const fetchFinalDetails = async () => {
@@ -27,7 +29,7 @@ const FinalOrder = () => {
       }
       try {
         // Backend se finalized order details mangwana (Direct Link Connection)
-        const res = await axios.get(`process.env.REACT_APP_API_BASE_URL/api/order/${cleanId}`);
+        const res = await axios.get(`${API_BASE_URL}/api/order/${cleanId}`);
         if (res.data) setOrderData(res.data);
       } catch (err) {
         console.error("Error fetching final order data:", err);
@@ -55,7 +57,7 @@ const FinalOrder = () => {
     setIsConfirming(true); // Button ko processing mode mein dalna
     try {
       // API hit karke order status update karna aur total price save karna (Direct Link Connection)
-      const res = await axios.post(`process.env.REACT_APP_API_BASE_URL/api/orders/finalize/${cleanId}`, {
+      const res = await axios.post(`${API_BASE_URL}/api/orders/finalize/${cleanId}`, {
         final_total_price: grandTotal
       });
       

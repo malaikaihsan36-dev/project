@@ -17,14 +17,14 @@ const ContactPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        // Environment variable access kiya taake localhost secure ho jaye
-        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
         
         // Dynamic link setup bina kisi single/double quotes ki galti ke
-        const res = await axios.get(`${apiBaseUrl}/api/contact-subjects`);
+        const res = await axios.get(`${API_BASE_URL}/api/contact-subjects`);
         setSubjects(res.data);
         if (res.data.length > 0) {
           setFormData(prev => ({ ...prev, subject: res.data[0].name }));
@@ -67,10 +67,8 @@ const ContactPage = () => {
     };
 
     try {
-      // Environment variable access kiya taake orders link secure ho jaye
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       
-      const response = await axios.post(`${apiBaseUrl}/api/orders`, contactData);
+      const response = await axios.post(`${API_BASE_URL}/api/orders`, contactData);
 
       if (response.status === 201 || response.status === 200) {
         setIsSubmitted(true);

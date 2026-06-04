@@ -9,6 +9,8 @@ const AdminOrders = () => {
   const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -21,9 +23,8 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       // Environment variable base URL configuration
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
       
-      const response = await fetch(`${apiBaseUrl}/api/admin/all-orders?nocache=${Date.now()}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/all-orders?nocache=${Date.now()}`, {
         method: 'GET',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -76,8 +77,8 @@ const AdminOrders = () => {
   // --- AUTO CLEANUP FUNCTION FOR EXPIRED ORDERS ---
   const cleanupExpiredOrder = async (db_id) => {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
-      const response = await fetch(`${apiBaseUrl}/api/admin/cleanup-expired-order/${db_id}`, {
+      
+      const response = await fetch(`${API_BASE_URL}/api/admin/cleanup-expired-order/${db_id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -90,8 +91,8 @@ const AdminOrders = () => {
 
   const updateStatus = async (db_id, newStatus) => {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
-      const response = await fetch(`${apiBaseUrl}/api/orders/${db_id}/status`, {
+      
+      const response = await fetch(`${API_BASE_URL}/api/orders/${db_id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })

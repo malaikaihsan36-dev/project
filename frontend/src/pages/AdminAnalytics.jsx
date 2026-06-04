@@ -11,13 +11,15 @@ const AdminAnalytics = () => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const currentMonthIndex = new Date().getMonth();
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   const fetchDatabaseMetrics = async () => {
     try {
       // Direct hardcoded paths lagaye bina kisi environment variable ke lafde ke
       const [ordersRes, catsRes, productsRes] = await Promise.all([
-        axios.get(`process.env.REACT_APP_API_BASE_URL/api/admin/all-orders?nocache=${Date.now()}`),
-        axios.get(`process.env.REACT_APP_API_BASE_URL/api/categories`),
-        axios.get(`process.env.REACT_APP_API_BASE_URL/api/products`) 
+        axios.get(`${API_BASE_URL}/api/admin/all-orders?nocache=${Date.now()}`),
+        axios.get(`${API_BASE_URL}/api/categories`),
+        axios.get(`${API_BASE_URL}/api/products`) 
       ]);
 
       const allOrders = ordersRes.data;

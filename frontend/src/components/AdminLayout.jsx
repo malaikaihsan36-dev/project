@@ -7,17 +7,16 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const socketRef = useRef(null);
   
-  // Safe base URL configuration bina purani working logic ko chhere
-  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-  
   // Notification States
   const [notifications, setNotifications] = useState({ total: 0, details: [] });
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   // Function to fetch notifications from backend
   const loadNotifications = async () => {
     try {
-      const res = await axios.get(`${apiBaseUrl}/api/notifications`, {
+      const res = await axios.get(`${API_BASE_URL}/api/notifications`, {
         headers: {
           'Cache-Control': 'no-cache',
           'Pragma': 'no-cache',
@@ -36,7 +35,7 @@ const AdminLayout = () => {
   };
 
   useEffect(() => {
-    const socket = io(apiBaseUrl, { transports: ['websocket'] });
+    const socket = io(API_BASE_URL, { transports: ['websocket'] });
     socketRef.current = socket;
 
     socket.emit('admin_login');
@@ -57,7 +56,7 @@ const AdminLayout = () => {
     });
 
     return () => socket.disconnect();
-  }, [apiBaseUrl]);
+  }, [API_BASE_URL]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminAuth');
@@ -74,7 +73,7 @@ const AdminLayout = () => {
   const handleNotificationClick = async (orderId) => {
     try {
       // 1. Backend API call takay is_read = 1 ho jaye
-      await axios.post(`${apiBaseUrl}/api/mark-read`, { orderId });
+      await axios.post(`${API_BASE_URL}/api/mark-read`, { orderId });
       
       // 2. Dropdown band karein
       setShowDropdown(false);

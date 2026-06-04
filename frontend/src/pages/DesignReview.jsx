@@ -14,9 +14,6 @@ const DesignReview = () => {
     const chatEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
-    // Dynamic backend connection string check bina code alteration ke
-    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
-
     // ID cleaning logic to prevent URL encoding issues
     const initialOrderId = location.state?.orderId || urlOrderId || "TEMP";
     const cleanId = String(initialOrderId).replace(/[%23#\s]/g, '').trim();
@@ -40,10 +37,12 @@ const DesignReview = () => {
     const [isDragging, setIsDragging] = useState(false);
     const dragStart = useRef({ x: 0, y: 0 });
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
     // 1. SOCKET: Global Admin Online/Offline Status
     useEffect(() => {
         // Dynamic socket URL pass kiya template string ke sath
-        const socket = io(`${apiBaseUrl}`, { transports: ['websocket'] });
+        const socket = io(`${API_BASE_URL}`, { transports: ['websocket'] });
         socketRef.current = socket;
 
         socket.on('global_admin_status', (status) => {
@@ -53,14 +52,14 @@ const DesignReview = () => {
         socket.emit('check_global_admin');
 
         return () => socket.disconnect();
-    }, [apiBaseUrl]);
+    }, [API_BASE_URL]);
 
     // 2. DATA: Initial Fetch for Order, Expiry, and Approval status
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
                 // Hardcoded local URL ki jagah template literal backticks dynamic string use kiya
-                const res = await axios.get(`${apiBaseUrl}/api/order/${cleanId}?t=${Date.now()}`);
+                const res = await axios.get(`${API_BASE_URL}/api/order/${cleanId}?t=${Date.now()}`);
                 if (res.data) {
                     setProduct({
                         title: res.data.product_title || "Custom Order",
@@ -77,19 +76,19 @@ const DesignReview = () => {
             }
         };
         if (cleanId && cleanId !== "TEMP") fetchOrderData();
-    }, [cleanId, apiBaseUrl]);
+    }, [cleanId, API_BASE_URL]);
 
     // 3. CHAT: Fetch historical messages
     const fetchChat = useCallback(async () => {
         try {
             // Dynamic backtick API setup bina kisi code alteration ke
-            const response = await fetch(`${apiBaseUrl}/api/chat/${cleanId}?t=${Date.now()}`);
+            const response = await fetch(`${API_BASE_URL}/api/chat/${cleanId}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
                 setMessages(data);
             }
         } catch (err) { console.error("Chat load fail:", err); }
-    }, [cleanId, apiBaseUrl]);
+    }, [cleanId, API_BASE_URL]);
 
     // 4. SOCKET: Real-time Chat and Design Update listeners
     useEffect(() => {
@@ -152,7 +151,7 @@ const DesignReview = () => {
         setIsApproved(nextState);
         try {
             // Dynamic secure API URL integration
-            await axios.post(`${apiBaseUrl}/api/order/update-status`, { 
+            await axios.post(`${API_BASE_URL}/api/order/update-status`, { 
                 orderId: cleanId, 
                 field: 'is_approved', 
                 value: nextState 

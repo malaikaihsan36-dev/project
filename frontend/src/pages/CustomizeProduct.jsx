@@ -34,6 +34,8 @@ const CustomizeProduct = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(!product);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   const displayProduct = useMemo(() => {
     // Agar product null hai ya loading hai, to default empty arrays return karein
     if (!product) return { 
@@ -72,7 +74,7 @@ const CustomizeProduct = () => {
       if (id) {
         try {
           // Direct fixed URL safe dynamic check k sath bina kisi variable issue k
-          const response = await fetch(`process.env.REACT_APP_API_BASE_URL/api/products/${id}`);
+          const response = await fetch(`${API_BASE_URL}/api/products/${id}`);
           if (response.ok) {
             const data = await response.json();
             setProduct(data);
@@ -175,7 +177,7 @@ const CustomizeProduct = () => {
 
     try {
       // Direct post method URL set kiya bina kisi environment variable k complex load k
-      const response = await fetch('process.env.REACT_APP_API_BASE_URL/api/orders', {
+      const response = await fetch('${API_BASE_URL}/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),

@@ -53,6 +53,8 @@ const BrowseCatalog = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   // API se products aur categories fetch karne ka logic
   useEffect(() => {
     const fetchCatalogData = async () => {
@@ -60,14 +62,14 @@ const BrowseCatalog = () => {
         setLoading(true);
 
         // Environment variable access kiya taake backend base link secure aur load ho sake
-        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'process.env.REACT_APP_API_BASE_URL';
+        
 
         // React strict structure string literals dynamic backend data call ke liye
-        const prodRes = await fetch(`${apiBaseUrl}/api/products`);
+        const prodRes = await fetch(`${API_BASE_URL}/api/products`);
         const prodData = await prodRes.json();
         setProducts(prodData);
 
-        const catRes = await fetch(`${apiBaseUrl}/api/categories`);
+        const catRes = await fetch(`${API_BASE_URL}/api/categories`);
         const catData = await catRes.json();
         setCategoriesList(catData);
 

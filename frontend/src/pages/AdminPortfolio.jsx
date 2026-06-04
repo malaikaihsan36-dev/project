@@ -18,14 +18,16 @@ const AdminPortfolio = () => {
   // formData state mein project_url field add kiya
   const [formData, setFormData] = useState({ title: '', desc: '', img: '', tags: '', category: '', project_url: '' });
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://melodious-enchantment-production-cdb6.up.railway.app';
+
   // --- Data Fetching Logic ---
   const fetchData = async () => {
     try {
       // Direct safe connection strings bina kisi variable configuration issue ke
       const [projRes, catRes, subRes] = await Promise.all([
-        axios.get('process.env.REACT_APP_API_BASE_URL/api/projects'),
-        axios.get('process.env.REACT_APP_API_BASE_URL/api/portfolio-categories'),
-        axios.get('process.env.REACT_APP_API_BASE_URL/api/contact-subjects')
+        axios.get('${API_BASE_URL}/api/projects'),
+        axios.get('${API_BASE_URL}/api/portfolio-categories'),
+        axios.get('${API_BASE_URL}/api/contact-subjects')
       ]);
       setProjects(projRes.data);
       setCategories(catRes.data);
@@ -48,7 +50,7 @@ const AdminPortfolio = () => {
   const addSubject = async () => {
     if (!newSubName.trim()) return;
     try {
-      await axios.post('process.env.REACT_APP_API_BASE_URL/api/contact-subjects', { name: newSubName });
+      await axios.post('${API_BASE_URL}/api/contact-subjects', { name: newSubName });
       setNewSubName('');
       fetchData();
     } catch (err) { alert("Failed to add subject"); }
@@ -57,7 +59,7 @@ const AdminPortfolio = () => {
   const deleteSubject = async (id) => {
     if (!window.confirm("Delete subject?")) return;
     try {
-      await axios.delete(`process.env.REACT_APP_API_BASE_URL/api/contact-subjects/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/contact-subjects/${id}`);
       fetchData();
     } catch (err) { alert("Delete failed"); }
   };
@@ -66,7 +68,7 @@ const AdminPortfolio = () => {
   const addCategory = async () => {
     if (!newCatName.trim()) return;
     try {
-      await axios.post('process.env.REACT_APP_API_BASE_URL/api/portfolio-categories', { name: newCatName });
+      await axios.post('${API_BASE_URL}/api/portfolio-categories', { name: newCatName });
       setNewCatName('');
       fetchData(); 
     } catch (err) { alert("Failed to add category."); }
@@ -75,7 +77,7 @@ const AdminPortfolio = () => {
   const deleteCategory = async (id) => {
     if (!window.confirm("Delete category?")) return;
     try {
-      await axios.delete(`process.env.REACT_APP_API_BASE_URL/api/portfolio-categories/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/portfolio-categories/${id}`);
       fetchData();
     } catch (err) { alert("Delete failed"); }
   };
@@ -126,10 +128,10 @@ const saveProject = async () => {
 
     if (editingId) {
       console.log("Updating ID:", editingId);
-      const res = await axios.put(`process.env.REACT_APP_API_BASE_URL/api/projects/${editingId}`, payload);
+      const res = await axios.put(`${API_BASE_URL}/api/projects/${editingId}`, payload);
       alert(res.data.message || "Updated successfully!");
     } else {
-      const res = await axios.post('process.env.REACT_APP_API_BASE_URL/api/projects', payload);
+      const res = await axios.post('${API_BASE_URL}/api/projects', payload);
       alert(res.data.message || "Saved successfully!");
     }
 
@@ -145,7 +147,7 @@ const saveProject = async () => {
   const deleteProject = async (id) => {
     if(window.confirm("Delete this project?")) {
       try { 
-        await axios.delete(`process.env.REACT_APP_API_BASE_URL/api/projects/${id}`); 
+        await axios.delete(`${API_BASE_URL}/api/projects/${id}`); 
         fetchData(); 
       } catch (err) { 
         console.error("Delete Error:", err.response?.data || err.message);

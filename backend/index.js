@@ -10,7 +10,7 @@ const cron = require('node-cron');
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3001', credentials: true }));
 // server.js mein ye lines dhoondein aur update karein
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Main Route
 app.use('/api', apiRoutes);
 
-const io = new Server(server, { cors: { origin: "http://localhost:3000" } });
+const io = new Server(server, { cors: { origin: "http://localhost:3001" } });
 
 io.on('connection', (socket) => {
     socket.on('join_order', (id) => socket.join(id.replace(/[%23#\s]/g, '')));

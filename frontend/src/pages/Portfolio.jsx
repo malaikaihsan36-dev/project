@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
-import NavBar from '../components/Navbar'; 
-import axios from 'axios'; 
-// Optimization helper ko import kiya
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, Star, ChevronRight, CheckCircle2 } from 'lucide-react';
+import NavBar from '../components/Navbar';
+import axios from 'axios';
 import { getOptimizedImage } from '../components/imageHelper';
 
 const Portfolio = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('All Projects');
   const [projects, setProjects] = useState([]);
-  const [categories, setCategories] = useState([]); // Database se aane wali categories
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Database se projects aur categories fetch karne ka logic
   useEffect(() => {
+    document.title = "Industrial Portfolio & Case Studies | ColourPix";
+    
     const fetchData = async () => {
       try {
         const [projRes, catRes] = await Promise.all([
@@ -22,7 +21,6 @@ const Portfolio = () => {
           axios.get('http://localhost:5000/api/portfolio-categories')
         ]);
         setProjects(projRes.data);
-        // Database categories ke start mein 'All Projects' add karna
         const dynamicTabs = ['All Projects', ...catRes.data.map(c => c.name)];
         setCategories(dynamicTabs);
       } catch (err) {
@@ -34,7 +32,6 @@ const Portfolio = () => {
     fetchData();
   }, []);
 
-  // Filter logic: Selected tab ke mutabiq projects dikhana
   const filteredProjects = activeTab === 'All Projects' 
     ? projects 
     : projects.filter(p => {
@@ -43,130 +40,145 @@ const Portfolio = () => {
       });
 
   return (
-    <div className="bg-[#0B0F1E] font-sans text-white overflow-x-hidden min-h-screen flex flex-col relative text-left">
+    <div className="bg-[#09090B] text-white antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen">
       <NavBar />
 
-      <main className="flex-1 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1f302a] via-[#0f1715] to-[#000000] pt-32 pb-0">
-        
-        {/* Hero Section */}
-        <section className="relative pb-12 px-4 md:px-10 text-center max-w-7xl mx-auto">
-          <h1 className="text-white text-4xl md:text-6xl font-black mb-4">Crafting Your Vision</h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">Real-world examples of pixel-perfect production.</p>
-        </section>
+      {/* HERO SECTION */}
+      <section className="relative py-24 sm:py-32 border-b border-[#27272A]/50 bg-[#0C0C0E] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#A1A1AA] uppercase tracking-wider mb-8">
+            <Link to="/" className="hover:text-white transition-colors">Home</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-[#2563EB]" />
+            <span className="text-white font-bold">Portfolio</span>
+          </div>
 
-        {/* Filter Bar - Dynamic tabs from database */}
-        <div className="sticky top-20 z-40 bg-[#0f1715]/95 backdrop-blur-sm border-b border-[#39564c]">
-          <div className="max-w-7xl mx-auto px-4 md:px-10 flex overflow-x-auto gap-8 no-scrollbar py-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+            <div className="lg:col-span-8">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] mb-4 block flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
+                MANUFACTURING PROOF & CASE STUDIES
+              </span>
+              <h1 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                CRAFTING <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
+                  BRAND
+                </span> <br />
+                EXCELLENCE.
+              </h1>
+            </div>
+
+            <div className="lg:col-span-4 lg:pb-2">
+              <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
+                Explore real-world examples of our luxury rigid boxes, offset commercial printing, hot foil stamped cartons, and enterprise packaging supply across Pakistan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FILTER BAR & PROJECTS GRID */}
+      <section className="py-28 border-b border-[#27272A]/50 bg-[#09090B]">
+        <div className="max-w-7xl mx-auto px-6">
+          
+          {/* Dynamic Categories Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-3 mb-12 border-b border-white/10 pb-6">
             {categories.map((tab) => (
-              <button 
-                key={tab} 
+              <button
+                key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`text-sm font-bold whitespace-nowrap transition-all duration-300 ${activeTab === tab ? 'text-white border-b-2 border-[#FF7F50] pb-1' : 'text-[#9abcb0] hover:text-white'}`}
+                className={`px-5 py-2.5 rounded-xl text-xs font-mono uppercase tracking-wider transition-all ${
+                  activeTab === tab
+                    ? 'bg-[#2563EB] text-white font-bold shadow-[0_0_20px_rgba(37,99,235,0.4)]'
+                    : 'bg-[#121215] text-[#A1A1AA] border border-white/10 hover:border-white/30 hover:text-white'
+                }`}
               >
                 {tab}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Projects Grid */}
-        <div className="max-w-7xl mx-auto px-4 md:px-10 py-12">
+          {/* Projects Gallery Grid */}
           {loading ? (
-            <div className="text-center py-20 text-[#00ffaa] font-mono">Loading Projects...</div>
+            <div className="text-center py-24 font-mono text-[#2563EB]">Loading Manufacturing Projects...</div>
           ) : filteredProjects.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-500">No projects found in "{activeTab}"</p>
-              <p className="text-xs text-gray-700">Total projects in DB: {projects.length}</p>
+            <div className="text-center py-24 text-gray-500 font-mono">
+              No production items found in "{activeTab}". Total in DB: {projects.length}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((item) => (
-                <div key={item.id} className="group bg-[#1F2937] rounded-lg overflow-hidden border border-[#374151] hover:border-[#FF7F50]/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,127,80,0.2)] flex flex-col h-full">
-                  <div className="relative h-64 overflow-hidden bg-gray-800">
-                    {/* OPTIMIZED IMAGE: 600px width used for grid cards */}
+              {filteredProjects.map((project, idx) => (
+                <div 
+                  key={project.id || idx}
+                  className="group luxury-card rounded-3xl overflow-hidden flex flex-col justify-between border border-white/10 hover:border-[#2563EB] transition-all duration-500 shadow-xl"
+                >
+                  <div className="relative h-72 overflow-hidden">
                     <img 
-                      src={getOptimizedImage(item.image_url || item.img || '', 600)} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                      loading="lazy"
-                      onError={(e) => { e.target.src = 'https://via.placeholder.com/400x300?text=Error+Loading+Image' }}
+                      src={getOptimizedImage(project.image_url || project.image)} 
+                      alt={project.title}
+                      className="w-full h-full object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
-                      <span className="text-[#00ffaa] text-sm font-medium mb-4 font-mono">Premium Quality</span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121215] via-transparent to-transparent opacity-90"></div>
+                    
+                    <div className="absolute top-4 left-4">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-white bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+                        {project.category || 'PACKAGING'}
+                      </span>
                     </div>
                   </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-bold text-white uppercase tracking-tight">{item.title}</h3>
-                      <div className="flex text-yellow-400 gap-0.5"><Star size={14} fill="currentColor" /></div>
+
+                  <div className="p-7 bg-[#121215] flex-grow flex flex-col justify-between">
+                    <div>
+                      <h2 className="font-syne text-2xl font-bold text-white mb-2 group-hover:text-[#2563EB] transition-colors">
+                        {project.title}
+                      </h2>
+                      <p className="text-xs text-[#A1A1AA] leading-relaxed mb-6 font-normal">
+                        {project.description || project.desc}
+                      </p>
                     </div>
-                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                      {item.description || item.desc || "High-quality custom production for our clients."}
-                    </p>
-                    {/* Dynamic Tags */}
-                    <div className="mt-auto flex flex-wrap gap-2">
-                      {item.tags && (typeof item.tags === 'string' ? item.tags.split(',') : item.tags).map((tag, i) => (
-                        <span key={i} className="px-2 py-1 bg-[#0f1715] text-[#9abcb0] text-[10px] uppercase font-black rounded border border-[#39564c] tracking-widest">
-                          {tag.trim()}
-                        </span>
-                      ))}
+
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-[#E4E4E7]">
+                      <span className="text-[#2563EB]">MANUFACTURING VERIFIED</span>
+                      <Link to="/contact" className="flex items-center gap-1 hover:text-[#2563EB] transition-colors">
+                        <span>INQUIRE RUN</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </Link>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           )}
+
         </div>
+      </section>
 
-        {/* Case Study Section - Featured Content */}
-        <section className="py-20 bg-[#1F2937]/30 border-t border-[#273a34]">
-          <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col md:flex-row gap-12 items-center text-left">
-            <div className="flex-1 w-full relative h-80 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              {/* External Image Optimization (Unsplash supports similar params, but function handles cloudinary) */}
-              <img 
-                src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80" 
-                className="w-full h-full object-cover" 
-                alt="Case Study" 
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 flex items-center p-10">
-                <div>
-                  <span className="bg-[#00ffaa] text-black text-[10px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">Success Story</span>
-                  <h3 className="text-white text-3xl font-bold mb-2">Digital to Physical</h3>
-                  <p className="text-gray-300 text-sm">Perfect color reproduction for TechFlow hoodie line.</p>
-                </div>
-              </div>
-            </div>
-            {/* Testimonial Card */}
-            <div className="flex-1 bg-[#101816] p-8 rounded-2xl border border-[#39564c]">
-              <div className="flex text-yellow-400 mb-4 gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" />)}
-              </div>
-              <p className="text-white text-xl font-medium italic mb-6">"The precision of the mockup vs final product is unbelievable."</p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-700 rounded-full border-2 border-[#00ffaa] overflow-hidden">
-                  <img src="https://i.pravatar.cc/100?u=1" alt="Sarah" />
-                </div>
-                <div><p className="text-white font-bold">Sarah Jenkins</p><p className="text-[#00ffaa] text-xs font-bold uppercase">TechFlow Inc.</p></div>
-              </div>
-            </div>
+      {/* CTA BANNER */}
+      <section className="py-24 bg-[#0C0C0E] text-center">
+        <div className="max-w-4xl mx-auto px-6 space-y-6">
+          <h2 className="font-syne text-4xl sm:text-6xl font-extrabold uppercase text-white">
+            WANT CUSTOM PRODUCTION SAMPLES?
+          </h2>
+          <p className="text-[#A1A1AA] text-base">
+            We provide physical 1:1 CAD dieline samples and color proofs prior to bulk manufacturing.
+          </p>
+          <div className="flex justify-center gap-4 pt-4">
+            <Link 
+              to="/contact" 
+              className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_30px_rgba(37,99,235,0.4)]"
+            >
+              Request Prototype Sample
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA Section - Lead Generation */}
-        <section className="py-24 px-4 text-center">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#1F2937] to-[#0B0F1E] rounded-3xl p-12 border border-[#39564c]">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Start your own masterpiece?</h2>
-            <p className="text-gray-400 text-lg mb-10">
-              Join thousands of creators who trust COLOUR PIX for their custom merchandise. Guaranteed quality, every time.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => navigate('/contact')} className="px-10 py-4 bg-[#00ffaa] hover:bg-white text-black font-black rounded-xl transition-all">Start Custom Order</button>
-              <button onClick={() => navigate('/catalog')} className="px-10 py-4 border border-gray-600 text-white hover:bg-white/5 font-bold rounded-xl transition-all">Request Sample Kit</button>
-            </div>
-          </div>
-        </section>
-      </main>
+      {/* FOOTER */}
+      <footer className="bg-[#050507] border-t border-[#27272A] py-12 text-center text-xs font-mono text-[#A1A1AA]">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <span>© 1991 – 2026 COLOURPIX PACKAGING & PRINTING MFG. ALL RIGHTS RESERVED.</span>
+          <span className="text-[#2563EB]">LCCI REGISTERED MEMBER #1991-PK</span>
+        </div>
+      </footer>
     </div>
   );
 };

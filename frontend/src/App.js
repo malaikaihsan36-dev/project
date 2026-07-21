@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 
-// Pages
+// Public Pages
 import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import WhyColourPixPage from './pages/WhyColourPixPage';
+import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import PackagingPage from './pages/PackagingPage';
+import FinishesPage from './pages/FinishesPage';
+import IndustriesPage from './pages/IndustriesPage';
+import ManufacturingPage from './pages/ManufacturingPage';
+import Portfolio from './pages/Portfolio';
+import ResourcesPage from './pages/ResourcesPage';
+import BlogPage from './pages/BlogPage';
+import ContactPage from './pages/ContactPage';
 import BrowseCatalog from './pages/BrowseCatalog';
 import CustomizeProduct from './pages/CustomizeProduct';
 import DesignReview from './pages/DesignReview';
 import FinalOrder from './pages/FinalOrder';
-import Portfolio from './pages/Portfolio';
 import ReviewsPage from './pages/ReviewsPage';
-import ContactPage from './pages/ContactPage';
 import Loading from './pages/Loading';
-import AdminPortfolio from './pages/AdminPortfolio'; 
 
 // Admin Components & Pages
 import AdminLayout from './components/AdminLayout';
@@ -20,10 +30,11 @@ import AdminOrders from './pages/AdminOrders';
 import AdminProducts from './pages/AdminProducts';
 import AdminCustomers from './pages/AdminCustomers';
 import AdminAnalytics from './pages/AdminAnalytics';
-import AdminChat from './pages/AdminChat';
+import AdminPortfolio from './pages/AdminPortfolio';
 import AdminLogin from './pages/AdminLogin';
 import AdminReviews from './pages/AdminReviews';
-import AdminSettings from './pages/AdminSettings'; // New Import Added
+import AdminSettings from './pages/AdminSettings';
+import AdminChat from './pages/AdminChat';
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('adminAuth') === 'true';
@@ -34,7 +45,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
+    const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -42,37 +53,40 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
-        {/* --- PUBLIC ROUTES --- */}
+        {/* --- PUBLIC CORPORATE MULTI-PAGE ROUTES --- */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/why-colourpix" element={<WhyColourPixPage />} />
+        <Route path="/why-choose-us" element={<WhyColourPixPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
+        <Route path="/packaging" element={<PackagingPage />} />
+        <Route path="/finishes" element={<FinishesPage />} />
+        <Route path="/industries" element={<IndustriesPage />} />
+        <Route path="/manufacturing" element={<ManufacturingPage />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        
+        {/* E-COMMERCE & CATALOG ROUTES */}
         <Route path="/catalog" element={<BrowseCatalog />} />
         <Route path="/products" element={<BrowseCatalog />} />
-        
-        {/* Dynamic ID support for Customization */}
         <Route path="/customize/:id" element={<CustomizeProduct />} />
         <Route path="/customize" element={<CustomizeProduct />} />
-        
-        {/* Design Review Routes with Order ID support */}
         <Route path="/order/:orderId" element={<DesignReview />} />
         <Route path="/design-page/:orderId" element={<DesignReview />} />
         <Route path="/design-review" element={<DesignReview />} />
         <Route path="/design-review/:orderId" element={<DesignReview />} />
-        
-        {/* New Chat Route mapping to DesignReview */}
         <Route path="/chat" element={<DesignReview />} />
-        
-        {/* Final Order Route with Order ID support */}
         <Route path="/final-order/:orderId" element={<FinalOrder />} />
         <Route path="/final-order" element={<FinalOrder />} />
-        
-        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/reviews" element={<ReviewsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
 
-        {/* --- ADMIN AUTH --- */}
+        {/* --- ADMIN AUTH & PANEL --- */}
         <Route path="/admin-login" element={<AdminLogin />} />
-
-        {/* --- PROTECTED ADMIN PANEL --- */}
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboard />} /> 
           <Route path="orders" element={<AdminOrders />} />
@@ -81,16 +95,13 @@ function App() {
           <Route path="analytics" element={<AdminAnalytics />} />
           <Route path="portfolio" element={<AdminPortfolio />} /> 
           <Route path="reviews" element={<AdminReviews />} />
-          <Route path="settings" element={<AdminSettings />} /> {/* New Settings Route Added */}
+          <Route path="settings" element={<AdminSettings />} />
         </Route>
 
-        {/* Notification click karne par ye route khulay ga */}
-  <Route path="/admin/order-review/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
-
-        {/* Admin Chat Dynamic Route */}
+        <Route path="/admin/order-review/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
         <Route path="/admin/chat/:orderId" element={<ProtectedRoute><AdminChat /></ProtectedRoute>} />
         
-        {/* --- FALLBACK --- */}
+        {/* FALLBACK */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

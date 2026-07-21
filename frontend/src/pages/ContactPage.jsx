@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Mail, Phone, Clock, MapPin, Send, MessageCircle, ChevronDown, CheckCircle2, ChevronRight, Building2, ArrowUpRight } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import Footer from '../components/Footer';
 import axios from 'axios';
 
 const ContactPage = () => {
@@ -9,20 +10,23 @@ const ContactPage = () => {
   const [subjects, setSubjects] = useState([]);
   
   const [formData, setFormData] = useState({
+    name: '',
     phone: '',
     email: '',
-    subject: '',
+    subject: 'Luxury Rigid Boxes',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    document.title = "Contact & Quotation Inquiry | ColourPix";
+    
     const fetchSubjects = async () => {
       try {
         const res = await axios.get('http://localhost:5000/api/contact-subjects');
-        setSubjects(res.data);
-        if (res.data.length > 0) {
+        if (res.data && res.data.length > 0) {
+          setSubjects(res.data);
           setFormData(prev => ({ ...prev, subject: res.data[0].name }));
         }
       } catch (err) {
@@ -32,15 +36,14 @@ const ContactPage = () => {
     fetchSubjects();
   }, []);
 
-  // Order ID generator (Same as CustomizeProduct)
   const generateOrderID = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
-    for (let i = 0; i < 4; i++) { // Change from 6 to 4
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    for (let i = 0; i < 4; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,17 +52,17 @@ const ContactPage = () => {
     const orderId = generateOrderID(); 
     
     const contactData = {
-      orderId, // Matches backend now
+      orderId,
       productTitle: `Inquiry: ${formData.subject}`,
       productId: 'CONTACT_FORM', 
-      quantity: 0,
+      quantity: 1000,
       totalPrice: "0.00",
       email: formData.email,
       whatsapp: formData.phone,
       size: 'N/A',
       material: 'N/A',
       selectedAddons: [],
-      specialRequest: formData.message 
+      specialRequest: `Name: ${formData.name} | Details: ${formData.message}` 
     };
 
     try {
@@ -71,7 +74,7 @@ const ContactPage = () => {
           setIsSubmitted(false);
           navigate('/design-review', { 
             state: { 
-              orderId, // Clean variable
+              orderId,
               userEmail: formData.email,
               isFromContact: true
             } 
@@ -79,152 +82,264 @@ const ContactPage = () => {
         }, 2000);
       }
     } catch (error) {
-      alert("Connection failed.");
+      alert("Connection failed. Please contact us directly via phone or email.");
     } finally {
       setLoading(false);
     }
-};
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="bg-[#0B0F1E] text-white antialiased overflow-x-hidden selection:bg-[#10B981] selection:text-white font-sans min-h-screen relative text-left">
-      
-      <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-[#10B981]/5 to-transparent"></div>
-        <div className="absolute -left-[10%] top-[20%] w-[40%] h-[40%] bg-[#10B981]/10 blur-[120px] rounded-full"></div>
-      </div>
-
+    <div className="bg-[#09090B] text-white antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen">
       <NavBar />
 
-      <main className="relative pt-32 pb-16 px-4 max-w-7xl mx-auto z-10">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tight text-white">
-            Get in Touch with <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#10B981] to-[#34D399]">COLOUR PIX</span>
-          </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Need help with your customization? We are here to assist. Fill out the form or chat with us instantly.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-7 bg-[#141A3A]/40 backdrop-blur-md border border-white/5 rounded-3xl p-8 shadow-xl">
-            {isSubmitted ? (
-              <div className="h-full flex flex-col items-center justify-center py-12 text-center">
-                <div className="size-20 bg-[#10B981]/20 text-[#10B981] rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle size={40} />
-                </div>
-                <h3 className="text-3xl font-bold mb-2 text-white">Connecting to Chat...</h3>
-                <p className="text-gray-400">Please wait while we transfer your inquiry.</p>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-2xl font-bold mb-8 text-white">Send us a message</h3>
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Phone Number</label>
-                      <input required name="phone" value={formData.phone} onChange={handleChange} className="w-full rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all" placeholder="+1 234 567 890" type="tel" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Email Address</label>
-                      <input required name="email" value={formData.email} onChange={handleChange} className="w-full rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all" placeholder="hello@example.com" type="email" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Subject</label>
-                    <div className="relative">
-                      <select name="subject" value={formData.subject} onChange={handleChange} className="w-full appearance-none rounded-xl border border-white/10 bg-[#0B0F1E]/50 h-14 px-6 focus:border-[#10B981] outline-none transition-all cursor-pointer">
-                        {subjects.map((sub) => (
-                          <option key={sub.id} value={sub.name} className="bg-[#0B0F1E]">
-                            {sub.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Message</label>
-                    <textarea required name="message" value={formData.message} onChange={handleChange} className="w-full rounded-2xl border border-white/10 bg-[#0B0F1E]/50 min-h-[160px] p-6 focus:border-[#10B981] outline-none transition-all resize-none" placeholder="Tell us how we can help..."></textarea>
-                  </div>
-                  <button 
-                    type="submit" 
-                    disabled={loading}
-                    className={`w-full md:w-auto px-10 h-14 rounded-xl bg-gradient-to-r from-[#10B981] to-[#34D399] text-[#060A14] font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all active:scale-95 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {loading ? 'Processing...' : 'Send Message'} <Send size={18} />
-                  </button>
-                </form>
-              </>
-            )}
+      {/* HERO SECTION */}
+      <section className="relative py-24 sm:py-32 border-b border-[#27272A]/50 bg-[#0C0C0E] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#A1A1AA] uppercase tracking-wider mb-8">
+            <Link to="/" className="hover:text-white transition-colors">Home</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-[#2563EB]" />
+            <span className="text-white font-bold">Contact</span>
           </div>
 
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#141A3A] rounded-3xl overflow-hidden h-64 relative group border border-white/5">
-              <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=800" alt="Map" className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-              <div className="absolute bottom-6 left-6 text-left">
-                <div className="flex items-center gap-2 text-[#10B981] mb-1">
-                  <MapPin size={18} />
-                  <span className="font-bold text-xs uppercase tracking-widest">Headquarters</span>
-                </div>
-                <p className="text-white font-medium">123 Pixel Avenue, NY 10012</p>
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+            <div className="lg:col-span-8">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] mb-4 block flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse"></span>
+                2-HOUR RESPONSE TIME • LCCI MEMBER #1991-PK
+              </span>
+              <h1 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                TALK TO OUR <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
+                  ENGINEERING
+                </span> <br />
+                TEAM.
+              </h1>
             </div>
 
-            <div className="space-y-4">
-              <ContactInfoCard icon={<Clock className="text-[#10B981]" />} title="Working Hours" info="Mon-Fri, 9am - 6pm EST" />
-              <ContactInfoCard 
-    icon={<Mail className="text-[#10B981]" />} 
-    title="Email Support" 
-    info={
-        <div className="flex flex-col">
-            <span>colourpix.official@gmail.com</span>
-            <span>colourpix.socials@gmail.com</span>
-        </div>
-    }  
-/>
-
-<ContactInfoCard 
-    icon={<Phone className="text-[#10B981]" />} 
-    title="Phone Support" 
-    info={
-        <div className="flex flex-col">
-            <span>+92 370 4123327</span>
-            <span>+92 301 0144611</span>
-        </div>
-    }  
-/>
+            <div className="lg:col-span-4 lg:pb-2">
+              <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
+                Have a packaging project or commercial print inquiry? Reach out to our senior sales engineers and pre-press specialists for direct factory quotes and dieline samples.
+              </p>
             </div>
           </div>
         </div>
-      </main>
+      </section>
 
-      <a href="https://wa.me/123" target="_blank" rel="noreferrer" className="fixed bottom-8 right-8 z-50 group flex items-center gap-3 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white p-4 pr-6 rounded-full shadow-lg hover:-translate-y-1 transition-all">
-        <div className="bg-white/20 p-2 rounded-full"><MessageCircle size={24} /></div>
-        <div className="flex flex-col items-start text-left leading-none">
-          <span className="text-[10px] opacity-80 mb-1 font-medium">Need help?</span>
-          <span className="font-bold text-sm">WhatsApp Chat</span>
+      {/* MAIN CONTACT SECTION */}
+      <section className="py-28 border-b border-[#27272A]/50 bg-[#09090B]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* Left Column: Form */}
+            <div className="lg:col-span-7 luxury-card p-8 sm:p-12 rounded-3xl border border-white/15 shadow-2xl">
+              {isSubmitted ? (
+                <div className="py-16 text-center space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-[#2563EB]/20 text-[#2563EB] flex items-center justify-center mx-auto">
+                    <CheckCircle2 size={36} />
+                  </div>
+                  <h3 className="font-syne text-3xl font-extrabold text-white">Inquiry Received!</h3>
+                  <p className="text-[#A1A1AA] text-sm">Connecting you to our live design review workspace...</p>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-8">
+                    <span className="text-xs font-mono text-[#2563EB] uppercase block font-bold tracking-wider mb-1">
+                      DIRECT QUOTATION FORM
+                    </span>
+                    <h2 className="font-syne text-3xl font-extrabold text-white uppercase">Request a Bulk Quote</h2>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Your Full Name *</label>
+                        <input 
+                          type="text" required 
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder="e.g. Ali Khan" 
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Email Address *</label>
+                        <input 
+                          type="email" required 
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="name@company.com" 
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Phone / WhatsApp *</label>
+                        <input 
+                          type="tel" required 
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="+92 300 1234567" 
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Product Interest *</label>
+                        <select 
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        >
+                          {subjects.length > 0 ? (
+                            subjects.map(s => <option key={s.id} value={s.name}>{s.name}</option>)
+                          ) : (
+                            <>
+                              <option value="Luxury Rigid Boxes">Luxury Rigid Boxes</option>
+                              <option value="Corrugated Mailers">Corrugated E-Commerce Mailers</option>
+                              <option value="Product Labels">Product Labels & Stickers</option>
+                              <option value="Retail Bags">Retail Shopping Bags</option>
+                              <option value="Commercial Print">Commercial Offset Printing</option>
+                            </>
+                          )}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Attach Dieline / Artwork File (Optional)</label>
+                      <div className="border-2 border-dashed border-white/15 hover:border-[#2563EB] rounded-2xl p-6 text-center cursor-pointer transition-colors bg-[#09090B]">
+                        <input 
+                          type="file" 
+                          id="file-upload"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                              alert(`Attached: ${e.target.files[0].name}`);
+                            }
+                          }}
+                        />
+                        <label htmlFor="file-upload" className="cursor-pointer space-y-2 block">
+                          <span className="text-xs font-mono text-[#2563EB] uppercase font-bold block">
+                            + Drag & Drop or Click to Upload Dieline (.AI, .PDF, .ARD)
+                          </span>
+                          <span className="text-[10px] text-[#A1A1AA] block">Supports PDF, AI, PSD, ARD up to 50MB</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <button 
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 rounded-xl font-syne font-bold text-base tracking-wider uppercase transition-all shadow-[0_0_30px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2"
+                    >
+                      <span>{loading ? 'Submitting...' : 'Submit Quotation Request'}</span>
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
+
+            {/* Right Column: Contact Cards & Map */}
+            <div className="lg:col-span-5 space-y-6">
+              
+              <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 space-y-6">
+                <span className="text-xs font-mono text-[#2563EB] uppercase block font-bold tracking-wider">
+                  DIRECT CONTACT INFORMATION
+                </span>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 border border-[#2563EB]/30 flex items-center justify-center text-[#2563EB] shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#A1A1AA] uppercase block">Official Email Support</span>
+                    <span className="text-sm font-bold text-white block">colourpix.official@gmail.com</span>
+                    <span className="text-xs text-[#A1A1AA]">colourpix.socials@gmail.com</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#E11D48]/10 border border-[#E11D48]/30 flex items-center justify-center text-[#E11D48] shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#A1A1AA] uppercase block">Direct Phone & WhatsApp</span>
+                    <span className="text-sm font-bold text-white block">+92 370 4123327</span>
+                    <span className="text-xs text-[#A1A1AA]">+92 301 0144611</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white shrink-0">
+                    <Building2 className="w-5 h-5 text-[#2563EB]" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#A1A1AA] uppercase block">Lahore Industrial Plant</span>
+                    <span className="text-sm font-bold text-white block">Lahore, Punjab, Pakistan</span>
+                    <span className="text-xs text-[#2563EB] font-mono font-bold">LCCI Member #1991-PK</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#A1A1AA] uppercase block">Plant Operating Hours</span>
+                    <span className="text-xs font-bold text-white">Monday – Saturday: 9:00 AM – 7:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Map Embed Card */}
+              <div className="rounded-3xl overflow-hidden border border-white/10 h-56 relative group">
+                <iframe 
+                  title="ColourPix Lahore Industrial Plant Map"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d435514.481926685!2d74.00472288330752!3d31.483103657313886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23fad61091b45ad!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" 
+                  className="w-full h-full filter invert contrast-125 grayscale"
+                  style={{ border: 0 }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+
+              {/* WhatsApp Quick Action Button */}
+              <a 
+                href="https://wa.me/923704123327" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="p-6 rounded-2xl bg-gradient-to-r from-[#25D366]/20 to-[#128C7E]/20 border border-[#25D366]/40 flex items-center justify-between text-white hover:border-[#25D366] transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <MessageCircle className="w-8 h-8 text-[#25D366]" />
+                  <div>
+                    <span className="text-[10px] font-mono text-[#25D366] uppercase block font-bold">INSTANT RESPONSE</span>
+                    <span className="text-sm font-bold">Chat Live via WhatsApp</span>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-5 h-5 text-[#25D366] group-hover:translate-x-1 transition-transform" />
+              </a>
+
+            </div>
+
+          </div>
         </div>
-      </a>
-    </div>
-  );
-};
+      </section>
 
-const ContactInfoCard = ({ icon, title, info, isLink, link }) => {
-  const content = (
-    <div className="bg-[#141A3A]/40 border border-white/5 p-6 rounded-2xl flex items-center gap-5 hover:border-[#10B981]/30 transition-all group">
-      <div className="size-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#10B981]/20 transition-colors">{icon}</div>
-      <div className="text-left">
-        <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">{title}</p>
-        <p className="text-white text-lg font-bold">{info}</p>
-      </div>
+      <Footer />
     </div>
   );
-  return isLink ? <a href={link} className="block no-underline">{content}</a> : <div>{content}</div>;
 };
 
 export default ContactPage;

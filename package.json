@@ -1,4 +1,11 @@
 {
+  "name": "colourpix-website",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd frontend && npm start",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && node index.js"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
@@ -9,5 +16,6 @@
     "node-cron": "^4.2.1",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
-  }
+  },
+  "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065"
 }

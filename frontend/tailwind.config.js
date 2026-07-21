@@ -6,12 +6,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        syne: ['"Syne"', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        mono: ['"Space Grotesk"', 'sans-serif'],
+      },
       colors: {
-        primary: "#FF4D4D",
-        secondary: "#c813ec",
-        "background-dark": "#0B0F1E",
-        "surface-dark": "#141A3A",
-        "text-muted": "#A1A1AA",
+        "matte-black": "#09090B",
+        "matte-card": "#121215",
+        "matte-border": "#27272A",
+        "warm-white": "#FAFAFA",
+        "warm-gray": "#A1A1AA",
+        "brand-blue": "#2563EB",
+        "brand-blue-dark": "#1E3A8A",
+        "brand-red": "#E11D48",
+        "brand-red-dark": "#9F1239",
       },
       animation: {
         'spin-slow': 'spin 3s linear infinite',

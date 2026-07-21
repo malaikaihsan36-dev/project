@@ -219,12 +219,3 @@ exports.getProductById = async (req, res) => {
     }
 };
 
-// Ek utility file mein ye function bana lein
-export const getOptimizedImage = (url) => {
-  if (!url) return "";
-  // Agar image Cloudinary ki hai, toh transformations add karein
-  if (url.includes("cloudinary.com")) {
-    return url.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
-  }
-  return url;
-};

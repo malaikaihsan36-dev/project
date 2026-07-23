@@ -23,6 +23,7 @@ import DesignReview from './pages/DesignReview';
 import FinalOrder from './pages/FinalOrder';
 import ReviewsPage from './pages/ReviewsPage';
 import Loading from './pages/Loading';
+import MagazineViewer from './pages/MagazineViewer';
 
 // Admin Components & Pages
 import AdminLayout from './components/AdminLayout';
@@ -88,6 +89,8 @@ function App() {
         <Route path="/final-order/:orderId" element={<FinalOrder />} />
         <Route path="/final-order" element={<FinalOrder />} />
         <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/read/:id" element={<MagazineViewer />} />
+        <Route path="/magazine/:id" element={<MagazineViewer />} />
 
         {/* --- ADMIN AUTH & PANEL --- */}
         <Route path="/admin-login" element={<AdminLogin />} />

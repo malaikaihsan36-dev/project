@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Download, 
   Search, 
-  Filter, 
   FileText, 
   BookOpen, 
   ChevronRight, 
-  ChevronDown, 
   Eye, 
-  Sparkles,
   ArrowUpRight,
-  Clock,
-  Layers,
-  Award
+  Layers
 } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -99,6 +94,7 @@ const PUBLICATIONS_DATA = [
 ];
 
 const KnowledgeCenterPage = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   
@@ -180,7 +176,7 @@ const KnowledgeCenterPage = () => {
               <div className="flex flex-wrap gap-4">
                 <button 
                   ref={magReadRef}
-                  onClick={() => downloadBrochure("Company Profile")}
+                  onClick={() => navigate("/read/cp-mag-01")}
                   className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] btn-magnetic"
                 >
                   Read Latest Magazine
@@ -220,7 +216,7 @@ const KnowledgeCenterPage = () => {
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <button 
-                      onClick={() => downloadBrochure("Company Profile")}
+                      onClick={() => navigate("/read/cp-mag-01")}
                       className="bg-white/15 backdrop-blur-md border border-white/20 text-white p-3 rounded-full hover:bg-white hover:text-black transition-colors"
                     >
                       <Eye size={20} />
@@ -270,7 +266,7 @@ const KnowledgeCenterPage = () => {
                   {/* CTAs */}
                   <div className="flex flex-wrap gap-4 pt-2">
                     <button 
-                      onClick={() => downloadBrochure("Company Profile")}
+                      onClick={() => navigate("/read/cp-mag-01")}
                       className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center gap-2"
                     >
                       <Eye size={14} /> Read Online
@@ -389,7 +385,13 @@ const KnowledgeCenterPage = () => {
                         </button>
                         
                         <button 
-                          onClick={() => downloadBrochure(res.downloadName)}
+                          onClick={() => {
+                            if (res.category === 'Magazine') {
+                              navigate(`/read/${res.id}`);
+                            } else {
+                              downloadBrochure(res.downloadName);
+                            }
+                          }}
                           className="bg-transparent border border-white/10 text-white hover:border-white/20 py-3.5 rounded-xl text-[10px] font-mono uppercase tracking-wider font-bold transition-all flex items-center justify-center gap-1.5"
                         >
                           <Eye size={12} /> Preview

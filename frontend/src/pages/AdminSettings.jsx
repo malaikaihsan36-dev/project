@@ -21,6 +21,8 @@ const AdminSettings = () => {
   // Password visibility states
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
   
   const [formData, setFormData] = useState({
     email: '',
@@ -31,7 +33,8 @@ const AdminSettings = () => {
   // 1. Fetch Admins
   const fetchAdmins = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin-list');
+      // Direct connection string setup ki bina kisi external changes ke
+      const res = await axios.get('${API_BASE_URL}/api/admin-list');
       setAdmins(res.data);
     } catch (err) {
       console.error("Error fetching admins:", err);
@@ -55,7 +58,8 @@ const AdminSettings = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/add', {
+      // Direct connection string setup ki bina kisi external changes ke
+      const res = await axios.post('${API_BASE_URL}/api/admin/add', {
         email: formData.email,
         password: formData.password
       });
@@ -81,7 +85,8 @@ const AdminSettings = () => {
 
     if (window.confirm(`Are you sure you want to remove ${email}?`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/${id}`);
+        // Direct connection string setup ki bina kisi external changes ke
+        await axios.delete(`${API_BASE_URL}/api/admin/${id}`);
         setAdmins(admins.filter(admin => admin.id !== id));
       } catch (err) {
         alert(err.response?.data?.error || "Failed to delete admin");

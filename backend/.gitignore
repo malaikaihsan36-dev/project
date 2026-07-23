@@ -1,0 +1,8 @@
+# Backend dependencies
+node_modules/
+
+# Environment variables (Database aur WhatsApp keys secure karne ke liye)
+.env
+
+# Logs
+npm-debug.log*

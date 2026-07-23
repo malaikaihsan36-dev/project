@@ -6,6 +6,7 @@ import axios from 'axios';
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -19,7 +20,7 @@ const Navbar = () => {
     e.preventDefault();
     const cleanCode = resumeCode.replace(/[#\s]/g, '').toUpperCase().trim();
     try {
-      const response = await axios.post('http://localhost:5000/api/orders/resume-design', { 
+      const response = await axios.post(`${API_BASE_URL}/api/orders/resume-design`, { 
         email: resumeEmail.toLowerCase().trim(), 
         code: cleanCode 
       });
@@ -130,6 +131,13 @@ const Navbar = () => {
               className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/why-colourpix' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
             >
               Why Us
+            </Link>
+
+            <Link 
+              to="/trust-center" 
+              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/trust-center' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
+            >
+              Trust Center
             </Link>
 
             {/* Services Dropdown */}

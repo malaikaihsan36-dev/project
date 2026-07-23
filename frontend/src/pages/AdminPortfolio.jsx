@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, X, UploadCloud, Tag, MessageSquare } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, UploadCloud, Tag, MessageSquare, ExternalLink } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 // Image optimization helper ko import kiya
@@ -15,16 +15,19 @@ const AdminPortfolio = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [formData, setFormData] = useState({ title: '', desc: '', img: '', tags: '', category: '' });
+  // formData state mein project_url field add kiya
+  const [formData, setFormData] = useState({ title: '', desc: '', img: '', tags: '', category: '', project_url: '' });
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
   // --- Data Fetching Logic ---
   const fetchData = async () => {
     try {
-      // Teeno APIs se ek sath data mangwaya performance behtar karne ke liye
+      // Direct safe connection strings bina kisi variable configuration issue ke
       const [projRes, catRes, subRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/projects'),
-        axios.get('http://localhost:5000/api/portfolio-categories'),
-        axios.get('http://localhost:5000/api/contact-subjects')
+        axios.get('${API_BASE_URL}/api/projects'),
+        axios.get('${API_BASE_URL}/api/portfolio-categories'),
+        axios.get('${API_BASE_URL}/api/contact-subjects')
       ]);
       setProjects(projRes.data);
       setCategories(catRes.data);
@@ -47,7 +50,7 @@ const AdminPortfolio = () => {
   const addSubject = async () => {
     if (!newSubName.trim()) return;
     try {
-      await axios.post('http://localhost:5000/api/contact-subjects', { name: newSubName });
+      await axios.post('${API_BASE_URL}/api/contact-subjects', { name: newSubName });
       setNewSubName('');
       fetchData();
     } catch (err) { alert("Failed to add subject"); }
@@ -56,7 +59,7 @@ const AdminPortfolio = () => {
   const deleteSubject = async (id) => {
     if (!window.confirm("Delete subject?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/contact-subjects/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/contact-subjects/${id}`);
       fetchData();
     } catch (err) { alert("Delete failed"); }
   };
@@ -65,7 +68,7 @@ const AdminPortfolio = () => {
   const addCategory = async () => {
     if (!newCatName.trim()) return;
     try {
-      await axios.post('http://localhost:5000/api/portfolio-categories', { name: newCatName });
+      await axios.post('${API_BASE_URL}/api/portfolio-categories', { name: newCatName });
       setNewCatName('');
       fetchData(); 
     } catch (err) { alert("Failed to add category."); }
@@ -74,7 +77,7 @@ const AdminPortfolio = () => {
   const deleteCategory = async (id) => {
     if (!window.confirm("Delete category?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/portfolio-categories/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/portfolio-categories/${id}`);
       fetchData();
     } catch (err) { alert("Delete failed"); }
   };
@@ -86,7 +89,7 @@ const AdminPortfolio = () => {
     data.append('file', acceptedFiles[0]);
     data.append('upload_preset', 'my_portfolio_preset'); 
     try {
-      const res = await axios.post('https://api.cloudinary.com/v1_1/dxduylcez/image/upload', data);
+      const res = await axios.post('https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload', data);
       setFormData({ ...formData, img: res.data.secure_url });
     } catch (err) { 
       alert("Upload failed."); 
@@ -100,42 +103,51 @@ const AdminPortfolio = () => {
     accept: {'image/*': []} 
   });
 
-  // --- Save / Update Project Logic ---
-  const saveProject = async () => {
-    if (!formData.img) {
-      alert("Please upload an image first.");
-      return;
+  // --- Save / Update Project Logic (Frontend AdminPortfolio.jsx) ---
+const saveProject = async () => {
+  // Title aur image validation
+  if (!formData.title.trim()) {
+    alert("Please enter a project title.");
+    return;
+  }
+  if (!formData.img) {
+    alert("Please upload an image first.");
+    return;
+  }
+
+  try {
+    // Payload mein backend ke mutabiq perfect mapping
+    const payload = {
+      title: formData.title,
+      desc: formData.desc,
+      img: formData.img,
+      category: formData.category,
+      tags: formData.tags,
+      project_url: formData.project_url // Yeh backend controller mein req.body se pick hoga
+    };
+
+    if (editingId) {
+      console.log("Updating ID:", editingId);
+      const res = await axios.put(`${API_BASE_URL}/api/projects/${editingId}`, payload);
+      alert(res.data.message || "Updated successfully!");
+    } else {
+      const res = await axios.post('${API_BASE_URL}/api/projects', payload);
+      alert(res.data.message || "Saved successfully!");
     }
 
-    try {
-      const payload = {
-        title: formData.title,
-        desc: formData.desc,
-        img: formData.img,
-        category: formData.category,
-        tags: formData.tags
-      };
-
-      if (editingId) {
-        await axios.put(`http://localhost:5000/api/projects/${editingId}`, payload);
-      } else {
-        await axios.post('http://localhost:5000/api/projects', payload);
-      }
-
-      alert("Saved successfully!");
-      fetchData();
-      closeModal();
-    } catch (err) { 
-      console.error("Save Error:", err.response?.data || err.message);
-      alert("Database save failed!"); 
-    }
-  };
+    fetchData(); // Grid refresh karega
+    closeModal(); // Modal band aur form clean karega
+  } catch (err) { 
+    console.error("Full Error Object:", err);
+    alert("Error: " + (err.response?.data?.message || err.message || "Server connection failed")); 
+  }
+};
 
   // --- Delete Project ---
   const deleteProject = async (id) => {
     if(window.confirm("Delete this project?")) {
       try { 
-        await axios.delete(`http://localhost:5000/api/projects/${id}`); 
+        await axios.delete(`${API_BASE_URL}/api/projects/${id}`); 
         fetchData(); 
       } catch (err) { 
         console.error("Delete Error:", err.response?.data || err.message);
@@ -147,7 +159,7 @@ const AdminPortfolio = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingId(null);
-    setFormData({ title: '', desc: '', img: '', tags: '', category: categories[0]?.name || '' });
+    setFormData({ title: '', desc: '', img: '', tags: '', category: categories[0]?.name || '', project_url: '' });
   };
 
   return (
@@ -234,6 +246,11 @@ const AdminPortfolio = () => {
                 <div>
                   <h3 className="font-bold text-lg">{p.title}</h3>
                   <span className="text-[10px] bg-[#00ffaa]/10 text-[#00ffaa] px-2 py-0.5 rounded uppercase font-bold">{p.category}</span>
+                  {p.project_url && (
+                    <a href={p.project_url} target="_blank" rel="noreferrer" className="block text-xs text-blue-400 hover:underline mt-1 flex items-center gap-1">
+                      <ExternalLink size={12} /> View Link
+                    </a>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => { 
@@ -243,7 +260,8 @@ const AdminPortfolio = () => {
                       desc: p.description || p.desc, 
                       img: p.image_url || p.img, 
                       tags: p.tags, 
-                      category: p.category
+                      category: p.category,
+                      project_url: p.project_url || '' // Edit mode mein link extract ho raha hai
                     }); 
                     setIsModalOpen(true); 
                   }} className="text-blue-400 p-1 hover:bg-blue-400/10 rounded"><Edit2 size={16} /></button>
@@ -285,6 +303,9 @@ const AdminPortfolio = () => {
             
             <input placeholder="Tags" value={formData.tags} onChange={e => setFormData({...formData, tags: e.target.value})} className="w-full p-2 bg-black/50 border border-gray-700 rounded mb-2 text-white outline-none focus:border-[#00ffaa]" />
             
+            {/* Project URL / Link Input Field */}
+            <input placeholder="Project URL / Link (e.g., https://example.com)" value={formData.project_url} onChange={e => setFormData({...formData, project_url: e.target.value})} className="w-full p-2 bg-black/50 border border-gray-700 rounded mb-2 text-white outline-none focus:border-[#00ffaa]" />
+
             <button onClick={saveProject} disabled={isUploading} className="bg-[#00ffaa] text-black w-full py-3 font-bold rounded-lg mt-4 disabled:bg-gray-600 transition-colors">
               {editingId ? "Update Project" : "Save Project"}
             </button>

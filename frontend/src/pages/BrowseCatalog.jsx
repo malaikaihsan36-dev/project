@@ -53,16 +53,23 @@ const BrowseCatalog = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   // API se products aur categories fetch karne ka logic
   useEffect(() => {
     const fetchCatalogData = async () => {
       try {
         setLoading(true);
-        const prodRes = await fetch('http://localhost:5000/api/products');
+
+        // Environment variable access kiya taake backend base link secure aur load ho sake
+        
+
+        // React strict structure string literals dynamic backend data call ke liye
+        const prodRes = await fetch(`${API_BASE_URL}/api/products`);
         const prodData = await prodRes.json();
         setProducts(prodData);
 
-        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catRes = await fetch(`${API_BASE_URL}/api/categories`);
         const catData = await catRes.json();
         setCategoriesList(catData);
 

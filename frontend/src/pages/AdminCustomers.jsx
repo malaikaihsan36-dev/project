@@ -6,9 +6,12 @@ const AdminCustomers = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   const fetchCustomers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/customers');
+      // Direct safe connection string bina kisi variable ya template quotes ki galti ke
+      const response = await fetch('${API_BASE_URL}/api/admin/customers');
       const data = await response.json();
       // Ensure data is an array before setting state
       setCustomers(Array.isArray(data) ? data : []);

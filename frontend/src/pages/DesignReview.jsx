@@ -37,9 +37,23 @@ const DesignReview = () => {
     const [isDragging, setIsDragging] = useState(false);
     const dragStart = useRef({ x: 0, y: 0 });
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
     // 1. SOCKET: Global Admin Online/Offline Status
     useEffect(() => {
-        const socket = io('http://localhost:5000', { transports: ['websocket'] });
+        // Dynamic socket URL pass kiya template string ke sath
+        const socket = io("https://colourpix.pk", {
+    path: "/api/socket.io",
+    // Forcefully use polling first to instantly break through cPanel firewall limits
+    transports: ["polling", "websocket"],
+    withCredentials: true,
+    autoConnect: true,
+    reconnection: true,            // Agar connection drop ho toh khud dubara connect kare
+    reconnectionAttempts: Infinity, // Jab tak net chal raha hai, try karta rahe
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000
+});
         socketRef.current = socket;
 
         socket.on('global_admin_status', (status) => {
@@ -49,13 +63,14 @@ const DesignReview = () => {
         socket.emit('check_global_admin');
 
         return () => socket.disconnect();
-    }, []);
+    }, [API_BASE_URL]);
 
     // 2. DATA: Initial Fetch for Order, Expiry, and Approval status
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/order/${cleanId}?t=${Date.now()}`);
+                // Hardcoded local URL ki jagah template literal backticks dynamic string use kiya
+                const res = await axios.get(`${API_BASE_URL}/api/order/${cleanId}?t=${Date.now()}`);
                 if (res.data) {
                     setProduct({
                         title: res.data.product_title || "Custom Order",
@@ -72,18 +87,19 @@ const DesignReview = () => {
             }
         };
         if (cleanId && cleanId !== "TEMP") fetchOrderData();
-    }, [cleanId]);
+    }, [cleanId, API_BASE_URL]);
 
     // 3. CHAT: Fetch historical messages
     const fetchChat = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/chat/${cleanId}?t=${Date.now()}`);
+            // Dynamic backtick API setup bina kisi code alteration ke
+            const response = await fetch(`${API_BASE_URL}/api/chat/${cleanId}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
                 setMessages(data);
             }
         } catch (err) { console.error("Chat load fail:", err); }
-    }, [cleanId]);
+    }, [cleanId, API_BASE_URL]);
 
     // 4. SOCKET: Real-time Chat and Design Update listeners
     useEffect(() => {
@@ -145,7 +161,8 @@ const DesignReview = () => {
         const nextState = !isApproved;
         setIsApproved(nextState);
         try {
-            await axios.post('http://localhost:5000/api/order/update-status', { 
+            // Dynamic secure API URL integration
+            await axios.post(`${API_BASE_URL}/api/order/update-status`, { 
                 orderId: cleanId, 
                 field: 'is_approved', 
                 value: nextState 
@@ -161,7 +178,7 @@ const DesignReview = () => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", "my_portfolio_preset");
-            const res = await fetch("https://api.cloudinary.com/v1_1/dxduylcez/image/upload", { method: "POST", body: formData });
+            const res = await fetch('https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload', { method: "POST", body: formData });
             const imageData = await res.json();
             socketRef.current.emit('send_message', {
                 orderId: cleanId, sender: 'customer', message: "Sent an image", imageUrl: imageData.secure_url, type: 'image'

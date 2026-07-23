@@ -35,12 +35,13 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const prodRes = await fetch('http://localhost:5000/api/products');
+        // Direct safe connection strings bina kisi variable ke
+        const prodRes = await fetch(`${API_BASE_URL}/api/products`);
         const prodData = await prodRes.json();
         const popular = prodData.filter(p => p.is_popular === 1 || p.is_popular === true);
         setPopularProducts(popular);
 
-        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catRes = await fetch(`${API_BASE_URL}/api/categories`);
         const catData = await catRes.json();
         setCategories(catData);
       } catch (err) {

@@ -8,13 +8,15 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false); // Loading state add ki
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     
     try {
-      // Backend API call jo humne banayi thi (ya banayenge)
-      const response = await axios.post('http://localhost:5000/api/admin/login', {
+      // Direct safe connection string setup bina kisi variables ki warning ke
+      const response = await axios.post('${API_BASE_URL}/api/admin/login', {
         email,
         password
       });

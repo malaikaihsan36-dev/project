@@ -8,6 +8,23 @@ const projCtrl = require('../controllers/projectController');
 const customerController = require('../controllers/customerController');
 const productController = require('../controllers/productController');
 const adminController = require('../controllers/adminController');
+const whatsappCtrl = require('../controllers/whatsappController');
+
+// --- WHATSAPP ROUTES ---
+// 1. Manually test karne ke liye route
+router.post('/test-whatsapp-send', async (req, res) => {
+    const { number, orderId } = req.body;
+    const success = await whatsappCtrl.sendCustomerNotification(number, orderId);
+    if (success) {
+        res.status(200).json({ message: "Notification sent successfully!" });
+    } else {
+        res.status(500).json({ error: "Failed to send WhatsApp message." });
+    }
+});
+
+// 2. Meta Webhook Route (Tarika 1 ke liye)
+router.get('/whatsapp-webhook', whatsappCtrl.handleIncomingWebhook);
+router.post('/whatsapp-webhook', whatsappCtrl.handleIncomingWebhook);
 
 // --- ADMIN MANAGEMENT ROUTES ---
 // Inhe upar rakhein aur paths ko specific karein

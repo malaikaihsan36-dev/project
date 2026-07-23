@@ -11,29 +11,43 @@ const AdminLayout = () => {
   const [notifications, setNotifications] = useState({ total: 0, details: [] });
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   // Function to fetch notifications from backend
   const loadNotifications = async () => {
-  try {
-    const res = await axios.get('http://localhost:5000/api/notifications', {
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-      },
-      // Ek random parameter add karne se browser cache bypass ho jata hai
-      params: { _t: Date.now() } 
-    });
-    
-    if (res.data.success) {
-      setNotifications({ total: res.data.total, details: res.data.details });
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/notifications`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+        // Ek random parameter add karne se browser cache bypass ho jata hai
+        params: { _t: Date.now() } 
+      });
+      
+      if (res.data.success) {
+        setNotifications({ total: res.data.total, details: res.data.details });
+      }
+    } catch (err) {
+      console.error("Error loading notifications:", err);
     }
-  } catch (err) {
-    console.error("Error loading notifications:", err);
-  }
-};
+  };
 
   useEffect(() => {
-    const socket = io('http://localhost:5000', { transports: ['websocket'] });
+    // ✅ Fixed: Added cPanel compatible real-time routing path and custom transport layers
+    const socket = io("https://colourpix.pk", {
+    path: "/api/socket.io",
+    // Forcefully use polling first to instantly break through cPanel firewall limits
+    transports: ["polling", "websocket"],
+    withCredentials: true,
+    autoConnect: true,
+    reconnection: true,            // Agar connection drop ho toh khud dubara connect kare
+    reconnectionAttempts: Infinity, // Jab tak net chal raha hai, try karta rahe
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000
+});
     socketRef.current = socket;
 
     socket.emit('admin_login');
@@ -54,7 +68,7 @@ const AdminLayout = () => {
     });
 
     return () => socket.disconnect();
-}, []);
+  }, [API_BASE_URL]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminAuth');
@@ -68,23 +82,23 @@ const AdminLayout = () => {
         : "text-[#94A3B8] hover:bg-[#334155] hover:text-white border-transparent"
     }`;
 
-    const handleNotificationClick = async (orderId) => {
-  try {
-    // 1. Backend API call takay is_read = 1 ho jaye
-    await axios.post('http://localhost:5000/api/mark-read', { orderId });
-    
-    // 2. Dropdown band karein
-    setShowDropdown(false);
-    
-    // 3. Page redirect karein (AdminLayout ke andar hai isliye /admin/ lagaeyn)
-    window.open(`/admin/order-review/${orderId}`, '_blank', 'noopener,noreferrer');
-    
-    // 4. Notifications dobara load karein takay count update ho jaye
-    loadNotifications(); 
-  } catch (err) {
-    console.error("Navigation error:", err);
-  }
-};
+  const handleNotificationClick = async (orderId) => {
+    try {
+      // 1. Backend API call takay is_read = 1 ho jaye
+      await axios.post(`${API_BASE_URL}/api/mark-read`, { orderId });
+      
+      // 2. Dropdown band karein
+      setShowDropdown(false);
+      
+      // 3. Page redirect karein (AdminLayout ke andar hai isliye /admin/ lagaeyn)
+      window.open(`/admin/order-review/${orderId}`, '_blank', 'noopener,noreferrer');
+      
+      // 4. Notifications dobara load karein takay count update ho jaye
+      loadNotifications(); 
+    } catch (err) {
+      console.error("Navigation error:", err);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#0F172A] text-white font-['Space_Grotesk'] text-left">

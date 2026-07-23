@@ -8,13 +8,16 @@ const AdminReviews = () => {
   const [newProductName, setNewProductName] = useState('');
   const [loading, setLoading] = useState(true);
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   // --- Fetch Data Functions ---
   const fetchData = async () => {
     try {
       setLoading(true);
+      // Hardcoded links ko fetch variables ke through update kiya bina kisi brackets ki galti ke
       const [reviewsRes, productsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/reviews'),
-        axios.get('http://localhost:5000/api/product-list')
+        axios.get('${API_BASE_URL}/api/reviews'),
+        axios.get('${API_BASE_URL}/api/product-list')
       ]);
       setReviews(reviewsRes.data);
       setProductList(productsRes.data);
@@ -32,7 +35,8 @@ const AdminReviews = () => {
   // --- Review Moderation Logic ---
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/reviews/${id}/status`, { status: newStatus });
+      // String dynamic interpolation ko clear format mein set kiya
+      await axios.patch('${API_BASE_URL}/api/reviews/' + id + '/status', { status: newStatus });
       fetchData(); // Refresh list
     } catch (err) {
       alert("Status Update Failed");
@@ -44,7 +48,7 @@ const AdminReviews = () => {
     e.preventDefault();
     if (!newProductName.trim()) return;
     try {
-      await axios.post('http://localhost:5000/api/product-list', { name: newProductName });
+      await axios.post('${API_BASE_URL}/api/product-list', { name: newProductName });
       setNewProductName('');
       fetchData(); // Refresh list to show new product
     } catch (err) {
@@ -55,7 +59,8 @@ const AdminReviews = () => {
   const handleDeleteProduct = async (id) => {
     if (!window.confirm("Are you sure? This will remove it from the User's dropdown.")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/product-list/${id}`);
+      // Dynamic link bina single/double quotes ki syntax warning ke concat kiya
+      await axios.delete('${API_BASE_URL}/api/product-list/' + id);
       fetchData();
     } catch (err) {
       alert("Delete failed");
@@ -88,24 +93,24 @@ const AdminReviews = () => {
                 placeholder="Add new product name (e.g. Stickers, Posters...)"
               />
               <button 
-  type="submit" 
-  className="relative h-[48px] px-6 rounded-xl font-bold flex items-center gap-2 overflow-hidden transition-all active:scale-95 group shadow-[0_0_15px_rgba(255,77,77,0.2)]"
->
-  {/* Two-Tone Gradient (Red to Orange) */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D4D] to-[#F97316] transition-all duration-300 group-hover:opacity-90"></div>
-  
-  {/* Hover Glimmer Effect */}
-  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white transition-opacity duration-300"></div>
+                type="submit" 
+                className="relative h-[48px] px-6 rounded-xl font-bold flex items-center gap-2 overflow-hidden transition-all active:scale-95 group shadow-[0_0_15px_rgba(255,77,77,0.2)]"
+              >
+                {/* Two-Tone Gradient (Red to Orange) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D4D] to-[#F97316] transition-all duration-300 group-hover:opacity-90"></div>
+                
+                {/* Hover Glimmer Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white transition-opacity duration-300"></div>
 
-  {/* Button Content */}
-  <div className="relative flex items-center gap-2 text-white">
-    <Plus size={18} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
-    <span>Add Product</span>
-  </div>
+                {/* Button Content */}
+                <div className="relative flex items-center gap-2 text-white">
+                  <Plus size={18} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
+                  <span>Add Product</span>
+                </div>
 
-  {/* Subtle Outer Glow on Hover */}
-  <div className="absolute inset-0 rounded-xl group-hover:shadow-[0_0_20px_rgba(255,77,77,0.4)] transition-all pointer-events-none"></div>
-</button>
+                {/* Subtle Outer Glow on Hover */}
+                <div className="absolute inset-0 rounded-xl group-hover:shadow-[0_0_20px_rgba(255,77,77,0.4)] transition-all pointer-events-none"></div>
+              </button>
             </form>
 
             <div className="flex flex-wrap gap-3">

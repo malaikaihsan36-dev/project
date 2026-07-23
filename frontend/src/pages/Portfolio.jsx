@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, Star, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Star, ChevronRight, CheckCircle2, ExternalLink } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import axios from 'axios';
 import { getOptimizedImage } from '../components/imageHelper';
 
 const Portfolio = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
   const [activeTab, setActiveTab] = useState('All Projects');
   const [projects, setProjects] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     document.title = "Industrial Portfolio & Case Studies | ColourPix";
     
     const fetchData = async () => {
       try {
+        // Direct safe localhost server calls bina kisi environment variable dependency ke
         const [projRes, catRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/portfolio-categories')
+          axios.get(`${API_BASE_URL}/api/projects`),
+          axios.get(`${API_BASE_URL}/api/portfolio-categories`)
         ]);
         setProjects(projRes.data);
         const dynamicTabs = ['All Projects', ...catRes.data.map(c => c.name)];
@@ -38,6 +39,13 @@ const Portfolio = () => {
         if (!p.category) return false;
         return p.category.trim().toLowerCase() === activeTab.trim().toLowerCase();
       });
+
+  // Helper function to safely open links in a new tab
+  const handleProjectClick = (url) => {
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+};
 
   return (
     <div className="bg-[#09090B] text-white antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen">

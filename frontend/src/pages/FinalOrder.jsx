@@ -18,6 +18,8 @@ const FinalOrder = () => {
   const orderId = location.state?.orderId;
   const cleanId = orderId ? orderId.replace(/[%23#\s]/g, '').trim() : "";
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   useEffect(() => {
     window.scrollTo(0, 0); // Page load par top par scroll karna
     const fetchFinalDetails = async () => {
@@ -26,8 +28,8 @@ const FinalOrder = () => {
         return;
       }
       try {
-        // Backend se finalized order details mangwana
-        const res = await axios.get(`http://localhost:5000/api/order/${cleanId}`);
+        // Backend se finalized order details mangwana (Direct Link Connection)
+        const res = await axios.get(`${API_BASE_URL}/api/order/${cleanId}`);
         if (res.data) setOrderData(res.data);
       } catch (err) {
         console.error("Error fetching final order data:", err);
@@ -54,8 +56,8 @@ const FinalOrder = () => {
   const handleFinalConfirm = async () => {
     setIsConfirming(true); // Button ko processing mode mein dalna
     try {
-      // API hit karke order status update karna aur total price save karna
-      const res = await axios.post(`http://localhost:5000/api/orders/finalize/${cleanId}`, {
+      // API hit karke order status update karna aur total price save karna (Direct Link Connection)
+      const res = await axios.post(`${API_BASE_URL}/api/orders/finalize/${cleanId}`, {
         final_total_price: grandTotal
       });
       

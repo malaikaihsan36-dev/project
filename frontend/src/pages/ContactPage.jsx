@@ -19,12 +19,14 @@ const ContactPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   useEffect(() => {
     document.title = "Contact & Quotation Inquiry | ColourPix";
     
     const fetchSubjects = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/contact-subjects');
+        const res = await axios.get(`${API_BASE_URL}/api/contact-subjects`);
         if (res.data && res.data.length > 0) {
           setSubjects(res.data);
           setFormData(prev => ({ ...prev, subject: res.data[0].name }));
@@ -66,7 +68,8 @@ const ContactPage = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/orders', contactData);
+      
+      const response = await axios.post(`${API_BASE_URL}/api/orders`, contactData);
 
       if (response.status === 201 || response.status === 200) {
         setIsSubmitted(true);

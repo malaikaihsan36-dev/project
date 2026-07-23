@@ -13,6 +13,8 @@ const AdminProducts = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingCatId, setEditingCatId] = useState(null); 
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   // Category Form State
   const [catData, setCatData] = useState({ name: '', image: null });
 
@@ -32,13 +34,15 @@ const AdminProducts = () => {
   }, []);
 
   const fetchCategories = async () => {
-    const res = await fetch('http://localhost:5000/api/categories');
+    // Direct safe connection strings bina kisi variable ke
+    const res = await fetch('${API_BASE_URL}/api/categories');
     const data = await res.json();
     setCategories(data);
   };
 
   const fetchProducts = async () => {
-    const res = await fetch('http://localhost:5000/api/products');
+    // Direct safe connection strings bina kisi variable ke
+    const res = await fetch('${API_BASE_URL}/api/products');
     const data = await res.json();
     setProducts(data);
   };
@@ -55,9 +59,10 @@ const AdminProducts = () => {
 
   // Create or Update Category (Sends Base64 to Backend for Cloudinary)
   const saveCategory = async () => {
+    // Direct safe connection strings bina kisi variable ke
     const url = editingCatId 
-      ? `http://localhost:5000/api/categories/${editingCatId}` 
-      : 'http://localhost:5000/api/categories';
+      ? `${API_BASE_URL}/api/categories/${editingCatId}` 
+      : '${API_BASE_URL}/api/categories';
     
     const method = editingCatId ? 'PUT' : 'POST';
 
@@ -93,7 +98,8 @@ const AdminProducts = () => {
     e.stopPropagation(); 
     if (!window.confirm("Are you sure? This will PERMANENTLY delete this category and ALL its products.")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/categories/${id}`, { method: 'DELETE' });
+      // Direct safe connection strings bina kisi variable ke
+      const res = await fetch(`${API_BASE_URL}/api/categories/${id}`, { method: 'DELETE' });
       if (res.ok) {
         alert("Category & Products Deleted!");
         fetchCategories();
@@ -108,7 +114,8 @@ const AdminProducts = () => {
   const togglePopular = async (product) => {
     try {
       const newStatus = !product.is_popular;
-      const res = await fetch(`http://localhost:5000/api/products/${product.id}`, {
+      // Direct safe connection strings bina kisi variable ke
+      const res = await fetch(`${API_BASE_URL}/api/products/${product.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...product, is_popular: newStatus }),
@@ -120,7 +127,8 @@ const AdminProducts = () => {
   const deleteProduct = async () => {
     if (!window.confirm("Delete this product permanently?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${editingId}`, { method: 'DELETE' });
+      // Direct safe connection strings bina kisi variable ke
+      const res = await fetch(`${API_BASE_URL}/api/products/${editingId}`, { method: 'DELETE' });
       if (res.ok) {
         alert("Product Deleted!");
         closeModal();
@@ -175,7 +183,8 @@ const AdminProducts = () => {
       description: prodData.description, image_url: prodData.previewImage
     };
 
-    const url = editingId ? `http://localhost:5000/api/products/${editingId}` : 'http://localhost:5000/api/products';
+    // Direct safe connection strings bina kisi variable ke
+    const url = editingId ? `${API_BASE_URL}/api/products/${editingId}` : '${API_BASE_URL}/api/products';
     try {
       const res = await fetch(url, {
         method: editingId ? 'PUT' : 'POST',

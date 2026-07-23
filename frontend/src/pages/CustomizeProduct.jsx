@@ -34,6 +34,8 @@ const CustomizeProduct = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(!product);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
   const displayProduct = useMemo(() => {
     // Agar product null hai ya loading hai, to default empty arrays return karein
     if (!product) return { 
@@ -71,7 +73,8 @@ const CustomizeProduct = () => {
     const fetchProductDetails = async () => {
       if (id) {
         try {
-          const response = await fetch(`http://localhost:5000/api/products/${id}`);
+          // Direct fixed URL safe dynamic check k sath bina kisi variable issue k
+          const response = await fetch(`${API_BASE_URL}/api/products/${id}`);
           if (response.ok) {
             const data = await response.json();
             setProduct(data);
@@ -147,7 +150,7 @@ const CustomizeProduct = () => {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
-};
+  };
 
   const handleSubmit = async () => {
     if (!email || !whatsapp || !size || !material) {
@@ -173,7 +176,8 @@ const CustomizeProduct = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
+      // Direct post method URL set kiya bina kisi environment variable k complex load k
+      const response = await fetch('${API_BASE_URL}/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
@@ -233,7 +237,6 @@ const CustomizeProduct = () => {
           
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-[#1F2937] flex items-center justify-center">
-              {/* getOptimizedImage function yahan apply kiya gaya hai */}
               <img 
                 src={getOptimizedImage(displayProduct.img || displayProduct.image_url, 1000)} 
                 alt={displayProduct.title} 
@@ -387,7 +390,7 @@ const CustomizeProduct = () => {
   );
 };
 
-// ... Baqi helper components same hain ...
+/* Helper Components */
 const FeatureCard = ({ Icon, title, desc, isActive, onClick }) => (
   <div onClick={onClick} className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col gap-2 text-left group ${isActive ? 'bg-[#00ffaa]/10 border-[#00ffaa] shadow-[0_0_15px_rgba(0,255,170,0.2)]' : 'bg-[#1F2937]/50 border-white/5 hover:border-white/20'}`}>
     <Icon className={`transition-colors ${isActive ? 'text-[#00ffaa]' : 'text-gray-500 group-hover:text-white'}`} size={20} />

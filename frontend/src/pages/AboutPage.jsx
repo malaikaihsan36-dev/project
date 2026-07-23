@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Award, ShieldCheck, Factory, Building2, CheckCircle2, ChevronRight } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const AboutPage = () => {
   useEffect(() => {
-    document.title = "About Us — 35 Years of Craftsmanship | ColourPix";
+    document.title = "About Us — Direct Industrial Manufacturing | ColourPix";
   }, []);
 
   return (
@@ -44,28 +45,28 @@ const AboutPage = () => {
                 ESTABLISHED 1991 • LCCI MEMBER #1991-PK
               </span>
               <h1 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
-                35 YEARS OF <br />
+                DECADES OF <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
-                  CRAFTSMANSHIP
+                  MANUFACTURING
                 </span> <br />
-                & INNOVATION.
+                & TECHNICAL SCALE.
               </h1>
             </div>
 
-            <div className="lg:col-span-4 lg:pb-2">
-              <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
-                ColourPix is a trusted Pakistani printing and packaging manufacturer with over 35 years of industry experience. We own and operate our production facility in Lahore — delivering uncompromised quality, structural precision, and zero-broker transparency.
+            <div className="lg:col-span-4 lg:pb-2 text-left">
+              <p className="text-[#A1A1AA] text-base leading-relaxed font-normal mb-6">
+                ColourPix is a leading international-grade printing and packaging manufacturer. Headquartered in our Lahore industrial facility, we own and operate a vertically integrated production plant. Since 1991, we have delivered engineering-led packaging solutions, precise structural prototyping, and absolute contract integrity directly to global and national enterprises.
               </p>
 
               <div className="flex items-center gap-4">
                 <Link 
                   to="/contact" 
-                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all flex items-center gap-2"
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all flex items-center gap-2"
                 >
                   <span>Work With Us</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
-                <span className="text-xs font-mono text-[#E4E4E7]">LCCI ACCREDITED</span>
+                <span className="text-xs font-mono text-[#E4E4E7]">LCCI MEMBER</span>
               </div>
             </div>
           </div>
@@ -79,21 +80,21 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <div className="lg:col-span-6 space-y-6 text-[#A1A1AA] text-base sm:text-lg leading-relaxed">
+            <div className="lg:col-span-6 space-y-6 text-[#A1A1AA] text-base leading-relaxed text-left">
               <span className="text-xs font-mono uppercase tracking-widest text-[#E11D48] block">
                 DIRECT MANUFACTURER — NOT A RESELLER
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-extrabold uppercase text-white leading-tight">
-                OUR STORY & PHILOSOPHY
+                OUR OPERATIONAL PHILOSOPHY
               </h2>
               <p className="text-white text-xl font-medium border-l-4 border-[#2563EB] pl-5">
-                We are not print brokers or shop vendors. ColourPix is a direct industrial manufacturer — owning and operating our multi-division production plant in Lahore.
+                Unlike print brokers, resellers, or trading agents, ColourPix is a direct industrial manufacturer. We maintain complete vertical ownership of our physical production plant, machinery assets, and pre-press prep rooms.
               </p>
               <p>
-                Founded in 1991, ColourPix was built on a single commitment: elevating commercial printing and custom packaging into strategic assets for brands. Over three decades, we have evolved from a specialized offset press room into an integrated packaging manufacturer serving over 1,000 corporate clients across Pakistan.
+                Established in 1991, our operations were founded with a singular technical focus: transforming industrial print execution into a high-performance brand asset. Over thirty-five years of continuous investment, we have scaled into an integrated packaging manufacturer managing complex supply chains for over 1,000 corporate brands.
               </p>
               <p>
-                Because we manufacture everything under one roof, our clients benefit from 100% material traceability, exact Pantone color consistency, and direct factory pricing with zero reseller markups.
+                By centralizing all divisions under a unified quality management system, we guarantee 100% paperboard substrate traceability, precise delta-E color consistency across production runs, and direct factory-gate cost optimization with zero intermediary markups.
               </p>
             </div>
 
@@ -105,8 +106,8 @@ const AboutPage = () => {
                   className="w-full h-96 sm:h-[450px] object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-transparent to-transparent opacity-80"></div>
-                <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-[#121215]/90 backdrop-blur-md border border-white/10">
-                  <span className="text-xs font-mono text-[#2563EB] uppercase block font-bold mb-1">LAHORE INDUSTRIAL FACILITY</span>
+                <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-[#121215]/90 backdrop-blur-md border border-white/10 text-left">
+                  <span className="text-xs font-mono text-[#2563EB] uppercase block font-bold mb-1">LAHORE INDUSTRIAL PLANT</span>
                   <span className="text-sm font-bold text-white">Over 35 years of continuous manufacturing operations</span>
                 </div>
               </div>
@@ -133,7 +134,7 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-left">
             {[
               { year: "1991", title: "FOUNDING IN LAHORE", desc: "Established as a commercial printing facility focused on color fidelity." },
               { year: "2002", title: "LCCI REGISTRATION", desc: "Expanded offset press capacity and received official LCCI accreditation (#1991-PK)." },
@@ -159,7 +160,7 @@ const AboutPage = () => {
       {/* ========================================================= */}
       <section className="py-24 border-b border-[#27272A]/50 bg-[#09090B]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
             <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 flex items-start gap-4">
               <Building2 className="w-10 h-10 text-[#2563EB] shrink-0" />
               <div>
@@ -199,7 +200,7 @@ const AboutPage = () => {
       <section className="py-24 bg-[#0C0C0E] text-center">
         <div className="max-w-4xl mx-auto px-6 space-y-6">
           <h2 className="font-syne text-4xl sm:text-6xl font-extrabold uppercase text-white">
-            READY TO WORK WITH A DIRECT MANUFACTURER?
+            READY TO ENGAGE A DIRECT MANUFACTURER?
           </h2>
           <p className="text-[#A1A1AA] text-base">
             Contact our engineering team today to receive CAD dielines, paperboard samples, or custom bulk quotations.
@@ -221,13 +222,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#050507] border-t border-[#27272A] py-12 text-center text-xs font-mono text-[#A1A1AA]">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span>© 1991 – 2026 COLOURPIX PACKAGING & PRINTING MFG. ALL RIGHTS RESERVED.</span>
-          <span className="text-[#2563EB]">LCCI REGISTERED MEMBER #1991-PK</span>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

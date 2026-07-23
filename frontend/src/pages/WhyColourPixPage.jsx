@@ -116,15 +116,15 @@ const WhyColourPixPage = () => {
               </h2>
               
               <p className="text-white text-xl font-medium border-l-4 border-[#2563EB] pl-5 leading-relaxed">
-                Experience in manufacturing is not just a metric — it is the difference between a packaging failure and a pristine retail unboxing.
+                Industrial experience is not a passive statistic—it represents the critical difference between retail shelf presence and structural supply chain failure.
               </p>
 
               <p className="text-[#A1A1AA] text-base leading-relaxed">
-                Founded in 1991 in Lahore, ColourPix began with a fundamental premise: that commercial printing should provide absolute brand fidelity. Over 35 years of continuous operation, we have expanded our single press room into an integrated multi-division manufacturing facility.
+                Founded in 1991 in Lahore, our operations were established on a core engineering principle: delivering absolute substrate and color fidelity. Over three decades of steady technological scaling, we have expanded our initial press room into a multi-division industrial plant specializing in high-performance printing, custom structural folding cartons, and luxury rigid box packaging.
               </p>
 
               <p className="text-[#A1A1AA] text-base leading-relaxed">
-                Three decades of continuous technical experience means our press operators anticipate paperboard grain shifts, ink absorbency variations, and foil adhesion challenges before a single sheet enters production.
+                Over 35 years of industrial experience empowers our engineering teams to anticipate complex physical variables—such as paperboard grain behavior, ink absorbency ratios, and thermal foil adhesion limits—before sheet feeding begins.
               </p>
             </div>
 
@@ -200,7 +200,7 @@ const WhyColourPixPage = () => {
                   <h3 className="font-syne text-2xl font-bold text-white uppercase">100% Owned Production Plant</h3>
                 </div>
                 <p className="text-xs text-[#A1A1AA] leading-relaxed">
-                  Unlike print brokers or shop vendors who outsource production to third parties, ColourPix executes all offset press runs, hot foil stamping, die-cutting, and box assembly inside our own plant.
+                  Unlike print brokers or packaging agencies who outsource production to third-party commercial vendors, ColourPix executes 100% of our offset press runs, precision hot foil stamping, heavy-duty die-cutting, and manual box assembly internally at our Lahore facility.
                 </p>
               </div>
 
@@ -254,7 +254,7 @@ const WhyColourPixPage = () => {
               </h2>
               
               <p className="text-[#A1A1AA] text-base leading-relaxed">
-                Over 1,000 corporate clients across Pakistan rely on ColourPix for their primary product packaging. Why? Because we understand that a delayed packaging shipment stops an entire product launch line.
+                Over 1,000 corporate enterprises nationwide rely on ColourPix to secure their product packaging supply lines. Our logistics and production teams operate with absolute operational discipline, recognizing that any delay in packaging delivery directly halts primary manufacturing and commercial product launches.
               </p>
 
               <div className="space-y-4 pt-2">

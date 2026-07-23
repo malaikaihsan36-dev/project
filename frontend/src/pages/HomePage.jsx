@@ -350,7 +350,7 @@ const HomePage = () => {
               {/* Right Column: Subheading & CTAs */}
               <div className="lg:col-span-4 lg:pb-4">
                 <p className="text-[#A1A1AA] text-base md:text-lg leading-relaxed font-normal mb-8 border-l-2 border-[#2563EB] pl-4">
-                  For over <strong className="text-white">35 years</strong>, ColourPix has helped businesses transform ideas into premium packaging and printed products through precision manufacturing, exceptional craftsmanship, and reliable production.
+                  For over <strong className="text-white">35 years</strong>, ColourPix has empowered corporate enterprises to manifest brand value through precision manufacturing. As a direct industrial plant, we deliver vertically integrated packaging substrates and commercial print editions characterized by structural complexity, material integrity, and direct factory-gate cost optimization.
                 </p>
 
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-4">

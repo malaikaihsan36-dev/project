@@ -234,11 +234,11 @@ const TrustCenterPage = () => {
               </h2>
               
               <p className="text-white text-lg font-medium border-l-4 border-[#2563EB] pl-5 leading-relaxed">
-                We are not print resellers or middleman shop vendors. ColourPix owns and operates a 100% direct industrial plant in Lahore.
+                Unlike print resellers or third-party agencies who outsource contract fulfillment, ColourPix maintains complete vertical ownership of our physical production facility in Lahore.
               </p>
 
               <p className="text-[#A1A1AA] text-base leading-relaxed">
-                Founded in 1991, ColourPix has built a reputation over 35 years as one of Pakistan's most reliable printing and packaging manufacturers. From structural CAD dieline plotting to multi-color offset runs and artisanal hot foil stamping, everything is produced under one roof with complete material traceability.
+                Since 1991, ColourPix has established a proven track record as a trusted industrial print partner. By integrating CAD structural engineering, multi-color Heidelberg offset press lines, and Swiss Bobst embellishment technology under a single roof, we ensure absolute supply security and material compliance.
               </p>
             </div>
 

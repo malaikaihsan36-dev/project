@@ -281,10 +281,10 @@ const Navbar = () => {
             </Link>
 
             <Link 
-              to="/resources" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/resources' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
+              to="/knowledge-center" 
+              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/knowledge-center' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
             >
-              Resources
+              Library
             </Link>
 
             <Link 
@@ -351,7 +351,7 @@ const Navbar = () => {
             <Link to="/industries" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Industries</Link>
             <Link to="/manufacturing" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Plant</Link>
             <Link to="/portfolio" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Portfolio</Link>
-            <Link to="/resources" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Resources</Link>
+            <Link to="/knowledge-center" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Library</Link>
             <Link to="/blog" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Blog</Link>
             <Link to="/contact" onClick={() => setIsOpen(false)} className="text-sm font-mono text-[#2563EB] uppercase font-bold pt-2 border-t border-white/10">Contact Us</Link>
           </div>

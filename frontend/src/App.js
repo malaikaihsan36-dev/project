@@ -14,7 +14,7 @@ import FinishesPage from './pages/FinishesPage';
 import IndustriesPage from './pages/IndustriesPage';
 import ManufacturingPage from './pages/ManufacturingPage';
 import Portfolio from './pages/Portfolio';
-import ResourcesPage from './pages/ResourcesPage';
+import KnowledgeCenterPage from './pages/KnowledgeCenterPage';
 import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import BrowseCatalog from './pages/BrowseCatalog';
@@ -70,7 +70,8 @@ function App() {
         <Route path="/industries" element={<IndustriesPage />} />
         <Route path="/manufacturing" element={<ManufacturingPage />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/resources" element={<KnowledgeCenterPage />} />
+        <Route path="/knowledge-center" element={<KnowledgeCenterPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/contact" element={<ContactPage />} />
         

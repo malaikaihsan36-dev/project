@@ -15,7 +15,7 @@ const IndustriesPage = () => {
       tag: "HIGH VOLUME SUPPLY",
       desc: "FDA-certified food-grade paperboards, greaseproof barrier liners, and custom folding cartons designed for shelf appeal and food safety.",
       features: ["Food-Grade Virgin Kraft", "Grease & Moisture Barrier Coatings", "High-Speed Automated Cartoning"],
-      image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=1000&auto=format&fit=crop"
     },
     {
       num: "02",
@@ -23,7 +23,7 @@ const IndustriesPage = () => {
       tag: "LUXURY GRADE FINISH",
       desc: "Tactile velvet soft-touch rigid setup boxes, gold foil stamped perfume cartons, and embossed cosmetic sleeves for prestige beauty brands.",
       features: ["Velvet Soft-Touch Lamination", "Precision Metallic Foil Stamping", "Custom Molded Velvet Inserts"],
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       num: "03",
@@ -31,7 +31,7 @@ const IndustriesPage = () => {
       tag: "STRICT QC STANDARDS",
       desc: "Tamper-evident pharmaceutical cartons, braille embossed medicine boxes, and strict Pantone color density controls for healthcare compliance.",
       features: ["Tamper-Evident Safety Locks", "Braille & Micro-Text Embossing", "Delta-E Color Tolerance Verification"],
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       num: "04",
@@ -39,7 +39,7 @@ const IndustriesPage = () => {
       tag: "BESPOKE BRAND KITS",
       desc: "Heavy cardstock shopping bags with reinforced cotton rope handles, branded clothing boxes, and custom embossed garment tags.",
       features: ["Reinforced Bottom Shopping Bags", "Foil Stamped Apparel Gift Boxes", "Bespoke Woven Tag Cards"],
-      image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
     },
     {
       num: "05",
@@ -47,7 +47,7 @@ const IndustriesPage = () => {
       tag: "PROTECTIVE PACKAGING",
       desc: "Heavy chipboard rigid boxes with high-density EVA foam cutouts and heavy corrugated shipping mailers for tech device safety.",
       features: ["High-Density EVA Foam Inserts", "High Burst-Strength Board", "Anti-Scratch Matte Film Wraps"],
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
     },
     {
       num: "06",

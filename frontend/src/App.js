@@ -6,6 +6,7 @@ import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import WhyColourPixPage from './pages/WhyColourPixPage';
+import TrustCenterPage from './pages/TrustCenterPage';
 import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import PackagingPage from './pages/PackagingPage';
@@ -60,6 +61,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/why-colourpix" element={<WhyColourPixPage />} />
         <Route path="/why-choose-us" element={<WhyColourPixPage />} />
+        <Route path="/trust-center" element={<TrustCenterPage />} />
+        <Route path="/trust" element={<TrustCenterPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
         <Route path="/packaging" element={<PackagingPage />} />

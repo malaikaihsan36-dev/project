@@ -18,7 +18,7 @@ const PackagingPage = () => {
       features: ["Custom Foam & Velvet Trays", "Friction Fit & Magnetic Closures", "Book-Style & Shoulder Box Formats"],
       materials: "1000-2400 GSM Grey Chipboard, Specialty Wrap Papers, Velvet",
       finishes: "Gold/Silver Hot Foil, Spot UV, Velvet Soft-Touch",
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "food-packaging",
@@ -28,7 +28,7 @@ const PackagingPage = () => {
       features: ["Grease & Moisture Barrier Liners", "High-Speed Automated Cartoning", "100% Recyclable Paperboard"],
       materials: "250-450 GSM Virgin Kraft, Poly-Coated Duplex, Food Board",
       finishes: "Aqueous Coating, Matte Lamination, Food-Safe Inks",
-      image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "cosmetic-packaging",
@@ -38,7 +38,7 @@ const PackagingPage = () => {
       features: ["Tactile Velvet Soft-Touch Film", "Multi-Level 3D Embossing", "Micro-Foil Registration"],
       materials: "300-450 GSM Bleached Kraft, Silver Metallized Board",
       finishes: "Hot Foil Stamping, Spot UV Varnish, 3D Relief Emboss",
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "pharmaceutical-packaging",
@@ -48,7 +48,7 @@ const PackagingPage = () => {
       features: ["Tamper-Evident Security Locks", "Braille & Micro-Text Embossing", "Delta-E Color Density Verification"],
       materials: "250-350 GSM Pharma Grade Folding Boxboard (FBB)",
       finishes: "Water-Based Varnish, Braille Emboss, Security Foils",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: "ecommerce-packaging",
@@ -68,7 +68,7 @@ const PackagingPage = () => {
       features: ["Reinforced Cardboard Base", "Cotton Rope & Satin Ribbon Handles", "Custom Metal Eyelets"],
       materials: "200-350 GSM Art Paper, Heavy Kraft Stock",
       finishes: "Matte/Gloss Lamination, Foil Stamped Logo",
-      image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
     }
   ];
 

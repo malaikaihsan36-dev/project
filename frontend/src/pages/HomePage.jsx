@@ -87,26 +87,26 @@ const HomePage = () => {
   ];
 
   const allCapabilitiesList = [
-    { num: "01", title: "Offset Printing", category: "HEAVY PRINTING", desc: "Heidelberg & Komori multi-color commercial offset press runs with automated ink density calibration.", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" },
-    { num: "02", title: "Digital Printing", category: "HEAVY PRINTING", desc: "High-resolution digital print runs for rapid variable data, custom short-run batches, and instant proofs.", image: "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=1000&auto=format&fit=crop" },
-    { num: "03", title: "UV Printing", category: "HEAVY PRINTING", desc: "Curing specialized UV inks and applying selective high-gloss spot UV varnish for rich visual depth.", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop" },
-    { num: "04", title: "DTF Printing", category: "HEAVY PRINTING", desc: "Direct-to-Film high-density apparel, canvas, and industrial fabric transfer printing.", image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1000&auto=format&fit=crop" },
-    { num: "05", title: "Luxury Packaging", category: "PACKAGING & BOXES", desc: "Bespoke high-end retail packaging with magnetic closures, velvet inserts, and gold leaf accents.", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop" },
-    { num: "06", title: "Food Packaging", category: "PACKAGING & BOXES", desc: "Food-grade barrier boards, greaseproof linings, and FDA-certified protective takeaway cartons.", image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1000&auto=format&fit=crop" },
-    { num: "07", title: "Rigid Boxes", category: "PACKAGING & BOXES", desc: "Heavy-chipboard setup boxes for luxury cosmetics, perfumes, electronics, and executive gifts.", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop" },
-    { num: "08", title: "Shopping Bags", category: "PACKAGING & BOXES", desc: "Custom paper shopping bags with reinforced handles, foil stamped logos, and heavy kraft stocks.", image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=1000&auto=format&fit=crop" },
-    { num: "09", title: "Labels", category: "PACKAGING & BOXES", desc: "High-definition roll and sheet labels with waterproof, oil-resistant, and metallic foil finishes.", image: "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=1000&auto=format&fit=crop" },
+    { num: "01", title: "Offset Printing", category: "HEAVY PRINTING", desc: "Heidelberg & Komori multi-color commercial offset press runs with automated ink density calibration.", image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "02", title: "Digital Printing", category: "HEAVY PRINTING", desc: "High-resolution digital print runs for rapid variable data, custom short-run batches, and instant proofs.", image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop" },
+    { num: "03", title: "UV Printing", category: "HEAVY PRINTING", desc: "Curing specialized UV inks and applying selective high-gloss spot UV varnish for rich visual depth.", image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "04", title: "DTF Printing", category: "HEAVY PRINTING", desc: "Direct-to-Film high-density apparel, canvas, and industrial fabric transfer printing.", image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1000&auto=format&fit=crop" },
+    { num: "05", title: "Luxury Packaging", category: "PACKAGING & BOXES", desc: "Bespoke high-end retail packaging with magnetic closures, velvet inserts, and gold leaf accents.", image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "06", title: "Food Packaging", category: "PACKAGING & BOXES", desc: "Food-grade barrier boards, greaseproof linings, and FDA-certified protective takeaway cartons.", image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=1000&auto=format&fit=crop" },
+    { num: "07", title: "Rigid Boxes", category: "PACKAGING & BOXES", desc: "Heavy-chipboard setup boxes for luxury cosmetics, perfumes, electronics, and executive gifts.", image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "08", title: "Shopping Bags", category: "PACKAGING & BOXES", desc: "Custom paper shopping bags with reinforced handles, foil stamped logos, and heavy kraft stocks.", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop" },
+    { num: "09", title: "Labels", category: "PACKAGING & BOXES", desc: "High-definition roll and sheet labels with waterproof, oil-resistant, and metallic foil finishes.", image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop" },
     { num: "10", title: "Catalogues", category: "COMMERCIAL & BRANDING", desc: "Hardcover & softcover corporate product catalogues, saddle-stitched or perfect-bound.", image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop" },
     { num: "11", title: "Brochures", category: "COMMERCIAL & BRANDING", desc: "Tri-fold, z-fold, and gate-fold marketing collateral printed on premium silk cardstocks.", image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000&auto=format&fit=crop" },
     { num: "12", title: "Corporate Printing", category: "COMMERCIAL & BRANDING", desc: "Executive letterheads, embossed business cards, presentation folders, and corporate brand kits.", image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1000&auto=format&fit=crop" },
-    { num: "13", title: "Retail Packaging", category: "PACKAGING & BOXES", desc: "Folding cartons, blister pack cards, product sleeves, and point-of-sale counter display boxes.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop" },
+    { num: "13", title: "Retail Packaging", category: "PACKAGING & BOXES", desc: "Folding cartons, blister pack cards, product sleeves, and point-of-sale counter display boxes.", image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop" },
     { num: "14", title: "Promotional Material", category: "COMMERCIAL & BRANDING", desc: "Event banners, acrylic displays, customized corporate calendars, and merch kit packaging.", image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop" },
-    { num: "15", title: "Luxury Finishes", category: "LUXURY FINISHING", desc: "Specialty surface treatments combining multiple metallic foils, raised varnishes, and micro-textures.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop" },
-    { num: "16", title: "Foiling", category: "LUXURY FINISHING", desc: "Precision hot foil stamping in gold, silver, rose gold, holographic, and satin metallic films.", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop" },
-    { num: "17", title: "Embossing", category: "LUXURY FINISHING", desc: "Multi-level 3D raised embossing and debossing for tactile depth on logos, borders, and emblems.", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop" },
-    { num: "18", title: "Spot UV", category: "LUXURY FINISHING", desc: "High-gloss raised spot UV varnish applied selectively over matte-laminated paperboard substrates.", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop" },
-    { num: "19", title: "Soft Touch Lamination", category: "LUXURY FINISHING", desc: "Ultra-luxurious velvet soft-touch film lamination providing anti-scratch tactile elegance.", image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=1000&auto=format&fit=crop" },
-    { num: "20", title: "Die Cutting", category: "PACKAGING & BOXES", desc: "Computerized structural die-cutting, scoring, creasing, perforation, and complex window cutouts.", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" }
+    { num: "15", title: "Luxury Finishes", category: "LUXURY FINISHING", desc: "Specialty surface treatments combining multiple metallic foils, raised varnishes, and micro-textures.", image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop" },
+    { num: "16", title: "Foiling", category: "LUXURY FINISHING", desc: "Precision hot foil stamping in gold, silver, rose gold, holographic, and satin metallic films.", image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop" },
+    { num: "17", title: "Embossing", category: "LUXURY FINISHING", desc: "Multi-level 3D raised embossing and debossing for tactile depth on logos, borders, and emblems.", image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "18", title: "Spot UV", category: "LUXURY FINISHING", desc: "High-gloss raised spot UV varnish applied selectively over matte-laminated paperboard substrates.", image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop" },
+    { num: "19", title: "Soft Touch Lamination", category: "LUXURY FINISHING", desc: "Ultra-luxurious velvet soft-touch film lamination providing anti-scratch tactile elegance.", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop" },
+    { num: "20", title: "Die Cutting", category: "PACKAGING & BOXES", desc: "Computerized structural die-cutting, scoring, creasing, perforation, and complex window cutouts.", image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop" }
   ];
 
   const featuredPackaging = [
@@ -114,25 +114,25 @@ const HomePage = () => {
       title: "Luxury Rigid Boxes", 
       desc: "Designed for premium cosmetics, perfume, electronics, and executive corporate gifting.",
       tags: ["Collapsible", "Magnetic Closure", "Velvet Insert"],
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1200&auto=format&fit=crop"
     },
     { 
       title: "Custom Corrugated Mailers", 
       desc: "Heavy-duty eco-friendly e-commerce shipping boxes engineered for maximum protection.",
       tags: ["E-Commerce", "High Crash Resistance", "Custom Print"],
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1200&auto=format&fit=crop"
     },
     { 
       title: "High-Definition Product Labels", 
       desc: "Waterproof, oil-resistant, roll and sheet labels for food, pharmaceuticals, and bottles.",
       tags: ["Roll Labels", "Foil Stamped", "Waterproof"],
-      image: "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=1200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop"
     },
     { 
       title: "Bespoke Retail Shopping Bags", 
       desc: "Crafted with reinforced handles, foil stamping, and heavy cardstock for luxury retail.",
       tags: ["Embossed Logo", "Rope Handle", "Heavy Kraft"],
-      image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=1200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop"
     }
   ];
 
@@ -151,7 +151,7 @@ const HomePage = () => {
       desc: "Initial technical audit, volume estimation, substrate consultation, and structural feasibility review with our senior sales engineers.",
       qc: "Requirements audit & MOQ verification",
       equipment: "Engineering Consultation & CAD Desk",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "02",
@@ -160,7 +160,7 @@ const HomePage = () => {
       desc: "CAD structural dieline engineering, graphic artwork layout, color separation, bleed verification, and 3D digital rendering.",
       qc: "Dieline accuracy & trap tolerance",
       equipment: "ArtiosCAD & Esko Pre-Press Workstation",
-      image: "https://images.unsplash.com/photo-1542744094-3a3121699493?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "03",
@@ -169,7 +169,7 @@ const HomePage = () => {
       desc: "Curating virgin Kraft, high-GSM duplex boards, rigid chipboards, velvet paperstocks, and eco-certified barrier substrates.",
       qc: "GSM density, burst test & grain direction",
       equipment: "Spectrophotometer & Caliper Testing",
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "04",
@@ -178,7 +178,7 @@ const HomePage = () => {
       desc: "Physical 1:1 unprinted CAD sample creation for dimensional fit testing, structural load testing, and client approval.",
       qc: "Structural fit & crease folding audit",
       equipment: "Kongsberg Automated Sample Plotter",
-      image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "05",
@@ -187,7 +187,7 @@ const HomePage = () => {
       desc: "High-volume commercial offset printing using multi-color Heidelberg & Komori presses with automated ink density control.",
       qc: "Pantone color matching (Delta E < 1.5)",
       equipment: "Heidelberg Speedmaster XL 6-Color Press",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "06",
@@ -196,7 +196,7 @@ const HomePage = () => {
       desc: "High-resolution digital print runs for rapid variable data, custom short-run batches, and personalized packaging collateral.",
       qc: "Dot alignment & resolution verification",
       equipment: "HP Indigo Industrial Digital Press",
-      image: "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "07",
@@ -205,7 +205,7 @@ const HomePage = () => {
       desc: "Curing specialized UV varnishes for selective high-gloss spot UV accents, chemical resistance, and rich tactile depth.",
       qc: "Gloss level & UV cure adhesion test",
       equipment: "Automated Spot UV Varnish Machine",
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "08",
@@ -214,7 +214,7 @@ const HomePage = () => {
       desc: "Precision hot foil stamping in metallic gold, silver, bronze, holographic, and satin foil films.",
       qc: "Foil sharpness, flaking test & registration",
       equipment: "Bobst Automatic Hot Foil Stamper",
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "09",
@@ -223,7 +223,7 @@ const HomePage = () => {
       desc: "Tactile multi-level 3D embossing & debossing for raised logos, micro-textures, and premium brand marks.",
       qc: "Emboss depth & substrate tear prevention",
       equipment: "Heavy Duty Hydraulic Embossing Press",
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "10",
@@ -232,7 +232,7 @@ const HomePage = () => {
       desc: "High-speed computerized heavy die-cutting, scoring, creasing, perforation, and exact contour trim.",
       qc: "Clean edge cut & fold line creasing integrity",
       equipment: "Bobst High-Speed Automatic Die-Cutter",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "11",
@@ -241,7 +241,7 @@ const HomePage = () => {
       desc: "100% manual and optical inspection of color registration, foil adhesion, glue strength, and structural integrity.",
       qc: "AQL 1.0 zero-defect sampling audit",
       equipment: "High-Speed Optical Defect Scanner",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "12",
@@ -250,7 +250,7 @@ const HomePage = () => {
       desc: "Automated rigid box assembly, corner gluing, tissue wrapping, shrink wrapping, and protective export bundling.",
       qc: "Drop test & moisture-barrier sealing",
       equipment: "Automated Box Folder & Gluer Line",
-      image: "https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=800&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop"
     },
     {
       num: "13",
@@ -633,7 +633,7 @@ const HomePage = () => {
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop" 
                   alt="Industrial Offset Press Facility" 
                   className="w-full h-full object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -646,7 +646,7 @@ const HomePage = () => {
 
               <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop" 
                   alt="Luxury Packaging Finishing" 
                   className="w-full h-full object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -659,7 +659,7 @@ const HomePage = () => {
 
               <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
                 <img 
-                  src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop" 
                   alt="LCCI Certified Production" 
                   className="w-full h-full object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -882,24 +882,24 @@ const HomePage = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-4">
                     <img 
-                      src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop" 
                       alt="Gold Foil Stamping" 
                       className="rounded-2xl border border-white/10 h-64 w-full object-cover filter contrast-125"
                     />
                     <img 
-                      src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop" 
                       alt="3D Embossed Detail" 
                       className="rounded-2xl border border-white/10 h-80 w-full object-cover filter contrast-125"
                     />
                   </div>
                   <div className="space-y-4 pt-8">
                     <img 
-                      src="https://images.unsplash.com/photo-1572584642822-6f8de0243c93?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop" 
                       alt="Velvet Touch Lamination" 
                       className="rounded-2xl border border-white/10 h-80 w-full object-cover filter contrast-125"
                     />
                     <img 
-                      src="https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop" 
                       alt="Precision Die Cut Box" 
                       className="rounded-2xl border border-white/10 h-64 w-full object-cover filter contrast-125"
                     />

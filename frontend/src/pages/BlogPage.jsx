@@ -33,7 +33,7 @@ For luxury cosmetics, perfumes, jewelry, and high-end electronics, rigid boxes p
 ### 3. Recommendation Matrix
 - **Choose Rigid Boxes** when unit margin is high, product weight requires heavy support, or gifting unboxing is a key marketing driver.
 - **Choose Folding Cartons** for high-volume retail shelf goods, FMCG packaging, or e-commerce subscription boxes where shipping efficiency is paramount.`,
-      image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: 2,
@@ -59,7 +59,7 @@ Cold foiling applies a UV-curable adhesive to the sheet via an offset printing p
 **Advantages:**
 - Allows multi-color metallic gradients by printing CMYK ink directly on top of silver foil.
 - Highly cost-effective for large-area foil coverage on long offset runs.`,
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: 3,
@@ -76,7 +76,7 @@ Paper fibers align parallel to the paper machine during manufacturing. Folding a
 
 ### 2. Burst Strength & Compression Resistance
 Bursting strength (measured in Mullen test units or kPa) determines how much hydraulic pressure a carton wall can withstand before bursting. For heavy industrial shipping cartons, specifying high burst strength virgin Kraft prevents stacking collapse in logistics warehouses.`,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: 4,
@@ -93,7 +93,7 @@ CMYK blends cyan, magenta, yellow, and black dots to simulate colors. Slight var
 
 ### 2. Pantone Matching System (PMS) Spot Inks
 Pantone spot inks are pre-mixed ink formulations mixed according to strict chemical formulas. Running dedicated 5th or 6th spot ink stations on Heidelberg offset presses guarantees Delta-E color variance under 1.5.`,
-      image: "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: 5,
@@ -110,7 +110,7 @@ Traditional poly-laminated food cartons utilize plastic coatings that impede pap
 
 ### 2. Soy & Vegetable-Based Inks
 Substituting petroleum-based solvent inks with soy-based ink formulations reduces volatile organic compound (VOC) emissions during printing while yielding deeper, more vibrant color pigments.`,
-      image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=1000&auto=format&fit=crop"
     },
     {
       id: 6,
@@ -127,7 +127,7 @@ Artwork background fills must extend at least 3mm past the cut line to prevent u
 
 ### 2. Crease Scoring & Paperboard Allowance
 Every fold consumes a fraction of paperboard thickness. CAD dieline engineers automatically offset crease lines based on substrate GSM to guarantee tight, square box corners.`,
-      image: "https://images.unsplash.com/photo-1542744094-3a3121699493?q=80&w=1000&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop"
     }
   ];
 

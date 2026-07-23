@@ -19,7 +19,7 @@ const AboutPage = () => {
         {/* Background Image & Vignette */}
         <div className="absolute inset-0 z-0 opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1600&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1600&auto=format&fit=crop" 
             alt="ColourPix Plant Floor" 
             className="w-full h-full object-cover filter contrast-125 brightness-75 scale-105"
           />
@@ -100,7 +100,7 @@ const AboutPage = () => {
             <div className="lg:col-span-6 relative">
               <div className="relative rounded-3xl overflow-hidden border border-white/15 shadow-2xl group">
                 <img 
-                  src="https://images.unsplash.com/photo-1542744094-3a3121699493?q=80&w=1000&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop" 
                   alt="Engineering Consultation" 
                   className="w-full h-96 sm:h-[450px] object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />

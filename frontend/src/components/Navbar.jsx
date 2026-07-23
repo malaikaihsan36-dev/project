@@ -68,26 +68,28 @@ const Navbar = () => {
   return (
     <>
       {/* TOP ANNOUNCEMENT BAR */}
-      <div className="bg-[#050507] border-b border-white/10 py-2 px-4 text-center text-xs font-mono tracking-widest text-[#A1A1AA] uppercase flex items-center justify-between max-w-7xl mx-auto">
-        <div className="hidden md:flex items-center gap-4">
-          <span className="flex items-center gap-1.5 text-[#2563EB] font-bold">
-            <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse inline-block"></span>
-            LCCI REGISTERED MEMBER #1991-PK
-          </span>
-          <span className="text-white/20">•</span>
-          <span>EST. 1991 — 35+ YEARS OF PRINT & PACKAGING MFG</span>
-        </div>
+      <div className="w-full bg-[#050507] border-b border-white/10">
+        <div className="max-w-7xl mx-auto py-2.5 px-6 text-xs font-mono tracking-widest text-[#A1A1AA] uppercase flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="hidden md:flex items-center gap-4">
+            <span className="flex items-center gap-1.5 text-[#2563EB] font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse inline-block"></span>
+              LCCI REGISTERED MEMBER #1991-PK
+            </span>
+            <span className="text-white/20">•</span>
+            <span>EST. 1991 — 35+ YEARS OF PRINT & PACKAGING MFG</span>
+          </div>
 
-        <div className="flex items-center gap-6 mx-auto md:mx-0">
-          <a href="tel:+923704123327" className="hover:text-white transition-colors flex items-center gap-1">
-            <Phone className="w-3 h-3 text-[#2563EB]" />
-            <span>+92 370 4123327</span>
-          </a>
-          <span className="text-white/20">•</span>
-          <a href="mailto:colourpix.official@gmail.com" className="hover:text-white transition-colors flex items-center gap-1">
-            <Mail className="w-3 h-3 text-[#E11D48]" />
-            <span>colourpix.official@gmail.com</span>
-          </a>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 mx-auto md:mx-0">
+            <a href="tel:+923704123327" className="hover:text-white transition-colors flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5 text-[#2563EB]" />
+              <span>+92 370 4123327</span>
+            </a>
+            <span className="hidden sm:inline text-white/20">•</span>
+            <a href="mailto:colourpix.official@gmail.com" className="hover:text-white transition-colors flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5 text-[#E11D48]" />
+              <span>colourpix.official@gmail.com</span>
+            </a>
+          </div>
         </div>
       </div>
 

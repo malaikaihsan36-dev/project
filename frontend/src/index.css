@@ -111,3 +111,41 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* World-Class Agency Transitions & Reveals */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-element {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Premium Button Hover Overlay Effect */
+.btn-magnetic {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Custom Slow Zoom Image Effect */
+.luxury-image-hover {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.luxury-image-hover:hover {
+  transform: scale(1.03);
+  filter: contrast(1.1) brightness(0.95);
+}

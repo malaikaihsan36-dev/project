@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowUpRight, 
@@ -21,8 +21,11 @@ import {
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { downloadBrochure } from '../components/pdfHelper';
+import { useParallax, ScrollReveal } from '../components/animationHelper';
 
 const WhyColourPixPage = () => {
+  const parallaxRef = useParallax(0.12);
+
   useEffect(() => {
     document.title = "Why ColourPix — 35+ Years Manufacturing Excellence | ColourPix";
   }, []);
@@ -38,6 +41,7 @@ const WhyColourPixPage = () => {
         {/* Background Image & Ambient Blur */}
         <div className="absolute inset-0 z-0 opacity-25">
           <img 
+            ref={parallaxRef}
             src="https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1600&auto=format&fit=crop" 
             alt="ColourPix Plant Floor" 
             className="w-full h-full object-cover filter contrast-125 brightness-75 scale-105"

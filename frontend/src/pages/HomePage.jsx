@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import AppBackground from '../layouts/AppBackground';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { PageTransition, ScrollReveal, useCountUp, useMagnetic } from '../components/animationHelper';
 import { 
   Building2, 
   ChevronDown,
@@ -13,7 +14,20 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+const StatNumber = ({ endValue, suffix = "", colorClass = "text-[#2563EB]" }) => {
+  const ref = useRef(null);
+  const count = useCountUp(endValue, 2000, ref);
+  return (
+    <span ref={ref} className={`font-syne text-4xl sm:text-5xl font-extrabold block mb-1 ${colorClass}`}>
+      {count}{suffix}
+    </span>
+  );
+};
+
 const HomePage = () => {
+  const quoteBtnRef = useMagnetic(0.15);
+  const catalogBtnRef = useMagnetic(0.15);
+
   const [popularProducts, setPopularProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openFaq, setOpenFaq] = useState(0);
@@ -298,7 +312,6 @@ const HomePage = () => {
   return (
     <AppBackground showGrid={false}>
       <NavBar />
-
       <div className="bg-[#09090B] text-[#FAFAFA] antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen relative text-left">
         
         {/* ========================================================= */}
@@ -342,16 +355,18 @@ const HomePage = () => {
 
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-4">
                   <a 
+                    ref={quoteBtnRef}
                     href="#contact"
-                    className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-center px-8 py-4 rounded-xl text-base font-semibold tracking-wide transition-all shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] flex items-center justify-center gap-2 group"
+                    className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-center px-8 py-4 rounded-xl text-base font-semibold tracking-wide transition-all shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] flex items-center justify-center gap-2 group btn-magnetic"
                   >
                     <span>Request a Quote</span>
                     <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
 
                   <Link 
+                    ref={catalogBtnRef}
                     to="/catalog"
-                    className="bg-[#121215] hover:bg-[#18181B] text-white text-center border border-white/15 px-8 py-4 rounded-xl text-base font-medium tracking-wide transition-all hover:border-white/30 flex items-center justify-center gap-2"
+                    className="bg-[#121215] hover:bg-[#18181B] text-white text-center border border-white/15 px-8 py-4 rounded-xl text-base font-medium tracking-wide transition-all hover:border-white/30 flex items-center justify-center gap-2 btn-magnetic"
                   >
                     <span>Explore Our Work</span>
                   </Link>
@@ -397,11 +412,9 @@ const HomePage = () => {
             </div>
 
             {/* Factual Metrics Counter Strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-[#121215] border border-white/10 mb-16 shadow-2xl">
+            <ScrollReveal className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-[#121215] border border-white/10 mb-16 shadow-2xl">
               <div className="border-r border-white/10 pr-6">
-                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2563EB] block mb-1">
-                  35+
-                </span>
+                <StatNumber endValue={35} suffix="+" colorClass="text-[#2563EB]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">YEARS EXPERIENCE</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Continuous operation since 1991</span>
               </div>
@@ -415,24 +428,20 @@ const HomePage = () => {
               </div>
 
               <div className="border-r border-white/10 pr-6 pl-2">
-                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#E11D48] block mb-1">
-                  1,000+
-                </span>
+                <StatNumber endValue={1000} suffix="+" colorClass="text-[#E11D48]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">ENTERPRISE CLIENTS</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Trusted across all 4 provinces</span>
               </div>
 
               <div className="pl-2">
-                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2563EB] block mb-1">
-                  100%
-                </span>
+                <StatNumber endValue={100} suffix="%" colorClass="text-[#2563EB]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">IN-HOUSE PLANT</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Zero reseller/broker margin</span>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* 9 Trust Signal Pillars Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <ScrollReveal className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
                   title: "35+ Years of Experience",
@@ -492,7 +501,7 @@ const HomePage = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
 
           </div>
         </section>
@@ -584,7 +593,7 @@ const HomePage = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+              <ScrollReveal className="grid grid-cols-1 md:grid-cols-5 gap-6">
                 {[
                   {
                     year: "1991",
@@ -626,7 +635,7 @@ const HomePage = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </ScrollReveal>
             </div>
 
             {/* Factory Visual Showcase Grid */}
@@ -733,7 +742,7 @@ const HomePage = () => {
             </div>
 
             {/* Large Photography Cards Grid (No Generic Icons) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ScrollReveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {allCapabilitiesList
                 .filter(item => capabilityFilter === 'ALL' || item.category === capabilityFilter)
                 .map((item, idx) => (
@@ -782,7 +791,7 @@ const HomePage = () => {
                     </div>
                   </div>
                 ))}
-            </div>
+            </ScrollReveal>
 
           </div>
         </section>

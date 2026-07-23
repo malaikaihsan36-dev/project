@@ -5,3 +5,5 @@ packages:
 
 allowBuilds:
   bcrypt: true
+  core-js: set this to true or false
+  core-js-pure: set this to true or false

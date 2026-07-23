@@ -15,10 +15,12 @@ import {
   HeartHandshake, 
   Target, 
   Flame, 
-  Check
+  Check,
+  Download
 } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const WhyColourPixPage = () => {
   useEffect(() => {
@@ -72,7 +74,7 @@ const WhyColourPixPage = () => {
                 For over 35 years, ColourPix has helped businesses transform ideas into premium printing and packaging solutions through precision manufacturing, innovation, and unwavering commitment to quality.
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-4">
                 <Link 
                   to="/contact" 
                   className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-7 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center gap-2"
@@ -80,7 +82,14 @@ const WhyColourPixPage = () => {
                   <span>Request a Quotation</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
-                <span className="text-xs font-mono text-[#E4E4E7]">LCCI MEMBER #1991-PK</span>
+                <button 
+                  onClick={() => downloadBrochure("Why ColourPix")}
+                  className="bg-[#121215] hover:bg-black text-white border border-white/10 px-7 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Info Brochure</span>
+                </button>
+                <span className="text-xs font-mono text-[#A1A1AA]">LCCI MEMBER #1991-PK</span>
               </div>
             </div>
           </div>

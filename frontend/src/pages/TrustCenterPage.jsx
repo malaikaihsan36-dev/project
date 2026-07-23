@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const TrustCenterPage = () => {
   const [activeTab, setActiveTab] = useState('machinery');
@@ -136,7 +137,7 @@ const TrustCenterPage = () => {
   };
 
   const handleDownloadProfile = () => {
-    alert("Downloading ColourPix Corporate Trust Profile & Machinery Roster (PDF)...");
+    downloadBrochure("Trust Center");
   };
 
   return (

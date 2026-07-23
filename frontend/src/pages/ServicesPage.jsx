@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Printer, Box, Sparkles, Layers, Zap, Package, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, Printer, Box, Sparkles, Layers, Zap, Package, ChevronRight, CheckCircle2, Download } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const ServicesPage = () => {
   useEffect(() => {
@@ -91,13 +92,22 @@ const ServicesPage = () => {
               <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
                 From structural CAD sample plotting to multi-color offset runs, artisanal hot foil stamping, and automated rigid box assembly — explore our comprehensive in-house manufacturing capabilities.
               </p>
-              <Link 
-                to="/catalog" 
-                className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
-              >
-                <span>View Packaging Lines</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link 
+                  to="/catalog" 
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <span>View Packaging Lines</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <button 
+                  onClick={() => downloadBrochure("Printing Solutions")}
+                  className="bg-[#121215] hover:bg-black text-white border border-white/10 px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download brochure</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

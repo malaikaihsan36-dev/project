@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ShieldCheck, CheckCircle2, ChevronRight, Building } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, CheckCircle2, ChevronRight, Building, Download } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const IndustriesPage = () => {
   useEffect(() => {
@@ -91,13 +92,22 @@ const IndustriesPage = () => {
               <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
                 We manufacture specialized packaging and commercial printing for FMCG, pharmaceuticals, luxury beauty, apparel, electronics, and e-commerce brands across Pakistan and export markets.
               </p>
-              <Link 
-                to="/contact" 
-                className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
-              >
-                <span>Discuss Your Industry Specs</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link 
+                  to="/contact" 
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <span>Discuss Specs</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <button 
+                  onClick={() => downloadBrochure("Industries We Serve")}
+                  className="bg-[#121215] hover:bg-black text-white border border-white/10 px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download brochure</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

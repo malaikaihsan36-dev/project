@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, CheckCircle2, Factory, ShieldCheck, ChevronRight, Cpu, Layers, RefreshCw } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Factory, ShieldCheck, ChevronRight, Cpu, Layers, RefreshCw, Download } from 'lucide-react';
 import NavBar from '../components/Navbar';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const ManufacturingPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -58,13 +59,22 @@ const ManufacturingPage = () => {
               <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
                 Step inside ColourPix's 100% owned production plant in Lahore. Take an in-depth interactive tour of our 13-stage manufacturing pipeline and advanced European and Japanese press infrastructure.
               </p>
-              <Link 
-                to="/contact" 
-                className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
-              >
-                <span>Schedule a Plant Audit</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link 
+                  to="/contact" 
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <span>Schedule Audit</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <button 
+                  onClick={() => downloadBrochure("Manufacturing Process")}
+                  className="bg-[#121215] hover:bg-black text-white border border-white/10 px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download process</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

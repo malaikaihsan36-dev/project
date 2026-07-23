@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Box, CheckCircle2, ChevronRight, Layers, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Box, CheckCircle2, ChevronRight, Layers, ShieldCheck, Download } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const PackagingPage = () => {
   useEffect(() => {
@@ -104,13 +105,22 @@ const PackagingPage = () => {
               <p className="text-[#A1A1AA] text-base sm:text-lg leading-relaxed font-normal mb-6">
                 Explore our full line of custom luxury rigid setup boxes, food-grade barrier cartons, cosmetics packaging, pharmaceutical folding boxes, and e-commerce mailers.
               </p>
-              <Link 
-                to="/catalog" 
-                className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
-              >
-                <span>Browse Interactive Catalog</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link 
+                  to="/catalog" 
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <span>Browse Catalog</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <button 
+                  onClick={() => downloadBrochure("Packaging Solutions")}
+                  className="bg-[#121215] hover:bg-black text-white border border-white/10 px-5 py-3 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download brochure</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

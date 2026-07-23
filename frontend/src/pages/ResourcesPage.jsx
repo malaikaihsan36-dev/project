@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Download, FileText, BookOpen, CheckCircle2, ChevronRight, HelpCircle, ChevronDown, ShieldCheck } from 'lucide-react';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { downloadBrochure } from '../components/pdfHelper';
 
 const ResourcesPage = () => {
   const [openFaq, setOpenFaq] = useState(null);
@@ -35,7 +36,7 @@ const ResourcesPage = () => {
   ];
 
   const handleDownloadProfile = () => {
-    alert("Downloading ColourPix Corporate Profile PDF (LCCI Member #1991-PK)...");
+    downloadBrochure("Company Profile");
   };
 
   return (

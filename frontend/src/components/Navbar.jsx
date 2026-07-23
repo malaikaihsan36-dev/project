@@ -106,7 +106,7 @@ const Navbar = () => {
                 COLOUR<span className="text-[#2563EB]">PIX</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E11D48] inline-block ml-0.5"></span>
               </span>
-              <span className="text-[9px] font-mono tracking-widest text-[#A1A1AA] uppercase">Packaging & Print Mfg.</span>
+              <span className="text-[9px] font-mono tracking-widest text-[#A1A1AA] uppercase">Direct Manufacturer • Est. 1991</span>
             </div>
           </div>
 
@@ -170,6 +170,11 @@ const Navbar = () => {
                       <span className="text-[10px] text-[#A1A1AA] block">{s.desc}</span>
                     </Link>
                   ))}
+                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
+                    <span>LCCI MEMBER #1991-PK</span>
+                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
+                    <span>100% DIRECT MFG</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -204,6 +209,11 @@ const Navbar = () => {
                       <span className="text-[10px] text-[#A1A1AA] block">{p.desc}</span>
                     </Link>
                   ))}
+                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
+                    <span>LCCI MEMBER #1991-PK</span>
+                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
+                    <span>100% DIRECT MFG</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -238,6 +248,11 @@ const Navbar = () => {
                       <span className="text-[10px] text-[#A1A1AA] block">{f.desc}</span>
                     </Link>
                   ))}
+                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
+                    <span>LCCI MEMBER #1991-PK</span>
+                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
+                    <span>100% DIRECT MFG</span>
+                  </div>
                 </div>
               )}
             </div>

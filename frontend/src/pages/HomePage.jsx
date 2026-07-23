@@ -436,39 +436,39 @@ const HomePage = () => {
               {[
                 {
                   title: "35+ Years of Experience",
-                  desc: "Three decades of continuous industrial manufacturing in Lahore, bringing deep material science and structural engineering to every project."
+                  desc: "Three decades of continuous industrial printing and packaging manufacturing in Lahore since 1991, offering deep material expertise."
                 },
                 {
-                  title: "LCCI Registered Company",
-                  desc: "Officially accredited with the Lahore Chamber of Commerce & Industry (Member #1991-PK), offering complete contractual integrity."
+                  title: "LCCI Registration Member",
+                  desc: "Officially registered and accredited with the Lahore Chamber of Commerce & Industry (LCCI Member #1991-PK) for absolute contract safety."
                 },
                 {
                   title: "Trusted Pakistani Manufacturer",
-                  desc: "A direct owner-operated manufacturing facility in Lahore — not a print broker, reseller, or middleman vendor."
+                  desc: "100% direct owner-operated manufacturing facility in Lahore, eliminating middleman broker markups and external delays."
                 },
                 {
-                  title: "Premium Quality Standards",
-                  desc: "Enforcing AQL 1.0 zero-defect sampling, Pantone color calibration, and burst testing on all paperboard stocks."
+                  title: "Premium Manufacturing",
+                  desc: "State-of-the-art plant equipped with European Heidelberg offset presses and advanced automated rigid box assembly lines."
                 },
                 {
-                  title: "Custom Manufacturing Solutions",
-                  desc: "In-house CAD dieline plotters and structural engineers crafting bespoke packaging tailored to your exact product specs."
+                  title: "Quality Assurance Standard",
+                  desc: "Enforcing strict AQL 1.0 zero-defect checks, burst-strength substrate testing, and Delta-E color density controls < 1.5."
                 },
                 {
-                  title: "Long-Term Client Relationships",
-                  desc: "Building 30-year supply partnerships with top enterprise brands through consistent pricing, reliability, and repeat accuracy."
+                  title: "Custom Packaging Solutions",
+                  desc: "In-house CAD dieline engineers mapping custom packaging structures and plotting physical 1:1 samples using Kongsberg cutters."
                 },
                 {
-                  title: "Nationwide Service",
-                  desc: "Tracked bulk supply chain logistics serving corporate clients across Karachi, Lahore, Islamabad, Faisalabad, and nationwide."
+                  title: "Dedicated Account Support",
+                  desc: "Personalized corporate relationship managers with a guaranteed 2-hour response time for structural audits and order progress."
                 },
                 {
-                  title: "Reliable Delivery",
-                  desc: "Guaranteed production scheduling backed by continuous 24/7 plant operating capabilities to meet strict launch deadlines."
+                  title: "Nationwide Tracked Delivery",
+                  desc: "Heavy-duty tracked bulk logistics providing reliable transit and shipping to Karachi, Lahore, Islamabad, Faisalabad, and nationwide."
                 },
                 {
-                  title: "High Production Capacity",
-                  desc: "Equipped with multi-color Heidelberg & Komori offset presses capable of executing multi-million unit high-volume orders."
+                  title: "Direct Factory Pricing",
+                  desc: "Transparent open-book factory quotes offering competitive pricing with direct access to physical swatches and sample kits."
                 }
               ].map((pillar, pIdx) => (
                 <div 

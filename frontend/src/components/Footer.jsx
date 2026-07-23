@@ -61,6 +61,23 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Subtle Horizontal Trust Strip */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 border-b border-white/10 pb-10 mb-10 text-left">
+          {[
+            { label: "ESTABLISHED 1991", val: "35+ Years Experience" },
+            { label: "LCCI ACCREDITATION", val: "Member #1991-PK" },
+            { label: "DIRECT MFG PLANT", val: "Lahore In-House Plant" },
+            { label: "QUALITY STANDARDS", val: "AQL 1.0 QC Audits" },
+            { label: "BULK LOGISTICS", val: "Nationwide Delivery" },
+            { label: "CORPORATE SUPPORT", val: "2-Hour Response" }
+          ].map((item, index) => (
+            <div key={index} className="p-4 rounded-2xl bg-[#09090B] border border-white/5 flex flex-col justify-between hover:border-[#2563EB] transition-colors duration-300">
+              <span className="text-[9px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-1">{item.label}</span>
+              <span className="text-xs font-bold text-white uppercase block">{item.val}</span>
+            </div>
+          ))}
+        </div>
+
         {/* 4-Column Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-16 text-left">
           

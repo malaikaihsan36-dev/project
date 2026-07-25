@@ -23,7 +23,7 @@ const PUBLICATIONS_DATA = [
     id: "cp-mag-01",
     title: "ColourPix Magazine - Issue #01",
     desc: "A deep dive into 2026 luxury rigid packaging trends, Heidelberg offset press calibrations, and sustainability metrics in pharmaceutical folding cartons.",
-    category: "Magazine",
+    category: "Featured",
     pages: 64,
     fileSize: "8.5 MB",
     lastUpdated: "July 2026",
@@ -47,7 +47,7 @@ const PUBLICATIONS_DATA = [
     id: "why-colourpix",
     title: "Why ColourPix Capabilities Brochure",
     desc: "Detailed spec guide highlighting our AQL 1.0 zero-defect quality control standards and vertically integrated manufacturing pipeline.",
-    category: "Brochure",
+    category: "Corporate",
     pages: 12,
     fileSize: "2.8 MB",
     lastUpdated: "May 2026",
@@ -56,40 +56,124 @@ const PUBLICATIONS_DATA = [
     keywords: ["why us", "capabilities", "trust", "accreditation"]
   },
   {
-    id: "printing-solutions",
-    title: "Commercial Printing Solutions Catalog",
-    desc: "High-resolution product specification sheets for commercial brochures, catalog binding, book prints, and variable digital runs.",
-    category: "Catalogue",
-    pages: 32,
-    fileSize: "6.1 MB",
-    lastUpdated: "April 2026",
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop",
-    downloadName: "Printing Solutions",
-    keywords: ["catalog", "printing", "offset", "books", "labels"]
+    id: "capability-statement",
+    title: "Capability Statement 2026",
+    desc: "A summary of industrial scope, materials capability, printing technologies, and logistics network details.",
+    category: "Corporate",
+    pages: 14,
+    fileSize: "3.1 MB",
+    lastUpdated: "June 2026",
+    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Company Profile",
+    keywords: ["statement", "capability", "assets", "production"]
   },
   {
-    id: "packaging-solutions",
-    title: "Custom Packaging Substrates Guide",
-    desc: "Design specifications, structural diagrams, and paperboard grade matrices (GSM density ranges) for luxury rigid folding boxes.",
-    category: "Guide",
+    id: "lcci-registration",
+    title: "LCCI Registration & Compliance Sheet",
+    desc: "Verified corporate certification document with the Lahore Chamber of Commerce & Industry (Member #1991-PK).",
+    category: "Corporate",
+    pages: 2,
+    fileSize: "1.2 MB",
+    lastUpdated: "Est. 1991",
+    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Trust Center",
+    keywords: ["lcci", "compliance", "registration", "certificate"]
+  },
+  {
+    id: "packaging-catalogue",
+    title: "Packaging Solutions Catalogue",
+    desc: "Complete catalog of luxury rigid setup boxes, corrugated mailers, folding cartons, labels, and food packaging.",
+    category: "Catalogues",
+    pages: 48,
+    fileSize: "9.2 MB",
+    lastUpdated: "July 2026",
+    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Packaging Solutions",
+    keywords: ["packaging", "catalog", "rigid box", "mailers", "cartons"]
+  },
+  {
+    id: "printing-catalogue",
+    title: "Commercial Printing Catalogue",
+    desc: "Specification sheet collection for editorial brochures, catalog bindings, leaflets, and high-definition book runs.",
+    category: "Catalogues",
+    pages: 36,
+    fileSize: "6.8 MB",
+    lastUpdated: "April 2026",
+    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Printing Solutions",
+    keywords: ["printing", "catalog", "offset", "editorial", "books"]
+  },
+  {
+    id: "finishes-catalogue",
+    title: "Premium Finishes & Embellishments Catalogue",
+    desc: "Design showcase of 3D Spot UV heights, gold hot foil stampings, embossing reliefs, and soft-touch laminations.",
+    category: "Catalogues",
+    pages: 28,
+    fileSize: "7.1 MB",
+    lastUpdated: "March 2026",
+    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Premium Finishes",
+    keywords: ["finishes", "embellishments", "foil", "uv", "embossing"]
+  },
+  {
+    id: "material-guide",
+    title: "Material & Substrates Spec Guide",
+    desc: "An engineer's handbook outlining duplex paperboard calibrations, Kraft card options, and greyboard density matrices.",
+    category: "Guides",
     pages: 24,
     fileSize: "5.4 MB",
     lastUpdated: "March 2026",
     image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop",
     downloadName: "Packaging Solutions",
-    keywords: ["packaging", "rigid box", "duplex board", "kraft", "cartons"]
+    keywords: ["material", "substrates", "duplex", "kraft", "greyboard"]
   },
   {
-    id: "premium-finishes",
-    title: "Tactile Embellishments & Premium Finishes Spec",
-    desc: "Swiss hot foil stamping guidelines, 3D spot UV heights, matte gloss film laminations.",
-    category: "Guide",
-    pages: 16,
-    fileSize: "3.7 MB",
-    lastUpdated: "February 2026",
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
-    downloadName: "Premium Finishes",
-    keywords: ["finishes", "foil", "uv", "embossing", "die cutting"]
+    id: "industry-guide",
+    title: "Industry Solutions & Applications Guide",
+    desc: "Custom package fits mapped to cosmetics, FMCG food-grade retail, pharmaceuticals, and e-commerce supply lines.",
+    category: "Guides",
+    pages: 30,
+    fileSize: "6.5 MB",
+    lastUpdated: "May 2026",
+    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Industries We Serve",
+    keywords: ["industry", "applications", "cosmetics", "food", "pharma"]
+  },
+  {
+    id: "design-guide",
+    title: "Packaging Structural Design Guide",
+    desc: "Pre-press dieline guidelines, fold folding allowances, bleed alignments, and color profile (CMYK/Pantone) setup checklist.",
+    category: "Guides",
+    pages: 32,
+    fileSize: "8.1 MB",
+    lastUpdated: "July 2026",
+    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Packaging Solutions",
+    keywords: ["design", "prepress", "dieline", "bleed", "artwork"]
+  },
+  {
+    id: "portfolio-catalogue",
+    title: "Selected Works Portfolio Catalogue",
+    desc: "A luxurious compilation of manufactured finished packaging units, luxury gift boxes, and commercial prints.",
+    category: "Portfolio",
+    pages: 40,
+    fileSize: "10.4 MB",
+    lastUpdated: "July 2026",
+    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Portfolio Catalogue",
+    keywords: ["portfolio", "catalogue", "works", "rigid", "prints"]
+  },
+  {
+    id: "case-studies-compilation",
+    title: "Export Case Studies Compilation",
+    desc: "In-depth engineering reviews highlighting structural challenges, materials used, and final retail results for export clients.",
+    category: "Portfolio",
+    pages: 26,
+    fileSize: "4.9 MB",
+    lastUpdated: "June 2026",
+    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop",
+    downloadName: "Portfolio Catalogue",
+    keywords: ["case study", "compilation", "challenges", "materials"]
   }
 ];
 
@@ -108,17 +192,12 @@ const KnowledgeCenterPage = () => {
   }, []);
 
   // Filter Categories list
-  const categoriesList = ['ALL', 'Featured Publications', 'Corporate Documents', 'Catalogues', 'Industry Guides', 'Resources'];
+  const categoriesList = ['ALL', 'Featured', 'Corporate', 'Catalogues', 'Guides', 'Portfolio'];
 
   // Map user categories list to card labels
   const getCategoryMatch = (tabName, cardCat) => {
     if (tabName === 'ALL') return true;
-    if (tabName === 'Featured Publications' && cardCat === 'Magazine') return true;
-    if (tabName === 'Corporate Documents' && cardCat === 'Corporate') return true;
-    if (tabName === 'Catalogues' && cardCat === 'Catalogue') return true;
-    if (tabName === 'Industry Guides' && cardCat === 'Guide') return true;
-    if (tabName === 'Resources' && (cardCat === 'Brochure' || cardCat === 'Guide')) return true;
-    return false;
+    return cardCat.toLowerCase() === tabName.toLowerCase();
   };
 
   // Search and filter memo

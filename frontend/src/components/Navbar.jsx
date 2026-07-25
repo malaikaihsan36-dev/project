@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, User, Search, ChevronDown, Phone, Mail, Building2, Layers, Box, Sparkles, Factory, BookOpen } from 'lucide-react';
 import axios from 'axios';
@@ -12,6 +12,19 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const [resumeEmail, setResumeEmail] = useState('');
   const [resumeCode, setResumeCode] = useState('');
@@ -91,7 +104,7 @@ const Navbar = () => {
       </div>
 
       {/* MAIN NAVBAR */}
-      <nav className="sticky top-0 left-0 w-full z-[100] bg-[#09090B]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg">
+      <nav className={`sticky top-0 left-0 w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-[#09090B]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.5)]' : 'bg-[#09090B]/80 backdrop-blur-md border-b border-white/5 shadow-none'}`}>
         <div className="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
           
           {/* Logo */}

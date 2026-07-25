@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBackground from '../layouts/AppBackground';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { PageTransition, ScrollReveal, useCountUp, useMagnetic } from '../components/animationHelper';
+import { downloadBrochure } from '../components/pdfHelper';
 import { 
   Building2, 
   ChevronDown,
@@ -11,7 +12,10 @@ import {
   Mail,
   ArrowUpRight, 
   Factory,
-  CheckCircle2
+  CheckCircle2,
+  Download,
+  Eye,
+  BookOpen
 } from 'lucide-react';
 
 const StatNumber = ({ endValue, suffix = "", colorClass = "text-[#2563EB]" }) => {
@@ -25,6 +29,7 @@ const StatNumber = ({ endValue, suffix = "", colorClass = "text-[#2563EB]" }) =>
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const quoteBtnRef = useMagnetic(0.15);
   const catalogBtnRef = useMagnetic(0.15);
 
@@ -1268,6 +1273,162 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* SECTION 7.5: FEATURED PUBLICATIONS SHOWCASE */}
+        {/* ========================================================= */}
+        <section className="py-24 border-b border-[#27272A]/50 bg-[#0C0C0E]">
+          <div className="max-w-7xl mx-auto px-6 text-left">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] mb-2 block font-bold">
+                  PUBLICATION LIBRARY & INSIGHTS
+                </span>
+                <h2 className="font-syne text-4xl sm:text-5xl font-extrabold uppercase text-white leading-tight">
+                  Featured Publications
+                </h2>
+              </div>
+              
+              <Link 
+                to="/knowledge-center"
+                className="bg-[#121215] border border-white/10 text-white hover:border-white/20 px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all inline-flex items-center gap-2"
+              >
+                <span>Explore Knowledge Center</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Featured Publication: ColourPix Magazine */}
+            <ScrollReveal>
+              <div className="luxury-card p-8 md:p-12 rounded-3xl border border-white/15 bg-[#121215]/80 backdrop-blur-md mb-12 relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-tr from-[#2563EB]/5 to-transparent blur-3xl pointer-events-none" />
+                
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                  {/* Left Column: Visual Cover */}
+                  <div className="lg:col-span-5 relative group overflow-hidden rounded-2xl border border-white/10 bg-[#09090B] aspect-[4/3] flex items-center justify-center">
+                    <img 
+                      src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop" 
+                      alt="ColourPix Magazine Cover" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95" 
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button 
+                        onClick={() => navigate("/read/cp-mag-01")}
+                        className="bg-white/15 backdrop-blur-md border border-white/20 text-white p-3 rounded-full hover:bg-white hover:text-black transition-colors"
+                      >
+                        <Eye size={20} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Metadata & CTAs */}
+                  <div className="lg:col-span-7 space-y-6">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="text-[10px] font-mono text-[#2563EB] bg-[#2563EB]/10 border border-[#2563EB]/30 px-3 py-1 rounded-full uppercase tracking-wider font-bold">
+                        ColourPix Magazine
+                      </span>
+                      <span className="text-[10px] font-mono text-white bg-[#E11D48] px-3 py-1 rounded-full uppercase tracking-wider font-bold">
+                        Issue #01
+                      </span>
+                    </div>
+
+                    <h3 className="font-syne text-3xl sm:text-4xl font-extrabold text-white uppercase leading-tight tracking-tight">
+                      The Future of Premium Packaging
+                    </h3>
+
+                    <p className="text-[#A1A1AA] text-base leading-relaxed">
+                      Explore the latest trends in luxury rigid packaging, Heidelberg offset press calibrations, and sustainability metrics in folding carton production.
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 pt-2">
+                      <button 
+                        onClick={() => navigate("/read/cp-mag-01")}
+                        className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center gap-2"
+                      >
+                        <Eye size={14} /> Read Online
+                      </button>
+                      <button 
+                        onClick={() => downloadBrochure("Company Profile")}
+                        className="bg-transparent border border-white/15 text-white hover:border-white/30 px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all flex items-center gap-2"
+                      >
+                        <Download size={14} /> Download PDF (8.5 MB)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Showcase three additional resources */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Company Profile & Plant Roster",
+                  category: "Corporate Documents",
+                  desc: "Corporate handbook detailing our 35-year chronology, Lahore facility layout, and list of production equipment.",
+                  downloadName: "Company Profile",
+                  image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=400&auto=format&fit=crop"
+                },
+                {
+                  title: "Material & Substrates Spec Guide",
+                  category: "Industry Guides",
+                  desc: "An engineer's handbook outlining duplex paperboard calibrations, Kraft card options, and greyboard density matrices.",
+                  downloadName: "Packaging Solutions",
+                  image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop"
+                },
+                {
+                  title: "Packaging Solutions Catalogue",
+                  category: "Catalogues",
+                  desc: "Complete catalog of luxury rigid setup boxes, corrugated mailers, folding cartons, labels, and food packaging.",
+                  downloadName: "Packaging Solutions",
+                  image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=400&auto=format&fit=crop"
+                }
+              ].map((res, idx) => (
+                <ScrollReveal key={idx}>
+                  <div className="group rounded-2xl border border-white/10 overflow-hidden bg-[#121215]/60 backdrop-blur-sm flex flex-col h-full hover:border-[#2563EB]/40 hover:-translate-y-1.5 transition-all duration-500 justify-between">
+                    <div className="relative h-44 overflow-hidden bg-[#09090B] border-b border-white/10">
+                      <img 
+                        src={res.image} 
+                        alt={res.title} 
+                        className="w-full h-full object-cover filter contrast-105 brightness-90 group-hover:scale-105 transition-transform duration-700" 
+                      />
+                      <span className="absolute top-3 left-3 z-10 text-[8px] font-mono uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/10 border border-[#2563EB]/30 px-2 py-0.5 rounded-full font-bold backdrop-blur-md">
+                        {res.category}
+                      </span>
+                    </div>
+
+                    <div className="p-5 flex-grow flex flex-col justify-between space-y-4">
+                      <div className="space-y-1">
+                        <h4 className="font-syne text-base font-bold text-white group-hover:text-[#2563EB] transition-colors leading-tight">
+                          {res.title}
+                        </h4>
+                        <p className="text-[11px] text-[#A1A1AA] leading-relaxed line-clamp-3">
+                          {res.desc}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <button 
+                          onClick={() => downloadBrochure(res.downloadName)}
+                          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-2.5 rounded-lg text-[9px] font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_10px_rgba(37,99,235,0.2)] flex items-center justify-center gap-1"
+                        >
+                          <Download size={10} /> Download
+                        </button>
+                        <button 
+                          onClick={() => downloadBrochure(res.downloadName)}
+                          className="bg-transparent border border-white/10 text-white hover:border-white/20 py-2.5 rounded-lg text-[9px] font-mono uppercase tracking-wider font-bold transition-all flex items-center justify-center gap-1"
+                        >
+                          <Eye size={10} /> Preview
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
           </div>
         </section>
 

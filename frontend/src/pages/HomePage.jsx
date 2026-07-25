@@ -27,8 +27,8 @@ const StatNumber = ({ endValue, suffix = "", colorClass = "text-[#2563EB]" }) =>
     </span>
   );
 };
-
 const HomePage = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
   const navigate = useNavigate();
   const quoteBtnRef = useMagnetic(0.15);
   const catalogBtnRef = useMagnetic(0.15);
@@ -75,7 +75,7 @@ const HomePage = () => {
     e.preventDefault();
     try {
       // Endpoint call or success state
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

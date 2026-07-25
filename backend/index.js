@@ -16,12 +16,14 @@ const server = http.createServer(app);
 // ==========================================
 // 🚀 CORS CONFIGURATION
 // ==========================================
-const allowedOrigins = [
-    'https://colourpix.pk',         // Aapki main production domain
-    'https://www.colourpix.pk',     // www wali variant domain
-    'http://localhost:3001',        // Local development frontend port 3001
-    'http://localhost:3000'         // Local development frontend port 3000
-];
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS 
+    ? process.env.CORS_ALLOWED_ORIGINS.split(',').map(item => item.trim())
+    : [
+        'https://colourpix.pk',         // Aapki main production domain
+        'https://www.colourpix.pk',     // www wali variant domain
+        'http://localhost:3001',        // Local development frontend port 3001
+        'http://localhost:3000'         // Local development frontend port 3000
+    ];
 
 const corsOptions = {
     origin: function (origin, callback) {

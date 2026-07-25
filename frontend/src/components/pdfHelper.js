@@ -282,6 +282,16 @@ export const downloadBrochure = async (brochureName) => {
   doc.setFillColor(18, 18, 21);
   doc.rect(0, 0, pageW, pageH, 'F');
 
+  // Technical blueprint grid lines (very faint)
+  doc.setDrawColor(28, 28, 30);
+  doc.setLineWidth(0.1);
+  for (let l = 20; l < pageW; l += 20) {
+    doc.line(l, 0, l, pageH);
+  }
+  for (let l = 20; l < pageH; l += 20) {
+    doc.line(0, l, pageW, l);
+  }
+
   // Decorative luxury accent color block
   doc.setFillColor(37, 99, 235); // Dark blue accent
   doc.rect(10, 10, 3, 277, 'F');
@@ -297,6 +307,16 @@ export const downloadBrochure = async (brochureName) => {
   doc.setDrawColor(39, 39, 42); // Gray border
   doc.setLineWidth(0.5);
   doc.line(25, 35, 185, 35);
+
+  // CMYK Target registration mark indicators
+  doc.setFillColor(0, 163, 224); // Cyan
+  doc.circle(25, 52, 2.5, 'F');
+  doc.setFillColor(236, 0, 140); // Magenta
+  doc.circle(32, 52, 2.5, 'F');
+  doc.setFillColor(255, 242, 0); // Yellow
+  doc.circle(39, 52, 2.5, 'F');
+  doc.setFillColor(35, 31, 32); // Black
+  doc.circle(46, 52, 2.5, 'F');
 
   // Large Editorial Title
   doc.setTextColor(255, 255, 255);
@@ -324,23 +344,44 @@ export const downloadBrochure = async (brochureName) => {
   doc.setLineWidth(0.8);
   doc.line(25, 115, 65, 115);
 
-  // Manufacturing Stamp
+  // Left Column: Technical Compliance Stamp Box
   doc.setFillColor(24, 24, 27);
-  doc.rect(25, 135, 155, 45, 'F');
+  doc.rect(25, 195, 85, 55, 'F');
   doc.setDrawColor(63, 63, 70);
-  doc.rect(25, 135, 155, 45, 'D');
+  doc.rect(25, 195, 85, 55, 'D');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('Helvetica', 'bold');
-  doc.setFontSize(9);
-  doc.text('MANUFACTURING COMPLIANCE STATEMENT:', 32, 147);
+  doc.setFontSize(8);
+  doc.text('TECHNICAL STANDARDS COMPLIANCE', 30, 206);
+  doc.line(30, 209, 105, 209);
+
   doc.setTextColor(161, 161, 170);
   doc.setFont('Helvetica', 'normal');
-  doc.setFontSize(8);
-  
+  doc.setFontSize(7);
   const complianceText = "This technical document details the proprietary folding dielines, substrate parameters, and machinery workloads executed at our Lahore industrial plant. All specifications adhere to AQL 1.0 zero-defect standards.";
-  const lines = doc.splitTextToSize(complianceText, 140);
-  doc.text(lines, 32, 155);
+  const complianceLines = doc.splitTextToSize(complianceText, 75);
+  doc.text(complianceLines, 30, 216);
+
+  // Right Column: Table of Contents / Document Index Box
+  doc.setFillColor(24, 24, 27);
+  doc.rect(115, 195, 65, 55, 'F');
+  doc.setDrawColor(63, 63, 70);
+  doc.rect(115, 195, 65, 55, 'D');
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('Helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.text('DOCUMENT INDEX', 122, 206);
+  doc.line(122, 209, 172, 209);
+
+  doc.setTextColor(161, 161, 170);
+  doc.setFont('Helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.text('SEC. 01  OPERATIONAL FOCUS', 122, 218);
+  doc.text('SEC. 02  TECHNICAL SPECIFICATIONS', 122, 226);
+  doc.text('SEC. 03  CAD DIELINE SCHEMATICS', 122, 234);
+  doc.text('SEC. 04  CONTACT & COMPLIANCE', 122, 242);
 
   // Footer cover
   doc.setTextColor(113, 113, 122);

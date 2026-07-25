@@ -333,17 +333,17 @@ const KnowledgeCenterPage = () => {
             {filteredResources.length > 0 ? (
               filteredResources.map((res) => (
                 <ScrollReveal key={res.id}>
-                  <div className="group luxury-card rounded-3xl border border-white/10 overflow-hidden bg-[#121215]/50 flex flex-col h-full hover:border-[#2563EB] transition-all duration-500 shadow-xl justify-between">
+                  <div className="group rounded-3xl border border-white/10 overflow-hidden bg-[#121215]/60 backdrop-blur-md flex flex-col h-full hover:border-[#2563EB]/40 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(37,99,235,0.06)] transition-all duration-500 justify-between">
                     
                     {/* Cover Preview Image */}
-                    <div className="relative h-56 overflow-hidden bg-[#09090B] border-b border-white/10">
+                    <div className="relative h-60 overflow-hidden bg-[#09090B] border-b border-white/10">
                       <img 
                         src={getOptimizedImage(res.image, 400)} 
                         alt={res.title} 
-                        className="w-full h-full object-cover filter contrast-105 brightness-95 group-hover:scale-103 transition-transform duration-700" 
+                        className="w-full h-full object-cover filter contrast-105 brightness-90 group-hover:scale-105 transition-transform duration-700" 
                         loading="lazy"
                       />
-                      <span className="absolute top-4 left-4 z-10 text-[9px] font-mono uppercase tracking-widest text-white bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
+                      <span className="absolute top-4 left-4 z-10 text-[9px] font-mono uppercase tracking-widest text-[#2563EB] bg-[#2563EB]/10 border border-[#2563EB]/30 px-3 py-1 rounded-full font-bold backdrop-blur-md">
                         {res.category}
                       </span>
                     </div>
@@ -370,7 +370,7 @@ const KnowledgeCenterPage = () => {
                           <span className="text-white font-bold">{res.fileSize}</span>
                         </div>
                         <div>
-                          <span className="block text-gray-500 uppercase">Updated</span>
+                          <span className="block text-gray-500 uppercase">Published</span>
                           <span className="text-white font-bold">{res.lastUpdated}</span>
                         </div>
                       </div>
@@ -379,7 +379,7 @@ const KnowledgeCenterPage = () => {
                       <div className="grid grid-cols-2 gap-3 pt-2">
                         <button 
                           onClick={() => downloadBrochure(res.downloadName)}
-                          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3.5 rounded-xl text-[10px] font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.25)] flex items-center justify-center gap-1.5"
+                          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3.5 rounded-xl text-[10px] font-mono uppercase tracking-wider font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.2)] flex items-center justify-center gap-1.5"
                         >
                           <Download size={12} /> Download
                         </button>

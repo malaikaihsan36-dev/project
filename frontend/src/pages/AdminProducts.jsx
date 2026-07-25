@@ -35,14 +35,14 @@ const AdminProducts = () => {
 
   const fetchCategories = async () => {
     // Direct safe connection strings bina kisi variable ke
-    const res = await fetch('${API_BASE_URL}/api/categories');
+    const res = await fetch(`${API_BASE_URL}/api/categories`);
     const data = await res.json();
     setCategories(data);
   };
 
   const fetchProducts = async () => {
     // Direct safe connection strings bina kisi variable ke
-    const res = await fetch('${API_BASE_URL}/api/products');
+    const res = await fetch(`${API_BASE_URL}/api/products`);
     const data = await res.json();
     setProducts(data);
   };
@@ -62,7 +62,7 @@ const AdminProducts = () => {
     // Direct safe connection strings bina kisi variable ke
     const url = editingCatId 
       ? `${API_BASE_URL}/api/categories/${editingCatId}` 
-      : '${API_BASE_URL}/api/categories';
+      : `${API_BASE_URL}/api/categories`;
     
     const method = editingCatId ? 'PUT' : 'POST';
 
@@ -184,7 +184,7 @@ const AdminProducts = () => {
     };
 
     // Direct safe connection strings bina kisi variable ke
-    const url = editingId ? `${API_BASE_URL}/api/products/${editingId}` : '${API_BASE_URL}/api/products';
+    const url = editingId ? `${API_BASE_URL}/api/products/${editingId}` : `${API_BASE_URL}/api/products`;
     try {
       const res = await fetch(url, {
         method: editingId ? 'PUT' : 'POST',

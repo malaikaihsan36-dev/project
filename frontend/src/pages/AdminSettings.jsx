@@ -34,7 +34,7 @@ const AdminSettings = () => {
   const fetchAdmins = async () => {
     try {
       // Direct connection string setup ki bina kisi external changes ke
-      const res = await axios.get('${API_BASE_URL}/api/admin-list');
+      const res = await axios.get(`${API_BASE_URL}/api/admin-list`);
       setAdmins(res.data);
     } catch (err) {
       console.error("Error fetching admins:", err);
@@ -59,7 +59,7 @@ const AdminSettings = () => {
     setLoading(true);
     try {
       // Direct connection string setup ki bina kisi external changes ke
-      const res = await axios.post('${API_BASE_URL}/api/admin/add', {
+      const res = await axios.post(`${API_BASE_URL}/api/admin/add`, {
         email: formData.email,
         password: formData.password
       });

@@ -22,7 +22,7 @@ const AdminChat = () => {
     const [inputValue, setInputValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showUploadMenu, setShowUploadMenu] = useState(false);
-    const [previewImage, setPreviewImage] = useState("https://via.placeholder.com/400");
+    const [previewImage, setPreviewImage] = useState("https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop");
     const [priceData, setPriceData] = useState({ production: 0, design: 0.00, shipping: 0.00, tax: 0 });
     const [isUploading, setIsUploading] = useState(false);
 
@@ -51,7 +51,7 @@ const AdminChat = () => {
                     }
                 }
                 // Admin page par aate hi notification count zero karne ke liye
-                await axios.post('${API_BASE_URL}/api/mark-read', { orderId: cleanId });
+                await axios.post(`${API_BASE_URL}/api/mark-read`, { orderId: cleanId });
             } catch (err) {
                 console.error("Initial Load Error:", err);
             }
@@ -116,7 +116,7 @@ const AdminChat = () => {
             });
             // Agar customer message kare aur admin live hai, toh auto mark-read
             if(data.sender === 'customer') {
-                axios.post('${API_BASE_URL}/api/mark-read', { orderId: cleanId }).catch(e => {});
+                axios.post(`${API_BASE_URL}/api/mark-read`, { orderId: cleanId }).catch(e => {});
             }
         });
 
@@ -146,7 +146,7 @@ const AdminChat = () => {
         const nextState = !isOrderPlaced;
         try {
             setIsOrderPlaced(nextState);
-            await axios.post('${API_BASE_URL}/api/order/update-status', { 
+            await axios.post(`${API_BASE_URL}/api/order/update-status`, { 
                 orderId: cleanId, field: 'is_placed', value: nextState 
             });
             if (socketRef.current) {
@@ -162,7 +162,7 @@ const AdminChat = () => {
     const handleExtend = async () => {
         if (!extendHours || isNaN(extendHours)) return;
         try {
-            await axios.post('${API_BASE_URL}/api/order/extend-expiry', { orderId: cleanId, hours: parseInt(extendHours) });
+            await axios.post(`${API_BASE_URL}/api/order/extend-expiry`, { orderId: cleanId, hours: parseInt(extendHours) });
             setExpiresAt(prev => new Date((prev ? prev.getTime() : new Date().getTime()) + parseInt(extendHours) * 60 * 60 * 1000));
             setExtendHours("");
         } catch (err) { alert("Extension failed"); }
@@ -193,7 +193,7 @@ const AdminChat = () => {
         formData.append("upload_preset", "my_portfolio_preset");
 
         try {
-            const res = await fetch('https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload', { method: "POST", body: formData });
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`, { method: "POST", body: formData });
             const data = await res.json();
             
             if (mode === 'chat') {
@@ -201,7 +201,7 @@ const AdminChat = () => {
             } else {
                 setPreviewImage(data.secure_url);
                 socketRef.current.emit('update_preview', { orderId: cleanId, imageUrl: data.secure_url });
-                await axios.post('${API_BASE_URL}/api/order/update-preview', { orderId: cleanId, imageUrl: data.secure_url });
+                await axios.post(`${API_BASE_URL}/api/order/update-preview`, { orderId: cleanId, imageUrl: data.secure_url });
             }
         } catch (err) { 
             alert("Upload failed"); 

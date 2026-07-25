@@ -11,7 +11,7 @@ const AdminCustomers = () => {
   const fetchCustomers = async () => {
     try {
       // Direct safe connection string bina kisi variable ya template quotes ki galti ke
-      const response = await fetch('${API_BASE_URL}/api/admin/customers');
+      const response = await fetch(`${API_BASE_URL}/api/admin/customers`);
       const data = await response.json();
       // Ensure data is an array before setting state
       setCustomers(Array.isArray(data) ? data : []);

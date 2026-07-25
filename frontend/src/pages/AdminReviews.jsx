@@ -16,8 +16,8 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk
       setLoading(true);
       // Hardcoded links ko fetch variables ke through update kiya bina kisi brackets ki galti ke
       const [reviewsRes, productsRes] = await Promise.all([
-        axios.get('${API_BASE_URL}/api/reviews'),
-        axios.get('${API_BASE_URL}/api/product-list')
+        axios.get(`${API_BASE_URL}/api/reviews`),
+        axios.get(`${API_BASE_URL}/api/product-list`)
       ]);
       setReviews(reviewsRes.data);
       setProductList(productsRes.data);
@@ -36,7 +36,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk
   const updateStatus = async (id, newStatus) => {
     try {
       // String dynamic interpolation ko clear format mein set kiya
-      await axios.patch('${API_BASE_URL}/api/reviews/' + id + '/status', { status: newStatus });
+      await axios.patch(`${API_BASE_URL}/api/reviews/${id}/status`, { status: newStatus });
       fetchData(); // Refresh list
     } catch (err) {
       alert("Status Update Failed");
@@ -48,7 +48,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk
     e.preventDefault();
     if (!newProductName.trim()) return;
     try {
-      await axios.post('${API_BASE_URL}/api/product-list', { name: newProductName });
+      await axios.post(`${API_BASE_URL}/api/product-list`, { name: newProductName });
       setNewProductName('');
       fetchData(); // Refresh list to show new product
     } catch (err) {
@@ -60,7 +60,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk
     if (!window.confirm("Are you sure? This will remove it from the User's dropdown.")) return;
     try {
       // Dynamic link bina single/double quotes ki syntax warning ke concat kiya
-      await axios.delete('${API_BASE_URL}/api/product-list/' + id);
+      await axios.delete(`${API_BASE_URL}/api/product-list/${id}`);
       fetchData();
     } catch (err) {
       alert("Delete failed");

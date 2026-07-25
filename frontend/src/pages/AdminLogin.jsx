@@ -16,7 +16,7 @@ const AdminLogin = () => {
     
     try {
       // Direct safe connection string setup bina kisi variables ki warning ke
-      const response = await axios.post('${API_BASE_URL}/api/admin/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/login`, {
         email,
         password
       });

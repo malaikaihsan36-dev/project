@@ -22,7 +22,7 @@ const DesignReview = () => {
     const [inputMessage, setInputMessage] = useState('');
     const [isAdminOnline, setIsAdminOnline] = useState(false);
     
-    const [product, setProduct] = useState(location.state?.product || { title: "Loading...", img: "https://via.placeholder.com/400" });
+    const [product, setProduct] = useState(location.state?.product || { title: "Loading...", img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop" });
     const [previewImage, setPreviewImage] = useState(product.img);
     const [messages, setMessages] = useState([]);
     const [expiresAt, setExpiresAt] = useState(null);

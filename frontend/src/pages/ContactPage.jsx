@@ -11,10 +11,13 @@ const ContactPage = () => {
   
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
+    company: '',
+    country: '',
     email: '',
+    phone: '',
     subject: 'Luxury Rigid Boxes',
-    message: ''
+    message: '',
+    artworkName: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,11 +67,10 @@ const ContactPage = () => {
       size: 'N/A',
       material: 'N/A',
       selectedAddons: [],
-      specialRequest: `Name: ${formData.name} | Details: ${formData.message}` 
+      specialRequest: `Name: ${formData.name} | Company: ${formData.company} | Country: ${formData.country} | Artwork: ${formData.artworkName || 'None'} | Details: ${formData.message}` 
     };
 
     try {
-      
       const response = await axios.post(`${API_BASE_URL}/api/orders`, contactData);
 
       if (response.status === 201 || response.status === 200) {
@@ -82,7 +84,7 @@ const ContactPage = () => {
               isFromContact: true
             } 
           });
-        }, 2000);
+        }, 3000);
       }
     } catch (error) {
       alert("Connection failed. Please contact us directly via phone or email.");
@@ -96,7 +98,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="bg-[#09090B] text-white antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen">
+    <div className="bg-[#09090B] text-white antialiased selection:bg-[#2563EB] selection:text-white font-sans min-h-screen relative">
       <NavBar />
 
       {/* HERO SECTION */}
@@ -140,12 +142,15 @@ const ContactPage = () => {
             {/* Left Column: Form */}
             <div className="lg:col-span-7 luxury-card p-8 sm:p-12 rounded-3xl border border-white/15 shadow-2xl">
               {isSubmitted ? (
-                <div className="py-16 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-[#2563EB]/20 text-[#2563EB] flex items-center justify-center mx-auto">
-                    <CheckCircle2 size={36} />
+                <div className="py-16 text-center space-y-6 animate-in fade-in zoom-in-95 duration-500">
+                  <div className="w-20 h-20 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] flex items-center justify-center mx-auto shadow-[0_0_40px_rgba(37,99,235,0.2)] animate-pulse">
+                    <CheckCircle2 size={44} />
                   </div>
-                  <h3 className="font-syne text-3xl font-extrabold text-white">Inquiry Received!</h3>
-                  <p className="text-[#A1A1AA] text-sm">Connecting you to our live design review workspace...</p>
+                  <h3 className="font-syne text-4xl font-extrabold text-white tracking-tight uppercase">Inquiry Transmitted</h3>
+                  <p className="text-[#A1A1AA] text-sm max-w-md mx-auto leading-relaxed">
+                    Your packaging brief has been registered. Redirecting to your secure live design review and dieline workspace dashboard...
+                  </p>
+                  <div className="w-12 h-1 bg-[#2563EB] mx-auto rounded-full animate-pulse"></div>
                 </div>
               ) : (
                 <>
@@ -170,6 +175,20 @@ const ContactPage = () => {
                         />
                       </div>
                       <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Company Name *</label>
+                        <input 
+                          type="text" required 
+                          name="company"
+                          value={formData.company}
+                          onChange={handleChange}
+                          placeholder="e.g. Apex Consumer Goods" 
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
                         <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Email Address *</label>
                         <input 
                           type="email" required 
@@ -180,9 +199,6 @@ const ContactPage = () => {
                           className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
                         />
                       </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Phone / WhatsApp *</label>
                         <input 
@@ -194,8 +210,22 @@ const ContactPage = () => {
                           className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
                         />
                       </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Product Interest *</label>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Country *</label>
+                        <input 
+                          type="text" required 
+                          name="country"
+                          value={formData.country}
+                          onChange={handleChange}
+                          placeholder="e.g. Pakistan" 
+                          className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Project Type *</label>
                         <select 
                           name="subject"
                           value={formData.subject}
@@ -218,6 +248,19 @@ const ContactPage = () => {
                     </div>
 
                     <div>
+                      <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Project Details *</label>
+                      <textarea 
+                        required 
+                        rows="4"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="Mention box sizes, substrate requirements, or print finishing expectations..." 
+                        className="w-full bg-[#09090B] border border-white/10 rounded-xl p-4 text-white text-sm outline-none focus:border-[#2563EB] transition-colors resize-none"
+                      />
+                    </div>
+
+                    <div>
                       <label className="text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider block mb-2">Attach Dieline / Artwork File (Optional)</label>
                       <div className="border-2 border-dashed border-white/15 hover:border-[#2563EB] rounded-2xl p-6 text-center cursor-pointer transition-colors bg-[#09090B]">
                         <input 
@@ -226,13 +269,13 @@ const ContactPage = () => {
                           className="hidden"
                           onChange={(e) => {
                             if (e.target.files?.[0]) {
-                              alert(`Attached: ${e.target.files[0].name}`);
+                              setFormData(prev => ({ ...prev, artworkName: e.target.files[0].name }));
                             }
                           }}
                         />
                         <label htmlFor="file-upload" className="cursor-pointer space-y-2 block">
                           <span className="text-xs font-mono text-[#2563EB] uppercase font-bold block">
-                            + Drag & Drop or Click to Upload Dieline (.AI, .PDF, .ARD)
+                            {formData.artworkName ? `Attached: ${formData.artworkName}` : "+ Drag & Drop or Click to Upload Dieline (.AI, .PDF, .ARD)"}
                           </span>
                           <span className="text-[10px] text-[#A1A1AA] block">Supports PDF, AI, PSD, ARD up to 50MB</span>
                         </label>
@@ -339,6 +382,17 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Floating WhatsApp Action Button */}
+      <a 
+        href="https://wa.me/923704123327" 
+        target="_blank" 
+        rel="noreferrer" 
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-[#09090B] p-4 rounded-full shadow-[0_10px_30px_rgba(37,211,102,0.4)] transition-all hover:scale-110 active:scale-95 flex items-center justify-center border border-white/10"
+        title="Chat Live on WhatsApp"
+      >
+        <MessageCircle size={28} className="text-[#09090B] fill-current" />
+      </a>
 
       <Footer />
     </div>

@@ -20,7 +20,7 @@ const ProductCard = ({ title, tag, img, id }) => (
         </div>
       )}
       <img 
-        src={img ? getOptimizedImage(img, 400) : `https://picsum.photos/seed/print/400/300`} 
+        src={img ? getOptimizedImage(img, 400) : "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop"} 
         alt={title} 
         loading="lazy"
         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter contrast-110 brightness-95" 

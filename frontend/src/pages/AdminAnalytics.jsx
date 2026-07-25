@@ -72,6 +72,7 @@ const AdminAnalytics = () => {
   };
 
   useEffect(() => {
+    document.title = "Admin Inventory & Analytics | ColourPix";
     fetchDatabaseMetrics();
     const interval = setInterval(fetchDatabaseMetrics, 10000);
     return () => clearInterval(interval);

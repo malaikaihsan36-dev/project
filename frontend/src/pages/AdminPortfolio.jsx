@@ -43,6 +43,7 @@ const AdminPortfolio = () => {
   };
 
   useEffect(() => { 
+    document.title = "Admin Portfolio Management | ColourPix";
     fetchData(); 
   }, []);
 

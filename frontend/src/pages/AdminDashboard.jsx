@@ -14,6 +14,7 @@ const AdminDashboard = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
 
     useEffect(() => {
+        document.title = "Admin Dashboard | ColourPix";
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);

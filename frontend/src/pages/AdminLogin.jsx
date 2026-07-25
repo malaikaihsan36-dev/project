@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Axios import kiya
 
@@ -9,6 +9,10 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+
+  useEffect(() => {
+    document.title = "Admin Login Access | ColourPix";
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();

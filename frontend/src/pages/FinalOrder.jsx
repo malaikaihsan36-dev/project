@@ -40,6 +40,14 @@ const FinalOrder = () => {
     fetchFinalDetails();
   }, [cleanId, navigate]);
 
+  useEffect(() => {
+    if (orderData && orderData.id) {
+      document.title = `Order Invoice #${orderData.id.toString().padStart(4, '0')} | ColourPix`;
+    } else {
+      document.title = "Order Invoice | ColourPix";
+    }
+  }, [orderData]);
+
   // Loading screen logic
   if (loading) return <div className="min-h-screen bg-[#0c1821] flex items-center justify-center text-white">Loading Invoice...</div>;
   if (!orderData) return null;

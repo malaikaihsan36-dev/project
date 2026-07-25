@@ -37,6 +37,7 @@ const AdminChat = () => {
 
     // 1. Initial Load: Order details fetch karna aur messages ko "Read" mark karna
     useEffect(() => {
+        document.title = "Admin Customer Workspace | ColourPix";
         const fetchAndMarkRead = async () => {
             if (!cleanId) return;
             try {

@@ -31,6 +31,7 @@ const ReviewsPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Customer Reviews & Case Feedback | ColourPix";
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/api/product-list`);

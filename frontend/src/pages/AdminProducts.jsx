@@ -29,6 +29,7 @@ const AdminProducts = () => {
 
   // --- INITIAL DATA FETCH ---
   useEffect(() => {
+    document.title = "Admin Inventory Management | ColourPix";
     fetchCategories();
     fetchProducts();
   }, []);

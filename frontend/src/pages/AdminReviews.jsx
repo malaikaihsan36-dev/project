@@ -29,6 +29,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk
   };
 
   useEffect(() => {
+    document.title = "Admin Reviews Moderation | ColourPix";
     fetchData();
   }, []);
 

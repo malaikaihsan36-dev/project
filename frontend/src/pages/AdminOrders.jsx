@@ -107,6 +107,7 @@ const AdminOrders = () => {
   };
 
   useEffect(() => {
+    document.title = "Admin Order Registry | ColourPix";
     fetchOrders();
     const interval = setInterval(fetchOrders, 10000);
     return () => clearInterval(interval);

@@ -90,6 +90,14 @@ const CustomizeProduct = () => {
     fetchProductDetails();
   }, [id]);
 
+  useEffect(() => {
+    if (product && product.name) {
+      document.title = `Customize ${product.name} | ColourPix`;
+    } else {
+      document.title = "Customize Product | ColourPix";
+    }
+  }, [product]);
+
   const calculatePrices = () => {
     if (!product || !size || !material) return { unitPrice: "0.00", total: "0.00" };
 

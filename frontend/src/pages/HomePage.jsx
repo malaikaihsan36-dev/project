@@ -52,6 +52,7 @@ const HomePage = () => {
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
 
   useEffect(() => {
+    document.title = "ColourPix — Industrial Packaging & Printing Manufacturer (LCCI #1991-PK)";
     const fetchData = async () => {
       try {
         // Direct safe connection strings bina kisi variable ke

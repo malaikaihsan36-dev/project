@@ -23,6 +23,7 @@ const AdminCustomers = () => {
   };
 
   useEffect(() => {
+    document.title = "Admin Customers Registry | ColourPix";
     fetchCustomers();
   }, []);
 

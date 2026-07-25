@@ -44,6 +44,7 @@ const AdminSettings = () => {
   };
 
   useEffect(() => {
+    document.title = "Admin Settings | ColourPix";
     fetchAdmins();
   }, []);
 

@@ -79,6 +79,14 @@ const DesignReview = () => {
         if (cleanId && cleanId !== "TEMP") fetchOrderData();
     }, [cleanId, API_BASE_URL]);
 
+    useEffect(() => {
+        if (product && product.title) {
+            document.title = `Design Review: ${product.title} | ColourPix`;
+        } else {
+            document.title = "Design Review Workspace | ColourPix";
+        }
+    }, [product]);
+
     const fetchChat = useCallback(async () => {
         try {
             const response = await fetch(`${API_BASE_URL}/api/chat/${cleanId}?t=${Date.now()}`);

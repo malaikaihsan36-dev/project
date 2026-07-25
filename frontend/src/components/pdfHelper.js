@@ -156,6 +156,17 @@ const drawProcessTimelineInfographic = (doc, x, y) => {
 
 // Global Brochure Content Definitions
 const BROCHURES = {
+  "ColourPix Magazine": {
+    title: "COLOURPIX MAGAZINE",
+    subtitle: "LATEST PACKAGING DESIGN & MANUFACTURING INSIGHTS",
+    accent: "#E11D48",
+    details: [
+      { heading: "Luxury Rigid Packaging Trends", body: "An in-depth review of luxury packaging trends, analyzing material innovations, high-end finishing embellishments, and structural aesthetics for global brands." },
+      { heading: "Heidelberg Press Precision & Calibration", body: "Technical guide on calibrating offset presses for high-fidelity color consistency, highlighting screen rulings and paper grain direction adjustments." },
+      { heading: "Sustainability & Eco-Friendly Substrates", body: "Assessing biodegradable materials, soy-based inks, and lightweighting packaging profiles to achieve net-zero circular product lifecycles." }
+    ],
+    infographic: drawFinishesInfographic
+  },
   "Company Profile": {
     title: "COMPANY PROFILE",
     subtitle: "TECHNICAL PLANT AUDIT & CORPORATE ROSTER",

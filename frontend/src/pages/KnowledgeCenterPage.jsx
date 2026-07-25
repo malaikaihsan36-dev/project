@@ -28,7 +28,7 @@ const PUBLICATIONS_DATA = [
     fileSize: "8.5 MB",
     lastUpdated: "July 2026",
     image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop",
-    downloadName: "Company Profile", 
+    downloadName: "ColourPix Magazine", 
     keywords: ["magazine", "trends", "rigid box", "heidelberg", "offset"]
   },
   {

@@ -39,54 +39,51 @@ const Navbar = () => {
     }
   };
 
-  const servicesLinks = [
-    { name: 'Commercial Offset Printing', path: '/service/offset-printing', desc: 'Heavy press Heidelberg 6-color runs' },
-    { name: 'Digital High-Definition', path: '/service/digital-printing', desc: 'Rapid short-run & variable data' },
-    { name: 'Specialty UV & Spot UV', path: '/service/uv-printing', desc: 'High-gloss 3D tactile varnish' },
-    { name: 'Direct-to-Film (DTF)', path: '/service/dtf-printing', desc: 'Fabric & textile garment prints' },
-    { name: 'Product Labels & Stickers', path: '/service/labels', desc: 'Waterproof foil-stamped labels' },
-    { name: 'Corporate Catalogues', path: '/service/catalogues', desc: 'Editorial publications & books' }
+  const companyLinks = [
+    { name: 'About Us', path: '/about', desc: 'Direct manufacturer chronology & scale' },
+    { name: 'Why ColourPix', path: '/why-colourpix', desc: 'Quality assurance, materials & factory rates' },
+    { name: 'Plant Tour', path: '/manufacturing', desc: 'Production floor & heavy machinery roster' },
+    { name: 'Trust Center', path: '/trust-center', desc: 'Standard operating compliance & credentials' }
   ];
 
-  const packagingLinks = [
-    { name: 'Luxury Rigid Boxes', path: '/packaging', desc: 'Handcrafted setup boxes with magnetic lids' },
-    { name: 'Food & FMCG Cartons', path: '/packaging', desc: 'FDA certified greaseproof barrier boards' },
-    { name: 'Cosmetic Beauty Packaging', path: '/packaging', desc: 'Velvet soft-touch embossed cartons' },
-    { name: 'Pharmaceutical Packaging', path: '/packaging', desc: 'Tamper-evident cartons with braille' },
-    { name: 'E-Commerce Mailers', path: '/packaging', desc: 'Tear-strip high burst corrugated boxes' },
-    { name: 'Retail Shopping Bags', path: '/packaging', desc: 'Reinforced paper bags with cotton rope' }
+  const capabilitiesLinks = [
+    { name: 'Printing Services', path: '/services', desc: 'Commercial offset, UV, & digital press runs' },
+    { name: 'Packaging Solutions', path: '/packaging', desc: 'Luxury rigid setup, food, and corrugated cartons' },
+    { name: 'Premium Finishes', path: '/finishes', desc: 'Hot foil stamp, raised spot UV, velvet wraps' }
   ];
 
-  const finishesLinks = [
-    { name: 'Metallic Hot Foil Stamping', path: '/finishes', desc: 'Gold, silver, rose gold & hologram films' },
-    { name: 'Spot UV & 3D Tactile', path: '/finishes', desc: 'Selective glass-like gloss contrast' },
-    { name: '3D Embossing & Debossing', path: '/finishes', desc: 'Multi-level relief paper sculpturing' },
-    { name: 'Velvet Soft-Touch Film', path: '/finishes', desc: 'Ultra-luxurious anti-scratch texture' },
-    { name: 'Automated Die Cutting', path: '/finishes', desc: 'Precision steel rule contour trim' }
+  const workLinks = [
+    { name: 'Industries Served', path: '/industries', desc: 'FMCG, beauty, pharma, e-commerce supply lines' },
+    { name: 'Production Portfolio', path: '/portfolio', desc: 'Audit verified case studies & custom runs' }
+  ];
+
+  const resourcesLinks = [
+    { name: 'Knowledge Center', path: '/knowledge-center', desc: 'Corporate brochures, guides & documentation' },
+    { name: 'Industrial Blog', path: '/blog', desc: 'Pre-press updates, paperboard trends & print news' }
   ];
 
   return (
     <>
       {/* TOP ANNOUNCEMENT BAR */}
-      <div className="w-full bg-[#050507] border-b border-white/10">
-        <div className="max-w-7xl mx-auto py-2.5 px-6 text-xs font-mono tracking-widest text-[#A1A1AA] uppercase flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="w-full bg-[#050507] border-b border-white/10 h-8 flex items-center">
+        <div className="max-w-7xl w-full mx-auto px-6 text-[10px] font-mono tracking-widest text-[#A1A1AA] uppercase flex items-center justify-between">
           <div className="hidden md:flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-[#2563EB] font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse inline-block"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse inline-block"></span>
               LCCI REGISTERED MEMBER #1991-PK
             </span>
             <span className="text-white/20">•</span>
-            <span>EST. 1991 — 35+ YEARS OF PRINT & PACKAGING MFG</span>
+            <span>EST. 1991 — 35+ YEARS OF MFG</span>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 mx-auto md:mx-0">
-            <a href="tel:+923704123327" className="hover:text-white transition-colors flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5 text-[#2563EB]" />
+          <div className="flex items-center gap-4 mx-auto md:mx-0">
+            <a href="tel:+923704123327" className="hover:text-white transition-colors flex items-center gap-1">
+              <Phone className="w-3 h-3 text-[#2563EB]" />
               <span>+92 370 4123327</span>
             </a>
-            <span className="hidden sm:inline text-white/20">•</span>
-            <a href="mailto:colourpix.official@gmail.com" className="hover:text-white transition-colors flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-[#E11D48]" />
+            <span className="text-white/20">•</span>
+            <a href="mailto:colourpix.official@gmail.com" className="hover:text-white transition-colors flex items-center gap-1">
+              <Mail className="w-3 h-3 text-[#E11D48]" />
               <span>colourpix.official@gmail.com</span>
             </a>
           </div>
@@ -94,26 +91,26 @@ const Navbar = () => {
       </div>
 
       {/* MAIN NAVBAR */}
-      <nav className="sticky top-0 left-0 w-full z-[100] bg-[#09090B]/95 backdrop-blur-2xl border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <nav className="sticky top-0 left-0 w-full z-[100] bg-[#09090B]/95 backdrop-blur-2xl border-b border-white/10 shadow-lg">
+        <div className="max-w-7xl mx-auto px-6 h-[76px] flex items-center justify-between">
           
           {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="w-10 h-10 rounded-xl bg-[#121215] border border-white/15 flex items-center justify-center text-white relative overflow-hidden group">
+          <div className="flex items-center gap-2.5 cursor-pointer select-none" onClick={() => navigate('/')}>
+            <div className="w-9 h-9 rounded-xl bg-[#121215] border border-white/15 flex items-center justify-center text-white relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-tr from-[#2563EB] to-[#E11D48] opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <span className="font-syne font-extrabold text-xl text-white">C</span>
+              <span className="font-syne font-extrabold text-lg text-white">C</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-syne text-xl font-bold tracking-tight text-white flex items-center gap-0.5">
+              <span className="font-syne text-lg font-bold tracking-tight text-white flex items-center gap-0.5 leading-none">
                 COLOUR<span className="text-[#2563EB]">PIX</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E11D48] inline-block ml-0.5"></span>
+                <span className="w-1.2 h-1.2 rounded-full bg-[#E11D48] inline-block ml-0.5 animate-pulse"></span>
               </span>
-              <span className="text-[9px] font-mono tracking-widest text-[#A1A1AA] uppercase">Direct Manufacturer • Est. 1991</span>
+              <span className="text-[8px] font-mono tracking-widest text-[#A1A1AA] uppercase mt-0.5 leading-none">Direct Manufacturer • Est. 1991</span>
             </div>
           </div>
 
           {/* Desktop Mega Navigation */}
-          <div className="hidden xl:flex items-center gap-6 relative">
+          <div className="hidden xl:flex items-center gap-7 relative select-none whitespace-nowrap flex-row flex-nowrap">
             <Link 
               to="/" 
               className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
@@ -121,184 +118,144 @@ const Navbar = () => {
               Home
             </Link>
 
-            <Link 
-              to="/about" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/about' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              About
-            </Link>
-
-            <Link 
-              to="/why-colourpix" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/why-colourpix' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Why Us
-            </Link>
-
-            <Link 
-              to="/trust-center" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/trust-center' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Trust Center
-            </Link>
-
-            {/* Services Dropdown */}
+            {/* Company Dropdown */}
             <div 
-              className="relative py-6"
-              onMouseEnter={() => setActiveDropdown('services')}
+              className="relative py-6 group"
+              onMouseEnter={() => setActiveDropdown('company')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link 
-                to="/services" 
-                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1 ${location.pathname.startsWith('/service') ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
+              <button 
+                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1.5 outline-none ${['/about', '/why-colourpix', '/manufacturing', '/trust-center'].includes(location.pathname) ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
               >
-                <span>Services</span>
-                <ChevronDown className="w-3 h-3" />
-              </Link>
+                <span>Company</span>
+                <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
 
-              {activeDropdown === 'services' && (
-                <div className="absolute top-full left-0 w-80 bg-[#121215] border border-white/15 rounded-2xl p-4 shadow-2xl space-y-2 text-left z-50">
-                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1">
-                    MANUFACTURING DIVISIONS
+              {activeDropdown === 'company' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-[320px] bg-[#121215] border border-white/10 rounded-2xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-1 text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1 mb-1">
+                    Corporate Registry
                   </div>
-                  {servicesLinks.map(s => (
+                  {companyLinks.map(c => (
                     <Link 
-                      key={s.path} 
-                      to={s.path}
+                      key={c.path} 
+                      to={c.path}
                       onClick={() => setActiveDropdown(null)}
                       className="block p-3 rounded-xl hover:bg-[#1C1C21] transition-colors group"
                     >
-                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{s.name}</span>
-                      <span className="text-[10px] text-[#A1A1AA] block">{s.desc}</span>
+                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{c.name}</span>
+                      <span className="text-[10px] text-[#A1A1AA] block">{c.desc}</span>
                     </Link>
                   ))}
-                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
-                    <span>LCCI MEMBER #1991-PK</span>
-                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
-                    <span>100% DIRECT MFG</span>
-                  </div>
                 </div>
               )}
             </div>
 
-            {/* Packaging Dropdown */}
+            {/* Capabilities Dropdown */}
             <div 
-              className="relative py-6"
-              onMouseEnter={() => setActiveDropdown('packaging')}
+              className="relative py-6 group"
+              onMouseEnter={() => setActiveDropdown('capabilities')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link 
-                to="/packaging" 
-                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1 ${location.pathname === '/packaging' ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
+              <button 
+                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1.5 outline-none ${['/services', '/packaging', '/finishes'].includes(location.pathname) || location.pathname.startsWith('/service') ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
               >
-                <span>Packaging</span>
-                <ChevronDown className="w-3 h-3" />
-              </Link>
+                <span>Capabilities</span>
+                <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
 
-              {activeDropdown === 'packaging' && (
-                <div className="absolute top-full left-0 w-80 bg-[#121215] border border-white/15 rounded-2xl p-4 shadow-2xl space-y-2 text-left z-50">
-                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1">
-                    BOX & CARTON LINES
+              {activeDropdown === 'capabilities' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-[320px] bg-[#121215] border border-white/10 rounded-2xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-1 text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1 mb-1">
+                    What We Do
                   </div>
-                  {packagingLinks.map(p => (
+                  {capabilitiesLinks.map(c => (
                     <Link 
-                      key={p.name} 
-                      to={p.path}
+                      key={c.path} 
+                      to={c.path}
                       onClick={() => setActiveDropdown(null)}
                       className="block p-3 rounded-xl hover:bg-[#1C1C21] transition-colors group"
                     >
-                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{p.name}</span>
-                      <span className="text-[10px] text-[#A1A1AA] block">{p.desc}</span>
+                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{c.name}</span>
+                      <span className="text-[10px] text-[#A1A1AA] block">{c.desc}</span>
                     </Link>
                   ))}
-                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
-                    <span>LCCI MEMBER #1991-PK</span>
-                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
-                    <span>100% DIRECT MFG</span>
-                  </div>
                 </div>
               )}
             </div>
 
-            {/* Finishes Dropdown */}
+            {/* Work Dropdown */}
             <div 
-              className="relative py-6"
-              onMouseEnter={() => setActiveDropdown('finishes')}
+              className="relative py-6 group"
+              onMouseEnter={() => setActiveDropdown('work')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link 
-                to="/finishes" 
-                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1 ${location.pathname === '/finishes' ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
+              <button 
+                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1.5 outline-none ${['/industries', '/portfolio'].includes(location.pathname) ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
               >
-                <span>Finishes</span>
-                <ChevronDown className="w-3 h-3" />
-              </Link>
+                <span>Work</span>
+                <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
 
-              {activeDropdown === 'finishes' && (
-                <div className="absolute top-full left-0 w-80 bg-[#121215] border border-white/15 rounded-2xl p-4 shadow-2xl space-y-2 text-left z-50">
-                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1">
-                    SURFACE EMBELLISHMENTS
+              {activeDropdown === 'work' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-[320px] bg-[#121215] border border-white/10 rounded-2xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-1 text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1 mb-1">
+                    Proven Impact
                   </div>
-                  {finishesLinks.map(f => (
+                  {workLinks.map(w => (
                     <Link 
-                      key={f.name} 
-                      to={f.path}
+                      key={w.path} 
+                      to={w.path}
                       onClick={() => setActiveDropdown(null)}
                       className="block p-3 rounded-xl hover:bg-[#1C1C21] transition-colors group"
                     >
-                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{f.name}</span>
-                      <span className="text-[10px] text-[#A1A1AA] block">{f.desc}</span>
+                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{w.name}</span>
+                      <span className="text-[10px] text-[#A1A1AA] block">{w.desc}</span>
                     </Link>
                   ))}
-                  <div className="pt-2.5 mt-2 border-t border-white/10 flex items-center justify-between text-[8px] font-mono text-[#A1A1AA] px-3">
-                    <span>LCCI MEMBER #1991-PK</span>
-                    <span className="w-1 h-1 bg-[#2563EB] rounded-full"></span>
-                    <span>100% DIRECT MFG</span>
-                  </div>
                 </div>
               )}
             </div>
 
-            <Link 
-              to="/industries" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/industries' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
+            {/* Resources Dropdown */}
+            <div 
+              className="relative py-6 group"
+              onMouseEnter={() => setActiveDropdown('resources')}
+              onMouseLeave={() => setActiveDropdown(null)}
             >
-              Industries
-            </Link>
+              <button 
+                className={`text-xs font-mono uppercase tracking-wider py-2 transition-all flex items-center gap-1.5 outline-none ${['/knowledge-center', '/blog', '/resources'].includes(location.pathname) ? 'text-[#2563EB] font-bold' : 'text-[#A1A1AA] hover:text-white'}`}
+              >
+                <span>Resources</span>
+                <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
 
-            <Link 
-              to="/manufacturing" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/manufacturing' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Plant
-            </Link>
+              {activeDropdown === 'resources' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-[320px] bg-[#121215] border border-white/10 rounded-2xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-1 text-left z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="text-[10px] font-mono text-[#2563EB] uppercase font-bold px-3 py-1 mb-1">
+                    Industry Library
+                  </div>
+                  {resourcesLinks.map(r => (
+                    <Link 
+                      key={r.path} 
+                      to={r.path}
+                      onClick={() => setActiveDropdown(null)}
+                      className="block p-3 rounded-xl hover:bg-[#1C1C21] transition-colors group"
+                    >
+                      <span className="text-xs font-bold text-white group-hover:text-[#2563EB] block">{r.name}</span>
+                      <span className="text-[10px] text-[#A1A1AA] block">{r.desc}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
-            <Link 
-              to="/portfolio" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/portfolio' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Portfolio
-            </Link>
-
-            <Link 
-              to="/knowledge-center" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/knowledge-center' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Library
-            </Link>
-
+            {/* Direct Utility Links */}
             <Link 
               to="/estimator" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/estimator' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
+              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${['/estimator', '/cost-estimator'].includes(location.pathname) ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
             >
               Estimator
-            </Link>
-
-            <Link 
-              to="/blog" 
-              className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/blog' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
-            >
-              Blog
             </Link>
 
             <Link 
@@ -349,19 +306,52 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="xl:hidden bg-[#09090B] p-6 flex flex-col gap-4 border-b border-white/10 text-left">
-            <Link to="/" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Home</Link>
-            <Link to="/about" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">About Us</Link>
-            <Link to="/services" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Services</Link>
-            <Link to="/packaging" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Packaging</Link>
-            <Link to="/finishes" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Finishes</Link>
-            <Link to="/industries" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Industries</Link>
-            <Link to="/manufacturing" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Plant</Link>
-            <Link to="/portfolio" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Portfolio</Link>
-            <Link to="/knowledge-center" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Library</Link>
-            <Link to="/estimator" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Estimator</Link>
-            <Link to="/blog" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase">Blog</Link>
-            <Link to="/contact" onClick={() => setIsOpen(false)} className="text-sm font-mono text-[#2563EB] uppercase font-bold pt-2 border-t border-white/10">Contact Us</Link>
+          <div className="xl:hidden bg-[#09090B] border-b border-white/10 text-left p-6 max-h-[80vh] overflow-y-auto space-y-6">
+            {/* Company Section */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Company</span>
+              <div className="grid grid-cols-2 gap-3 pl-2">
+                {companyLinks.map(c => (
+                  <Link key={c.path} to={c.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{c.name}</Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Capabilities Section */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Capabilities</span>
+              <div className="grid grid-cols-2 gap-3 pl-2">
+                {capabilitiesLinks.map(c => (
+                  <Link key={c.path} to={c.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{c.name}</Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Work Section */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Work & Industries</span>
+              <div className="grid grid-cols-2 gap-3 pl-2">
+                {workLinks.map(w => (
+                  <Link key={w.path} to={w.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{w.name}</Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Resources Section */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Resources</span>
+              <div className="grid grid-cols-2 gap-3 pl-2">
+                {resourcesLinks.map(r => (
+                  <Link key={r.path} to={r.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{r.name}</Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct Utility Links */}
+            <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
+              <Link to="/estimator" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase font-bold">Estimator</Link>
+              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-sm font-mono text-[#2563EB] uppercase font-bold">Contact Us</Link>
+            </div>
           </div>
         )}
       </nav>

@@ -149,6 +149,7 @@ const Footer = () => {
               <li><Link to="/knowledge-center" className="hover:text-white transition-colors">Packaging Guide</Link></li>
               <li><Link to="/knowledge-center" className="hover:text-white transition-colors">Paperboard GSM Guide</Link></li>
               <li><Link to="/knowledge-center" className="hover:text-white transition-colors">Dieline Bleed Checklist</Link></li>
+              <li><Link to="/estimator" className="hover:text-white transition-colors font-bold text-[#2563EB]">Cost Estimator</Link></li>
               <li><Link to="/blog" className="hover:text-white transition-colors">Blog & Insights</Link></li>
               <li><Link to="/knowledge-center" className="hover:text-white transition-colors">Download Company Profile</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Request Sample Kit</Link></li>

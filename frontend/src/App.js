@@ -24,6 +24,7 @@ import FinalOrder from './pages/FinalOrder';
 import ReviewsPage from './pages/ReviewsPage';
 import Loading from './pages/Loading';
 import MagazineViewer from './pages/MagazineViewer';
+import EstimatorPage from './pages/EstimatorPage';
 
 // Admin Components & Pages
 import AdminLayout from './components/AdminLayout';
@@ -75,6 +76,8 @@ function App() {
         <Route path="/knowledge-center" element={<KnowledgeCenterPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/estimator" element={<EstimatorPage />} />
+        <Route path="/cost-estimator" element={<EstimatorPage />} />
         
         {/* E-COMMERCE & CATALOG ROUTES */}
         <Route path="/catalog" element={<BrowseCatalog />} />

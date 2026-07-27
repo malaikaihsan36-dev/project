@@ -29,7 +29,7 @@ const FinishesPage = () => {
       visualEffect: "High-gloss glasslike sheen raised up to 100 microns for rich tactile depth.",
       benefits: ["Scratch & water resistance", "Highlights key brand elements", "Creates sensory unboxing touch"],
       bestIndustries: "Electronics, Book Covers, Rigid Setup Boxes & Retail Cartons",
-      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1200"
+      image: "/images/corporate_packaging.png"
     },
     {
       id: "embossing",

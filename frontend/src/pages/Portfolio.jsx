@@ -25,7 +25,7 @@ const CASE_STUDIES_FALLBACK = [
     id: "cs-1",
     title: "Luxury Cosmetics Matte Rigid Box",
     category: "Luxury Packaging",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a",
+    image: "/images/cosmetic_packaging.png",
     description: "Premium perfume and luxury skincare gift box set run utilizing soft-touch finishes and magnetic closures.",
     challenge: "An international luxury perfume brand required collapsible rigid packaging that could withstand cross-border container shipping logistics while retaining an ultra-luxurious velvet soft-touch shelf presence with zero scuffing.",
     objective: "Engineered a high-GSM collapsible magnetic-closure rigid box featuring precision custom dieline scoring, internal custom-molded velvet inserts, and multi-layered gold hot foil stamping.",
@@ -35,16 +35,16 @@ const CASE_STUDIES_FALLBACK = [
     result: "15,000 units manufactured and delivered on-schedule. Transit drop-testing verified a 100% glue seam reliability rate with zero structural collapses.",
     process: ["ArtiosCAD dieline layout proofing", "Sheet printing & inline soft-touch film application", "Hot foil embossing cylinder stamp", "Die-cutting & automatic folding-gluing assembly"],
     gallery: [
-      "https://images.unsplash.com/photo-1612817288484-6f916006741a",
-      "https://images.unsplash.com/photo-1512909006721-3d6018887383",
-      "https://images.unsplash.com/photo-1544816155-12df9643f363"
+      "/images/cosmetic_packaging.png",
+      "/images/clothing_packaging.png",
+      "/images/corporate_packaging.png"
     ]
   },
   {
     id: "cs-2",
     title: "FDA-Certified Organic Food Cartons",
     category: "Food Packaging",
-    image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4",
+    image: "/images/food_packaging.png",
     description: "Biodegradable grease-resistant takeaway food packaging sleeves printed with organic soy inks.",
     challenge: "A fast-casual restaurant chain needed eco-friendly takeaway burger and fry cartons that could prevent grease leakage and lock in heat without causing the paperboard to become soggy.",
     objective: "Developed biodegradable folding food cartons using barrier duplex boards lined with a greaseproof inner layer and decorated using food-safe organic soy-based inks.",
@@ -54,16 +54,16 @@ const CASE_STUDIES_FALLBACK = [
     result: "100,000 flat-packed units exported to regional hubs. Burst testing confirmed zero leakage after 45 minutes of contact with hot vegetable oils.",
     process: ["FDA barrier board technical audit", "Soy ink printing calibration run", "High-speed automatic folding-carton punch", "Flat-pack bundle export banding"],
     gallery: [
-      "https://images.unsplash.com/photo-1628149455678-16f37bc392f4",
-      "https://images.unsplash.com/photo-1544816155-12df9643f363",
-      "https://images.unsplash.com/photo-1595246140625-573b715d11dc"
+      "/images/food_packaging.png",
+      "/images/ecommerce_packaging.png",
+      "/images/corporate_packaging.png"
     ]
   },
   {
     id: "cs-3",
     title: "High Edge-Crush Corrugated Mailers",
     category: "Corrugated Boxes",
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc",
+    image: "/images/ecommerce_packaging.png",
     description: "Heavy-duty locking mailer boxes engineered for fragile retail items and logistics safety.",
     challenge: "A subscription brand faced high parcel-damage rates from conventional postal carrier handling, leading to broken product containers and customer complaints.",
     objective: "Custom designed a heavy-duty E-flute corrugated mailer box with secure folding locks, double-sidewalls, and high edge-crush properties.",
@@ -73,16 +73,16 @@ const CASE_STUDIES_FALLBACK = [
     result: "Reduced product shipping damages by 94% over a 3-month tracking period. Compression load testing verified safety up to 35 kg.",
     process: ["Edge-Crush-Test (ECT) weight evaluation", "CAD dieline folder locks strategy", "Inline rotary flexographic die-cut run", "Drop & vibration simulation test"],
     gallery: [
-      "https://images.unsplash.com/photo-1595246140625-573b715d11dc",
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-      "https://images.unsplash.com/photo-1612817288484-6f916006741a"
+      "/images/ecommerce_packaging.png",
+      "/images/pharma_packaging.png",
+      "/images/clothing_packaging.png"
     ]
   },
   {
     id: "cs-4",
     title: "Serialized Pharmaceutical Packing Sleeves",
     category: "Pharmaceutical Packaging",
-    image: "https://images.unsplash.com/photo-1607619056574-7b8d304b3b33",
+    image: "/images/pharma_packaging.png",
     description: "Reverse-tuck folding boxes printed with dynamic serialized barcodes for medicine tracking.",
     challenge: "A medical manufacturer required absolute text legibility and precise barcode printing matching international serialization scan verification standards.",
     objective: "Created lightweight folding cartons using bleached SBS board printed with high-resolution tracking layouts and dynamic QR serialization codes.",
@@ -92,28 +92,28 @@ const CASE_STUDIES_FALLBACK = [
     result: "250,000 cartons shipped with 100% scanner readability of serialized barcodes. Zero bleed or offset defects found in compliance audit.",
     process: ["Pre-flight vector text outline verification", "HP Indigo digital variable run", "Quality scan tracking alignment check", "Reverse-tuck automatic fold-score"],
     gallery: [
-      "https://images.unsplash.com/photo-1607619056574-7b8d304b3b33",
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794",
-      "https://images.unsplash.com/photo-1595079676339-1534801ad6cf"
+      "/images/pharma_packaging.png",
+      "/images/corporate_packaging.png",
+      "/images/food_packaging.png"
     ]
   },
   {
     id: "cs-5",
-    title: "Gold-Foiled Premium Kraft Shopping Bags",
-    category: "Shopping Bags",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363",
-    description: "Heavy Kraft paper retail shopping bags featuring embossed gold foiling and rope handles.",
-    challenge: "A high-end retail brand wanted branded shopping carry bags that could hold up to 5 kg of product weight without handle tear or glue failure at the bottom seams.",
-    objective: "Constructed premium shopping bags using heavy Kraft board with reinforced card inserts at the base and rope handle eyelets, finished with dynamic gold foil stamping.",
-    materials: "250 GSM Pure Kraft Paper, 400 GSM Base Reinforcement Cards, Braided Cotton Rope Handles.",
+    title: "Haute Couture Apparel Rigid Box",
+    category: "Apparel & Fashion",
+    image: "/images/clothing_packaging.png",
+    description: "Heavy velvet garment apparel packaging boxes featuring embossed gold foiling and custom magnetic closures.",
+    challenge: "A high-end retail fashion brand wanted luxury apparel packaging that could hold up to 5 kg of product weight without handle tear or glue failure at the bottom seams.",
+    objective: "Constructed premium garment boxes using heavy chipboard with reinforced card inserts at the base, finished with dynamic gold foil stamping.",
+    materials: "1200 GSM Heavy Chipboard, Satin Fabric Lining, 400 GSM Base Reinforcement Cards.",
     printing: "Heidelberg Offset printing + Hot Foil Cylinder Emboss.",
-    finishes: "Hot Gold Foil Stamping, Logo Blind Embossing, Soft-Touch Matte Outer Coating.",
-    result: "Delivered 20,000 bags. Structural testing verified handles could sustain up to 10 kg static weight load for 24 hours without tear.",
+    finishes: "Hot Gold Foil Stamping, Logo Blind Embossing, Soft-Touch Velvet Outer Coating.",
+    result: "Delivered 20,000 boxes. Structural testing verified handles could sustain up to 10 kg static weight load for 24 hours without tear.",
     process: ["Bag template dieline crease test", "Foil cylinder die engraving", "Rotary hot foil impression run", "Reinforced cardboard insert hand assembly"],
     gallery: [
-      "https://images.unsplash.com/photo-1544816155-12df9643f363",
-      "https://images.unsplash.com/photo-1612817288484-6f916006741a",
-      "https://images.unsplash.com/photo-1572584642822-6f8de0243c93"
+      "/images/clothing_packaging.png",
+      "/images/corporate_packaging.png",
+      "/images/cosmetic_packaging.png"
     ]
   }
 ];

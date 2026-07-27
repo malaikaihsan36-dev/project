@@ -134,25 +134,25 @@ const HomePage = () => {
       title: "Luxury Rigid Boxes", 
       desc: "Designed for premium cosmetics, perfume, electronics, and executive corporate gifting.",
       tags: ["Collapsible", "Magnetic Closure", "Velvet Insert"],
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1200&auto=format&fit=crop"
+      image: "/images/cosmetic_packaging.png"
     },
     { 
       title: "Custom Corrugated Mailers", 
       desc: "Heavy-duty eco-friendly e-commerce shipping boxes engineered for maximum protection.",
       tags: ["E-Commerce", "High Crash Resistance", "Custom Print"],
-      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1200&auto=format&fit=crop"
+      image: "/images/ecommerce_packaging.png"
     },
     { 
-      title: "High-Definition Product Labels", 
-      desc: "Waterproof, oil-resistant, roll and sheet labels for food, pharmaceuticals, and bottles.",
-      tags: ["Roll Labels", "Foil Stamped", "Waterproof"],
-      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop"
+      title: "Clinical Medicine & Pharma Packaging", 
+      desc: "Tamper-evident, serialized medical boxes for pharmaceuticals, bottles, and health supplements.",
+      tags: ["Pharma Grade", "Foil Stamped", "Clinical"],
+      image: "/images/pharma_packaging.png"
     },
     { 
-      title: "Bespoke Retail Shopping Bags", 
-      desc: "Crafted with reinforced handles, foil stamping, and heavy cardstock for luxury retail.",
-      tags: ["Embossed Logo", "Rope Handle", "Heavy Kraft"],
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop"
+      title: "Gourmet Food & Confectionery Cartons", 
+      desc: "FDA-certified food-grade paperboard packaging with greaseproof PLA inner lining.",
+      tags: ["Food Safe", "Gold Embossed", "Eco Kraft"],
+      image: "/images/food_packaging.png"
     }
   ];
 
@@ -1310,7 +1310,7 @@ const HomePage = () => {
                   {/* Left Column: Visual Cover */}
                   <div className="lg:col-span-5 relative group overflow-hidden rounded-2xl border border-white/10 bg-[#09090B] aspect-[4/3] flex items-center justify-center">
                     <img 
-                      src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop" 
+                      src="/images/corporate_packaging.png" 
                       alt="ColourPix Magazine Cover" 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95" 
                     />
@@ -1370,21 +1370,21 @@ const HomePage = () => {
                   category: "Corporate Documents",
                   desc: "Corporate handbook detailing our 35-year chronology, Lahore facility layout, and list of production equipment.",
                   downloadName: "Company Profile",
-                  image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=400&auto=format&fit=crop"
+                  image: "/images/corporate_packaging.png"
                 },
                 {
                   title: "Material & Substrates Spec Guide",
                   category: "Industry Guides",
                   desc: "An engineer's handbook outlining duplex paperboard calibrations, Kraft card options, and greyboard density matrices.",
                   downloadName: "Packaging Solutions",
-                  image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop"
+                  image: "/images/clothing_packaging.png"
                 },
                 {
                   title: "Packaging Solutions Catalogue",
                   category: "Catalogues",
                   desc: "Complete catalog of luxury rigid setup boxes, corrugated mailers, folding cartons, labels, and food packaging.",
                   downloadName: "Packaging Solutions",
-                  image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=400&auto=format&fit=crop"
+                  image: "/images/ecommerce_packaging.png"
                 }
               ].map((res, idx) => (
                 <ScrollReveal key={idx}>

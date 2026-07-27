@@ -20,10 +20,15 @@ async function ensureDatabaseTables() {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
         `);
-        // Seed initial project
+        // Seed initial industry projects
         await db.query(`
           INSERT INTO projects (title, description, image_url, category, tags) VALUES 
-          ('Premium Cosmetic Rigid Box', 'Luxury rigid cardboard box with velvet wrapping and gold hot foil stamping.', 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800', 'Luxury Rigid Boxes', 'Cosmetic, Gold Foil')
+          ('Artisanal Gourmet Food Box', 'Custom printed organic food & confectionery packaging with gold foil embossed logo.', '/images/food_packaging.png', 'Gourmet Food', 'Food, Gold Foil, Eco'),
+          ('Clinical Pharmaceutical Carton', 'Sleek medicine & supplement packaging carton with metallic silver foil and tamper-evident seal.', '/images/pharma_packaging.png', 'Pharmaceuticals', 'Medicine, Silver Foil, Clinical'),
+          ('Haute Couture Apparel Rigid Box', 'Luxury velvet-wrapped garment gift box with custom gold foil stamping for apparel & fashion.', '/images/clothing_packaging.png', 'Apparel & Fashion', 'Clothing, Rigid Box, Luxury'),
+          ('Executive Corporate Presentation Suite', 'Custom branded corporate presentation set and executive stationery gift box with metallic copper foil.', '/images/corporate_packaging.png', 'Corporate & Enterprise', 'Corporate, Executive, Stationery'),
+          ('Emerald Velvet Cosmetic Rigid Box', 'High-end cosmetic & skincare dropper box with soft-touch lamination and rose gold embellishments.', '/images/cosmetic_packaging.png', 'Cosmetics & Skincare', 'Beauty, Cosmetic, Rose Gold'),
+          ('Vibrant E-Commerce Shipping Mailer', 'Heavy-duty eco-friendly corrugated mailer box with electric blue internal flexo printing.', '/images/ecommerce_packaging.png', 'E-Commerce Mailers', 'Corrugated, E-Commerce, Custom Print')
         `);
       } else throw err;
     });

@@ -19,7 +19,7 @@ const PackagingPage = () => {
       features: ["Custom Foam & Velvet Trays", "Friction Fit & Magnetic Closures", "Book-Style & Shoulder Box Formats"],
       materials: "1000-2400 GSM Grey Chipboard, Specialty Wrap Papers, Velvet",
       finishes: "Gold/Silver Hot Foil, Spot UV, Velvet Soft-Touch",
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/clothing_packaging.png"
     },
     {
       id: "food-packaging",
@@ -29,7 +29,7 @@ const PackagingPage = () => {
       features: ["Grease & Moisture Barrier Liners", "High-Speed Automated Cartoning", "100% Recyclable Paperboard"],
       materials: "250-450 GSM Virgin Kraft, Poly-Coated Duplex, Food Board",
       finishes: "Aqueous Coating, Matte Lamination, Food-Safe Inks",
-      image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/food_packaging.png"
     },
     {
       id: "cosmetic-packaging",
@@ -39,7 +39,7 @@ const PackagingPage = () => {
       features: ["Tactile Velvet Soft-Touch Film", "Multi-Level 3D Embossing", "Micro-Foil Registration"],
       materials: "300-450 GSM Bleached Kraft, Silver Metallized Board",
       finishes: "Hot Foil Stamping, Spot UV Varnish, 3D Relief Emboss",
-      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/cosmetic_packaging.png"
     },
     {
       id: "pharmaceutical-packaging",
@@ -49,7 +49,7 @@ const PackagingPage = () => {
       features: ["Tamper-Evident Security Locks", "Braille & Micro-Text Embossing", "Delta-E Color Density Verification"],
       materials: "250-350 GSM Pharma Grade Folding Boxboard (FBB)",
       finishes: "Water-Based Varnish, Braille Emboss, Security Foils",
-      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/pharma_packaging.png"
     },
     {
       id: "ecommerce-packaging",
@@ -58,15 +58,6 @@ const PackagingPage = () => {
       desc: "Self-sealing tear-strip e-commerce mailer boxes, heavy corrugated shipping cartons, and waterproof adhesive product labels.",
       features: ["Peel & Seal Adhesive Strips", "Flute E/B Corrugated Board", "Heavy Drop & Crush Resistance"],
       materials: "E-Flute & B-Flute Single Wall Corrugated Board",
-      finishes: "Flexographic Print, Water Resistant Varnish",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop"
-    },
-    {
-      id: "retail-bags",
-      title: "Retail & Apparel Shopping Bags",
-      tag: "REINFORCED HANDLES",
-      desc: "Heavy cardstock shopping bags with reinforced bottom boards, cotton rope handles, and custom embossed brand logos.",
-      features: ["Reinforced Cardboard Base", "Cotton Rope & Satin Ribbon Handles", "Custom Metal Eyelets"],
       materials: "200-350 GSM Art Paper, Heavy Kraft Stock",
       finishes: "Matte/Gloss Lamination, Foil Stamped Logo",
       image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"

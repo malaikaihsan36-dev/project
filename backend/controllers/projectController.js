@@ -1,6 +1,100 @@
 // Database configuration ko import kiya
 const db = require('../config/db');
 
+// Self-healing: Ensure all required tables for portfolio and reviews exist and are seeded
+async function ensureDatabaseTables() {
+  try {
+    // Check projects
+    await db.query('SELECT 1 FROM projects LIMIT 1').catch(async (err) => {
+      if (err.code === 'ER_NO_SUCH_TABLE') {
+        console.log('Creating projects table...');
+        await db.query(`
+          CREATE TABLE projects (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            image_url VARCHAR(255) NOT NULL,
+            category VARCHAR(100),
+            tags VARCHAR(255),
+            project_url VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+        // Seed initial project
+        await db.query(`
+          INSERT INTO projects (title, description, image_url, category, tags) VALUES 
+          ('Premium Cosmetic Rigid Box', 'Luxury rigid cardboard box with velvet wrapping and gold hot foil stamping.', 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800', 'Luxury Rigid Boxes', 'Cosmetic, Gold Foil')
+        `);
+      } else throw err;
+    });
+
+    // Check portfolio_categories
+    await db.query('SELECT 1 FROM portfolio_categories LIMIT 1').catch(async (err) => {
+      if (err.code === 'ER_NO_SUCH_TABLE') {
+        console.log('Creating portfolio_categories table...');
+        await db.query(`
+          CREATE TABLE portfolio_categories (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL UNIQUE
+          )
+        `);
+        // Seed default categories
+        await db.query(`
+          INSERT IGNORE INTO portfolio_categories (name) VALUES 
+          ('Luxury Rigid Boxes'), ('Corrugated Mailers'), ('Retail Cartons'), ('Labels & Stickers')
+        `);
+      } else throw err;
+    });
+
+    // Check reviews
+    await db.query('SELECT 1 FROM reviews LIMIT 1').catch(async (err) => {
+      if (err.code === 'ER_NO_SUCH_TABLE') {
+        console.log('Creating reviews table...');
+        await db.query(`
+          CREATE TABLE reviews (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            customer_name VARCHAR(100) NOT NULL,
+            product_name VARCHAR(100) NOT NULL,
+            rating INT NOT NULL,
+            review_text TEXT,
+            status VARCHAR(20) DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          )
+        `);
+        // Seed some demo approved reviews
+        await db.query(`
+          INSERT INTO reviews (customer_name, product_name, rating, review_text, status) VALUES 
+          ('Mian Muhammad Asif', 'Luxury Rigid Boxes', 5, 'Exceptional quality rigid packaging. The gold hot stamping was extremely sharp and aligned perfectly with our brand guides. Highly recommended for premium retailers in Lahore!', 'Approved'),
+          ('Sarah Jenkins', 'Corrugated Mailers', 5, 'Great structural design and thick board choice. Kept our export cosmetics safe during shipping. Will buy again!', 'Approved')
+        `);
+      } else throw err;
+    });
+
+    // Check review_products
+    await db.query('SELECT 1 FROM review_products LIMIT 1').catch(async (err) => {
+      if (err.code === 'ER_NO_SUCH_TABLE') {
+        console.log('Creating review_products table...');
+        await db.query(`
+          CREATE TABLE review_products (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL UNIQUE
+          )
+        `);
+        // Seed default products
+        await db.query(`
+          INSERT IGNORE INTO review_products (name) VALUES 
+          ('Luxury Rigid Boxes'), ('Corrugated Mailers'), ('Premium Retail Cartons'), ('Product Labels')
+        `);
+      } else throw err;
+    });
+
+  } catch (err) {
+    console.error('Error ensuring portfolio/reviews tables:', err);
+  }
+}
+
+// Execute self-healing migration asynchronously on startup
+ensureDatabaseTables();
 
 // ========== PORTFOLIO FUNCTIONS =============
 

@@ -27,7 +27,7 @@ const PUBLICATIONS_DATA = [
     pages: 64,
     fileSize: "8.5 MB",
     lastUpdated: "July 2026",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop",
+    image: "/images/cad_dieline.png",
     downloadName: "ColourPix Magazine", 
     keywords: ["magazine", "trends", "rigid box", "heidelberg", "offset"]
   },
@@ -39,7 +39,7 @@ const PUBLICATIONS_DATA = [
     pages: 18,
     fileSize: "4.2 MB",
     lastUpdated: "June 2026",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+    image: "/images/corporate_packaging.png",
     downloadName: "Company Profile",
     keywords: ["profile", "lcci", "lahore", "factory", "machinery"]
   },
@@ -51,7 +51,7 @@ const PUBLICATIONS_DATA = [
     pages: 12,
     fileSize: "2.8 MB",
     lastUpdated: "May 2026",
-    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/plant_press.png",
     downloadName: "Why ColourPix",
     keywords: ["why us", "capabilities", "trust", "accreditation"]
   },
@@ -63,7 +63,7 @@ const PUBLICATIONS_DATA = [
     pages: 14,
     fileSize: "3.1 MB",
     lastUpdated: "June 2026",
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+    image: "/images/labels_stickers.png",
     downloadName: "Company Profile",
     keywords: ["statement", "capability", "assets", "production"]
   },
@@ -75,7 +75,7 @@ const PUBLICATIONS_DATA = [
     pages: 2,
     fileSize: "1.2 MB",
     lastUpdated: "Est. 1991",
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop",
+    image: "/images/ecommerce_packaging.png",
     downloadName: "Trust Center",
     keywords: ["lcci", "compliance", "registration", "certificate"]
   },
@@ -87,7 +87,7 @@ const PUBLICATIONS_DATA = [
     pages: 48,
     fileSize: "9.2 MB",
     lastUpdated: "July 2026",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/foil_emboss.png",
     downloadName: "Packaging Solutions",
     keywords: ["packaging", "catalog", "rigid box", "mailers", "cartons"]
   },
@@ -99,7 +99,7 @@ const PUBLICATIONS_DATA = [
     pages: 36,
     fileSize: "6.8 MB",
     lastUpdated: "April 2026",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+    image: "/images/corporate_packaging.png",
     downloadName: "Printing Solutions",
     keywords: ["printing", "catalog", "offset", "editorial", "books"]
   },
@@ -111,7 +111,7 @@ const PUBLICATIONS_DATA = [
     pages: 28,
     fileSize: "7.1 MB",
     lastUpdated: "March 2026",
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop",
+    image: "/images/ecommerce_packaging.png",
     downloadName: "Premium Finishes",
     keywords: ["finishes", "embellishments", "foil", "uv", "embossing"]
   },
@@ -123,7 +123,7 @@ const PUBLICATIONS_DATA = [
     pages: 24,
     fileSize: "5.4 MB",
     lastUpdated: "March 2026",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/foil_emboss.png",
     downloadName: "Packaging Solutions",
     keywords: ["material", "substrates", "duplex", "kraft", "greyboard"]
   },
@@ -135,7 +135,7 @@ const PUBLICATIONS_DATA = [
     pages: 30,
     fileSize: "6.5 MB",
     lastUpdated: "May 2026",
-    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/plant_press.png",
     downloadName: "Industries We Serve",
     keywords: ["industry", "applications", "cosmetics", "food", "pharma"]
   },
@@ -147,7 +147,7 @@ const PUBLICATIONS_DATA = [
     pages: 32,
     fileSize: "8.1 MB",
     lastUpdated: "July 2026",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop",
+    image: "/images/cad_dieline.png",
     downloadName: "Packaging Solutions",
     keywords: ["design", "prepress", "dieline", "bleed", "artwork"]
   },
@@ -159,7 +159,7 @@ const PUBLICATIONS_DATA = [
     pages: 40,
     fileSize: "10.4 MB",
     lastUpdated: "July 2026",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+    image: "/images/corporate_packaging.png",
     downloadName: "Portfolio Catalogue",
     keywords: ["portfolio", "catalogue", "works", "rigid", "prints"]
   },
@@ -171,7 +171,7 @@ const PUBLICATIONS_DATA = [
     pages: 26,
     fileSize: "4.9 MB",
     lastUpdated: "June 2026",
-    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop",
+    image: "/images/plant_press.png",
     downloadName: "Portfolio Catalogue",
     keywords: ["case study", "compilation", "challenges", "materials"]
   }
@@ -289,7 +289,7 @@ const KnowledgeCenterPage = () => {
                 {/* Visual Cover Column */}
                 <div className="lg:col-span-5 relative group overflow-hidden rounded-2xl border border-white/10 bg-[#09090B] aspect-[4/3] flex items-center justify-center">
                   <img 
-                    src={getOptimizedImage("https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop", 600)} 
+                    src={getOptimizedImage("/images/cad_dieline.png", 600)} 
                     alt="Featured Magazine Cover" 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95" 
                   />

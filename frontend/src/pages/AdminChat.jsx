@@ -22,7 +22,7 @@ const AdminChat = () => {
     const [inputValue, setInputValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showUploadMenu, setShowUploadMenu] = useState(false);
-    const [previewImage, setPreviewImage] = useState("https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=400&auto=format&fit=crop");
+    const [previewImage, setPreviewImage] = useState("/images/foil_emboss.png");
     const [priceData, setPriceData] = useState({ production: 0, design: 0.00, shipping: 0.00, tax: 0 });
     const [isUploading, setIsUploading] = useState(false);
 

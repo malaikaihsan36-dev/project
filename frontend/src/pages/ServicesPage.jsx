@@ -16,7 +16,7 @@ const ServicesPage = () => {
       tag: "HEAVY PRESS DIVISION",
       desc: "High-volume multi-color printing using European Heidelberg and Japanese Komori offset presses with automated spectro-densitometer ink controls.",
       specs: ["Up to 6-Color + Inline Varnish", "Pantone Matching (Delta-E < 1.5)", "200 to 600 GSM Paperboard"],
-      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/plant_press.png"
     },
     {
       num: "02",
@@ -24,7 +24,7 @@ const ServicesPage = () => {
       tag: "PACKAGING DIVISION",
       desc: "Handcrafted and automated setup boxes built from heavy-duty rigid chipboard, wrapped in premium specialty papers, velvet linings, and magnetic closures.",
       specs: ["Magnetic & Ribbon Closures", "Custom Foam & Velvet Trays", "Book-Style & Neck-Box Formats"],
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/foil_emboss.png"
     },
     {
       num: "03",
@@ -32,7 +32,7 @@ const ServicesPage = () => {
       tag: "EMBELLISHMENT LINE",
       desc: "Computerized metallic hot foil stamping in gold, silver, rose gold, bronze, holographic, and satin films applied under high thermal pressure.",
       specs: ["Micro-Detail Foil Registration", "Holographic Anti-Counterfeit Foils", "Multi-Level Embossed Foiling"],
-      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/ecommerce_packaging.png"
     },
     {
       num: "04",
@@ -40,7 +40,7 @@ const ServicesPage = () => {
       tag: "PRE-PRESS DIVISION",
       desc: "Custom box structural dieline engineering, ArtiosCAD 3D modeling, load-bearing weight testing, and unprinted 1:1 physical CAD sample plotting.",
       specs: ["Kongsberg Plotter CAD Sampling", "ArtiosCAD 3D Dieline Files", "Fit & Drop Test Verification"],
-      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/corporate_packaging.png"
     },
     {
       num: "05",
@@ -48,7 +48,7 @@ const ServicesPage = () => {
       tag: "DIGITAL DIVISION",
       desc: "Rapid variable data, personalized short-run batches, and high-definition marketing collateral printed with zero plate setup costs.",
       specs: ["Variable Data & Barcode Printing", "Same-Day Proofing Runs", "Bespoke Packaging Labels"],
-      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/labels_stickers.png"
     },
     {
       num: "06",
@@ -56,7 +56,7 @@ const ServicesPage = () => {
       tag: "FINISHING DIVISION",
       desc: "High-speed computerized heavy die-cutting, crease scoring, micro-perforation, window cutouts, and exact contour trim.",
       specs: ["Bobst Automatic Die-Cutters", "Clean Edge Cut Integrity", "Precise Window Patching"],
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/cad_dieline.png"
     }
   ];
 

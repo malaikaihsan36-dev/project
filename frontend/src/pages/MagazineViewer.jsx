@@ -28,7 +28,7 @@ const MAGAZINE_PAGES = [
     subtitle: "MAGAZINE",
     issue: "ISSUE #01 — Q3 2026",
     tagline: "Industrial Printing, Structural Engineering, & Supply Chain Masterclass",
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop"
+    image: "/images/cad_dieline.png"
   },
   // Page 2: Editorial Intro
   {
@@ -37,7 +37,7 @@ const MAGAZINE_PAGES = [
     author: "M. Ihsan, Production Director",
     text: "At ColourPix, we believe packaging is the physical manifest of a brand’s promise. In this inaugural issue, our engineering and design teams share key insights on achieving zero-defect packaging at scale, calibrating Heidelberg offset presses for high-fidelity color consistency, and choosing optimal greyboard densities for luxury rigid boxes.",
     accent: "EST. 1991 • LAHORE PLANT",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop"
+    image: "/images/corporate_packaging.png"
   },
   // Page 3: Heidelberg Precision
   {
@@ -45,7 +45,7 @@ const MAGAZINE_PAGES = [
     title: "Heidelberg Press Runs",
     subtitle: "01 / PRESSROOM ENG",
     text: "Our pressrooms in Lahore run state-of-the-art Heidelberg Speedmaster multi-color presses. Operating at speeds up to 15,000 sheets per hour, these machines feature inline spectrophotometers that verify color density on every impression, keeping Delta-E variance below 1.5.",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop"
+    image: "/images/corporate_packaging.png"
   },
   // Page 4: Rigid Setup Boxes
   {
@@ -53,7 +53,7 @@ const MAGAZINE_PAGES = [
     title: "Luxury Rigid Boxes",
     subtitle: "02 / STRUCTURAL GEOMETRY",
     text: "Handcrafted luxury packaging demands structural rigidity. We combine automated V-grooving on 1200–2400 GSM greyboard with precision corner taping and hand-wrapped art papers to produce setup boxes that protect and elevate premium cosmetic and perfume brands.",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop"
+    image: "/images/foil_emboss.png"
   },
   // Page 5: Substrates Specification
   {
@@ -73,7 +73,7 @@ const MAGAZINE_PAGES = [
     title: "Swiss Hot Foil Stamping",
     subtitle: "04 / TACTILE FINISHES",
     text: "Our finishing lines leverage Swiss Bobst automatic foil stampers. Under extreme thermal pressure, metallic foil films are transferred onto paperboards with 0.1mm alignment accuracy, yielding reflective gold, silver, and holographic logos.",
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=800&auto=format&fit=crop"
+    image: "/images/ecommerce_packaging.png"
   },
   // Page 7: Quality Inspection (AQL 1.0)
   {
@@ -82,7 +82,7 @@ const MAGAZINE_PAGES = [
     author: "Quality Assurance Division",
     text: "We adhere strictly to AQL 1.0 inspection standards. Our automated quality scanners and manual inspection tables test finished packages for adhesive peel strength, score line folding resistance, corner drop stability, and shipping stacking compression, ensuring every single unit delivered meets contract requirements.",
     accent: "AQL 1.0 ACCREDITED",
-    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=800&auto=format&fit=crop"
+    image: "/images/plant_press.png"
   },
   // Page 8: Back Cover
   {

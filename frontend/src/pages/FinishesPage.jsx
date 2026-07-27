@@ -19,7 +19,7 @@ const FinishesPage = () => {
       visualEffect: "Opaque, mirror-like metallic shine in gold, silver, rose gold, bronze, or custom holographic films.",
       benefits: ["High-impact shelf reflection", "Tear-resistant metallic film", "Compatible with textured paperboards"],
       bestIndustries: "Perfumes, Cosmetics, Executive Gifts, Confectionery & Spirits",
-      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/ecommerce_packaging.png"
     },
     {
       id: "spot-uv",
@@ -29,7 +29,7 @@ const FinishesPage = () => {
       visualEffect: "High-gloss glasslike sheen raised up to 100 microns for rich tactile depth.",
       benefits: ["Scratch & water resistance", "Highlights key brand elements", "Creates sensory unboxing touch"],
       bestIndustries: "Electronics, Book Covers, Rigid Setup Boxes & Retail Cartons",
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/foil_emboss.png"
     },
     {
       id: "embossing",
@@ -39,7 +39,7 @@ const FinishesPage = () => {
       visualEffect: "Sculpted 3D paper elevation that catches ambient lighting and creates memorable hand-feel.",
       benefits: ["Adds physical dimension", "Refines brand crests & logos", "Zero ink requirement for blind emboss"],
       bestIndustries: "Pharma Seals, Luxury Retail Bags, Certificates & Brand Kits",
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/foil_emboss.png"
     },
     {
       id: "soft-touch",
@@ -49,7 +49,7 @@ const FinishesPage = () => {
       visualEffect: "Silky, glare-free deep matte texture with superior color saturation.",
       benefits: ["Anti-fingerprint coating", "Velvety hand-feel", "Ideal base for hot foil & spot UV"],
       bestIndustries: "High-End Beauty, Apparel Boxes, Rigid Gift Packaging & Books",
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/cad_dieline.png"
     },
     {
       id: "matte-lamination",
@@ -59,7 +59,7 @@ const FinishesPage = () => {
       visualEffect: "Clean, non-reflective matte finish that softens contrast and reduces glare.",
       benefits: ["Protects against moisture & handling", "Prevents crease cracking", "Economical luxury finish"],
       bestIndustries: "Corporate Brochures, Product Sleeves & FMCG Cartons",
-      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/plant_press.png"
     },
     {
       id: "die-cutting",
@@ -69,7 +69,7 @@ const FinishesPage = () => {
       visualEffect: "Razor-sharp contour edges, intricate display cutouts, and 100% square folding geometry.",
       benefits: ["Automated folder-gluer compatibility", "Zero edge fraying", "Intricate window shapes"],
       bestIndustries: "Window Cartons, Retail Counter Displays & Custom Mailers",
-      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/plant_press.png"
     }
   ];
 

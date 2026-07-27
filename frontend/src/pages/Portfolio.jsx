@@ -153,7 +153,7 @@ const Portfolio = () => {
               finishes: p.finishes || fallbackMatch?.finishes || "Gloss spot varnish overlay, clean score folds, and precision die cutting.",
               result: p.result || fallbackMatch?.result || "Run successfully completed, checked via AQL 1.0 zero-defect audit, and dispatched to logistics centers.",
               process: p.process || fallbackMatch?.process || ["CAD layout proofing", "Sheet printing press run", "Automatic die-cutting", "AQL 1.0 packing checklist"],
-              gallery: p.gallery || fallbackMatch?.gallery || [p.image_url || p.image, "https://images.unsplash.com/photo-1544816155-12df9643f363"]
+              gallery: p.gallery || fallbackMatch?.gallery || [p.image_url || p.image, "/images/cad_dieline.png"]
             };
           });
           setProjects(merged);

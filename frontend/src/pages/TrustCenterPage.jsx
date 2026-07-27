@@ -41,7 +41,7 @@ const TrustCenterPage = () => {
       specs: ["Max Sheet Size: 720 x 1020 mm", "Speed: 18,000 sheets/hour", "Delta-E Color Tolerance < 1.5", "Inline Water-Based Coating Unit"],
       precision: "0.01 mm Dot Registration",
       benefits: "Unmatched color density across long high-volume packaging press runs.",
-      image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/plant_press.png"
     },
     {
       id: "komori",
@@ -51,7 +51,7 @@ const TrustCenterPage = () => {
       specs: ["5-Color + Varnish Tower", "Automated Spectrophotometer", "200-600 GSM Paperboard Capacity"],
       precision: "Ultra-Fine Raster Resolution",
       benefits: "Rapid setup changeover for corporate catalogues, brochures, and food cartons.",
-      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/corporate_packaging.png"
     },
     {
       id: "indigo",
@@ -61,7 +61,7 @@ const TrustCenterPage = () => {
       specs: ["Zero Plate Setup Fees", "Variable Data & Barcode Engine", "Same-Day Proofing Turnaround"],
       precision: "Liquid ElectroInk Offset Match",
       benefits: "Short-run customization and trial packaging batches without plate fees.",
-      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/labels_stickers.png"
     },
     {
       id: "bobst",
@@ -71,7 +71,7 @@ const TrustCenterPage = () => {
       specs: ["High Thermal Pressure Transfer", "0.1mm Foil Registration Accuracy", "Clean Edge Steel Rule Die-Cut"],
       precision: "Micro-Foil Stamping Detail",
       benefits: "Prestige metallic gold, silver, holographic foil stamping and 3D embossing.",
-      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/ecommerce_packaging.png"
     },
     {
       id: "kongsberg",
@@ -81,7 +81,7 @@ const TrustCenterPage = () => {
       specs: ["1:1 Physical Sample Plotting", "ArtiosCAD 3D File Integration", "24-Hour Prototype Turnaround"],
       precision: "Exact Cut & Crease Score Geometry",
       benefits: "Rapid unprinted prototype creation for structural fit and load testing.",
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
+      image: "/images/cad_dieline.png"
     }
   ];
 
@@ -100,7 +100,7 @@ const TrustCenterPage = () => {
       challenge: "Required a rigid setup box with a velvet soft-touch wrap and gold foil stamped logo that could withstand international freight without scuffing.",
       solution: "Engineered a 1400 GSM grey chipboard structure wrapped in 150 GSM soft-touch film with thermal foil stamping and high-density EVA foam inserts.",
       result: "Delivered 25,000 flawless rigid box units with 0% defect rate across export retail stores.",
-      image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop"
+      image: "/images/foil_emboss.png"
     },
     {
       client: "National FMCG Confectionery",
@@ -108,7 +108,7 @@ const TrustCenterPage = () => {
       challenge: "Needed greaseproof barrier folding cartons compliant with food safety regulations for high-speed automated cartoning lines.",
       solution: "Manufactured virgin Kraft paperboard cartons with water-based dispersion barrier coating printed on our Heidelberg XL press.",
       result: "Achieved 100% FDA compliance and seamless integration with 120 carton/min automated packing machinery.",
-      image: "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?q=80&w=800&auto=format&fit=crop"
+      image: "/images/food_packaging.png"
     }
   ];
 
@@ -150,7 +150,7 @@ const TrustCenterPage = () => {
       <section className="relative py-28 sm:py-36 border-b border-[#27272A]/50 bg-[#0C0C0E] overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1600&auto=format&fit=crop" 
+            src="/images/plant_press.png" 
             alt="ColourPix Plant Floor" 
             className="w-full h-full object-cover filter contrast-125 brightness-75 scale-105"
           />

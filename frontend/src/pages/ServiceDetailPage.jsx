@@ -19,7 +19,7 @@ const servicesData = {
       "Superior ink density and sharp halftone dot structure"
     ],
     applications: ["Rigid Box Wraps", "FMCG Cartons", "Product Sleeves", "High-Volume Brochures", "Corporate Catalogues"],
-    image: "https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/plant_press.png"
   },
   "digital-printing": {
     title: "High-Definition Digital Printing",
@@ -35,7 +35,7 @@ const servicesData = {
       "Exact color consistency across small repeat orders"
     ],
     applications: ["Limited Edition Boxes", "Variable Data Labels", "Event Marketing Kits", "Personalized Collateral"],
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/labels_stickers.png"
   },
   "uv-printing": {
     title: "Specialty UV & Spot UV Printing",
@@ -50,7 +50,7 @@ const servicesData = {
       "Creates sensory unboxing experience for consumers"
     ],
     applications: ["Luxury Rigid Boxes", "Book & Catalogue Covers", "Perfume Cartons", "Premium Gift Packaging"],
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/foil_emboss.png"
   },
   "dtf-printing": {
     title: "Direct-to-Film (DTF) Fabric Printing",
@@ -65,7 +65,7 @@ const servicesData = {
       "No weeding required for intricate vector graphics"
     ],
     applications: ["Branded Corporate Apparel", "Custom Canvas Tote Bags", "Promotional Merchandise", "Uniforms"],
-    image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/cad_dieline.png"
   },
   "labels": {
     title: "Custom Product Labels & Stickers",
@@ -80,7 +80,7 @@ const servicesData = {
       "Holographic anti-counterfeiting security foils"
     ],
     applications: ["Cosmetic Bottles", "Food & Sauce Jars", "Beverage Bottles", "Shipping Carton Labels"],
-    image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/ecommerce_packaging.png"
   },
   "catalogues": {
     title: "Corporate Catalogues & Publications",
@@ -95,7 +95,7 @@ const servicesData = {
       "Custom metallic foil cover accents for corporate impact"
     ],
     applications: ["Product Catalogues", "Annual Reports", "Brand Lookbooks", "Architectural Portfolios"],
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop"
+    image: "/images/corporate_packaging.png"
   }
 };
 

@@ -42,7 +42,7 @@ const WhyColourPixPage = () => {
         <div className="absolute inset-0 z-0 opacity-25">
           <img 
             ref={parallaxRef}
-            src="https://images.unsplash.com/photo-1616070829579-ec19d0772e2a?q=80&w=1600&auto=format&fit=crop" 
+            src="/images/plant_press.png" 
             alt="ColourPix Plant Floor" 
             className="w-full h-full object-cover filter contrast-125 brightness-75 scale-105"
           />
@@ -222,7 +222,7 @@ const WhyColourPixPage = () => {
             <div className="lg:col-span-6">
               <div className="relative h-80 sm:h-[420px] rounded-3xl overflow-hidden border border-white/15 shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=1000&auto=format&fit=crop" 
+                  src="/images/corporate_packaging.png" 
                   alt="ColourPix Production Floor" 
                   className="w-full h-full object-cover filter contrast-125 brightness-90"
                 />

@@ -243,26 +243,26 @@ const TrustCenterPage = () => {
             </div>
 
             <div className="lg:col-span-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
                   <span className="font-syne text-4xl font-extrabold text-[#2563EB]">35+</span>
                   <h4 className="font-syne text-sm font-bold text-white uppercase">Years Experience</h4>
                   <p className="text-xs text-[#A1A1AA]">Continuous pressroom operations since 1991.</p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
                   <span className="font-syne text-4xl font-extrabold text-white">#1991-PK</span>
                   <h4 className="font-syne text-sm font-bold text-white uppercase">LCCI Registered</h4>
                   <p className="text-xs text-[#A1A1AA]">Lahore Chamber of Commerce Member.</p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
                   <span className="font-syne text-4xl font-extrabold text-[#E11D48]">100%</span>
                   <h4 className="font-syne text-sm font-bold text-white uppercase">In-House Plant</h4>
                   <p className="text-xs text-[#A1A1AA]">Direct manufacturing without brokers.</p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#121215] border border-white/10 space-y-2">
                   <span className="font-syne text-4xl font-extrabold text-[#2563EB]">AQL 1.0</span>
                   <h4 className="font-syne text-sm font-bold text-white uppercase">Zero Defect QC</h4>
                   <p className="text-xs text-[#A1A1AA]">Multi-stage quality inspection audit.</p>

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
  * Custom hook to trigger scroll reveals on elements.
  * Returns a ref to attach to the target element.
  */
-export const useScrollReveal = (threshold = 0.15) => {
+export const useScrollReveal = (threshold = 0.01) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -22,8 +22,16 @@ export const useScrollReveal = (threshold = 0.15) => {
 
     observer.observe(el);
 
+    // Failsafe auto-reveal: guarantee element is visible after 1.5 seconds if observer fails on mobile/Safari
+    const timer = setTimeout(() => {
+      if (el && !el.classList.contains('revealed')) {
+        el.classList.add('revealed');
+      }
+    }, 1500);
+
     return () => {
       if (el) observer.unobserve(el);
+      clearTimeout(timer);
     };
   }, [threshold]);
 
@@ -33,7 +41,7 @@ export const useScrollReveal = (threshold = 0.15) => {
 /**
  * ScrollReveal Wrapper Component for easy JSX usage.
  */
-export const ScrollReveal = ({ children, className = '', threshold = 0.15 }) => {
+export const ScrollReveal = ({ children, className = '', threshold = 0.01 }) => {
   const revealRef = useScrollReveal(threshold);
   return (
     <div ref={revealRef} className={className}>

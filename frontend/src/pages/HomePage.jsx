@@ -418,14 +418,14 @@ const HomePage = () => {
             </div>
 
             {/* Factual Metrics Counter Strip */}
-            <ScrollReveal className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-[#121215] border border-white/10 mb-16 shadow-2xl">
-              <div className="border-r border-white/10 pr-6">
+            <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 sm:p-8 rounded-3xl bg-[#121215] border border-white/10 mb-16 shadow-2xl">
+              <div className="sm:border-r border-white/10 pr-6">
                 <StatNumber endValue={35} suffix="+" colorClass="text-[#2563EB]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">YEARS EXPERIENCE</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Continuous operation since 1991</span>
               </div>
 
-              <div className="md:border-r border-white/10 pr-6 pl-2">
+              <div className="md:border-r border-white/10 pr-6 pl-0 sm:pl-4">
                 <span className="font-syne text-4xl sm:text-5xl font-extrabold text-white block mb-1">
                   LCCI
                 </span>
@@ -433,13 +433,13 @@ const HomePage = () => {
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Member #1991-PK (Lahore)</span>
               </div>
 
-              <div className="border-r border-white/10 pr-6 pl-2">
+              <div className="sm:border-r border-white/10 pr-6 pl-0 sm:pl-4">
                 <StatNumber endValue={1000} suffix="+" colorClass="text-[#E11D48]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">ENTERPRISE CLIENTS</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Trusted across all 4 provinces</span>
               </div>
 
-              <div className="pl-2">
+              <div className="pl-0 sm:pl-4">
                 <StatNumber endValue={100} suffix="%" colorClass="text-[#2563EB]" />
                 <span className="text-xs font-mono text-white uppercase block font-bold">IN-HOUSE PLANT</span>
                 <span className="text-[10px] font-mono text-[#A1A1AA]">Zero reseller/broker margin</span>

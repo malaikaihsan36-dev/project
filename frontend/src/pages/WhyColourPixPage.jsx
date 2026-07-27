@@ -280,23 +280,23 @@ const WhyColourPixPage = () => {
                   CORPORATE PERFORMANCE STATS
                 </span>
                 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="p-6 rounded-2xl bg-[#09090B] border border-white/10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="p-4 sm:p-6 rounded-2xl bg-[#09090B] border border-white/10">
                     <span className="font-syne text-4xl font-extrabold text-[#2563EB] block mb-1">99.4%</span>
                     <span className="text-xs font-mono text-[#A1A1AA] uppercase">On-Time Dispatch Rate</span>
                   </div>
 
-                  <div className="p-6 rounded-2xl bg-[#09090B] border border-white/10">
+                  <div className="p-4 sm:p-6 rounded-2xl bg-[#09090B] border border-white/10">
                     <span className="font-syne text-4xl font-extrabold text-white block mb-1">1,000+</span>
                     <span className="text-xs font-mono text-[#A1A1AA] uppercase">Corporate Accounts</span>
                   </div>
 
-                  <div className="p-6 rounded-2xl bg-[#09090B] border border-white/10">
+                  <div className="p-4 sm:p-6 rounded-2xl bg-[#09090B] border border-white/10">
                     <span className="font-syne text-4xl font-extrabold text-[#E11D48] block mb-1">AQL 1.0</span>
                     <span className="text-xs font-mono text-[#A1A1AA] uppercase">Zero Defect Inspection</span>
                   </div>
 
-                  <div className="p-6 rounded-2xl bg-[#09090B] border border-white/10">
+                  <div className="p-4 sm:p-6 rounded-2xl bg-[#09090B] border border-white/10">
                     <span className="font-syne text-4xl font-extrabold text-[#2563EB] block mb-1">50M+</span>
                     <span className="text-xs font-mono text-[#A1A1AA] uppercase">Packaging Units Run</span>
                   </div>

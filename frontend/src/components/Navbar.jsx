@@ -283,7 +283,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 text-[#A1A1AA] hover:text-white transition-colors"
+              className="p-3 text-[#A1A1AA] hover:text-white transition-colors"
               title="Search Services & Products"
             >
               <Search size={18} />
@@ -299,7 +299,7 @@ const Navbar = () => {
 
             <button
               onClick={() => navigate('/contact')}
-              className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-semibold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] inline-block"
+              className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-3 rounded-lg text-xs font-mono uppercase tracking-wider font-semibold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] inline-block"
             >
               Request Quote
             </button>
@@ -311,7 +311,7 @@ const Navbar = () => {
               title="Admin Portal"
             />
             
-            <button className="xl:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+            <button className="xl:hidden text-white p-3 hover:bg-white/5 rounded-lg transition-colors" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -323,9 +323,16 @@ const Navbar = () => {
             {/* Company Section */}
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Company</span>
-              <div className="grid grid-cols-2 gap-3 pl-2">
+              <div className="grid grid-cols-2 gap-3">
                 {companyLinks.map(c => (
-                  <Link key={c.path} to={c.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{c.name}</Link>
+                  <Link 
+                    key={c.path} 
+                    to={c.path} 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-xs font-mono text-white uppercase py-3.5 px-2 rounded-xl bg-[#121215] border border-white/10 hover:text-[#2563EB] hover:bg-white/5 transition-colors block text-center truncate"
+                  >
+                    {c.name}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -333,9 +340,16 @@ const Navbar = () => {
             {/* Capabilities Section */}
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Capabilities</span>
-              <div className="grid grid-cols-2 gap-3 pl-2">
+              <div className="grid grid-cols-2 gap-3">
                 {capabilitiesLinks.map(c => (
-                  <Link key={c.path} to={c.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{c.name}</Link>
+                  <Link 
+                    key={c.path} 
+                    to={c.path} 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-xs font-mono text-white uppercase py-3.5 px-2 rounded-xl bg-[#121215] border border-white/10 hover:text-[#2563EB] hover:bg-white/5 transition-colors block text-center truncate"
+                  >
+                    {c.name}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -343,9 +357,16 @@ const Navbar = () => {
             {/* Work Section */}
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Work & Industries</span>
-              <div className="grid grid-cols-2 gap-3 pl-2">
+              <div className="grid grid-cols-2 gap-3">
                 {workLinks.map(w => (
-                  <Link key={w.path} to={w.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{w.name}</Link>
+                  <Link 
+                    key={w.path} 
+                    to={w.path} 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-xs font-mono text-white uppercase py-3.5 px-2 rounded-xl bg-[#121215] border border-white/10 hover:text-[#2563EB] hover:bg-white/5 transition-colors block text-center truncate"
+                  >
+                    {w.name}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -353,17 +374,36 @@ const Navbar = () => {
             {/* Resources Section */}
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Resources</span>
-              <div className="grid grid-cols-2 gap-3 pl-2">
+              <div className="grid grid-cols-2 gap-3">
                 {resourcesLinks.map(r => (
-                  <Link key={r.path} to={r.path} onClick={() => setIsOpen(false)} className="text-xs font-mono text-white uppercase py-1 hover:text-[#2563EB]">{r.name}</Link>
+                  <Link 
+                    key={r.path} 
+                    to={r.path} 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-xs font-mono text-white uppercase py-3.5 px-2 rounded-xl bg-[#121215] border border-white/10 hover:text-[#2563EB] hover:bg-white/5 transition-colors block text-center truncate"
+                  >
+                    {r.name}
+                  </Link>
                 ))}
               </div>
             </div>
 
             {/* Direct Utility Links */}
             <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-              <Link to="/estimator" onClick={() => setIsOpen(false)} className="text-sm font-mono text-white uppercase font-bold">Estimator</Link>
-              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-sm font-mono text-[#2563EB] uppercase font-bold">Contact Us</Link>
+              <Link 
+                to="/estimator" 
+                onClick={() => setIsOpen(false)} 
+                className="text-sm font-mono text-white uppercase font-bold py-3.5 px-4 rounded-xl bg-[#121215] border border-white/10 block text-center"
+              >
+                Estimator
+              </Link>
+              <Link 
+                to="/contact" 
+                onClick={() => setIsOpen(false)} 
+                className="text-sm font-mono text-white uppercase font-bold py-3.5 px-4 rounded-xl bg-[#2563EB] block text-center"
+              >
+                Contact Us
+              </Link>
             </div>
           </div>
         )}

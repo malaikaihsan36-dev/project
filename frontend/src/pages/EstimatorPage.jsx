@@ -632,7 +632,7 @@ const EstimatorPage = () => {
                             <button
                               key={val}
                               onClick={() => setQuantity(val)}
-                              className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all ${
+                              className={`px-4 py-3 rounded-xl text-xs font-mono font-bold border transition-all ${
                                 quantity === val 
                                   ? "bg-[#2563EB] border-[#2563EB] text-white" 
                                   : "bg-[#121215] border-white/10 text-[#A1A1AA] hover:border-white/20"
@@ -690,7 +690,7 @@ const EstimatorPage = () => {
                           <button
                             key={unit}
                             onClick={() => setDimensionUnit(unit)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                            className={`px-4 py-3 rounded-lg text-xs font-mono font-bold transition-all ${
                               dimensionUnit === unit 
                                 ? "bg-[#2563EB] text-white" 
                                 : "text-[#A1A1AA]"

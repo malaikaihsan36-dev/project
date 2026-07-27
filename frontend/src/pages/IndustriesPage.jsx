@@ -16,7 +16,7 @@ const IndustriesPage = () => {
       tag: "HIGH VOLUME SUPPLY",
       desc: "FDA-certified food-grade paperboards, greaseproof barrier liners, and custom folding cartons designed for shelf appeal and food safety.",
       features: ["Food-Grade Virgin Kraft", "Grease & Moisture Barrier Coatings", "High-Speed Automated Cartoning"],
-      image: "/images/food_packaging.png"
+      image: "/images/ind_fmcg_food.svg"
     },
     {
       num: "02",
@@ -24,7 +24,7 @@ const IndustriesPage = () => {
       tag: "LUXURY GRADE FINISH",
       desc: "Tactile velvet soft-touch rigid setup boxes, gold foil stamped perfume cartons, and embossed cosmetic sleeves for prestige beauty brands.",
       features: ["Velvet Soft-Touch Lamination", "Precision Metallic Foil Stamping", "Custom Molded Velvet Inserts"],
-      image: "/images/cosmetic_packaging.png"
+      image: "/images/ind_cosmetics_beauty.svg"
     },
     {
       num: "03",
@@ -32,7 +32,7 @@ const IndustriesPage = () => {
       tag: "STRICT QC STANDARDS",
       desc: "Tamper-evident pharmaceutical cartons, braille embossed medicine boxes, and strict Pantone color density controls for healthcare compliance.",
       features: ["Tamper-Evident Safety Locks", "Braille & Micro-Text Embossing", "Delta-E Color Tolerance Verification"],
-      image: "/images/pharma_packaging.png"
+      image: "/images/ind_pharma_health.svg"
     },
     {
       num: "04",
@@ -40,7 +40,7 @@ const IndustriesPage = () => {
       tag: "BESPOKE BRAND KITS",
       desc: "Heavy cardstock garment packaging, branded clothing boxes, and custom embossed retail gift tags.",
       features: ["Reinforced Bottom Garment Boxes", "Foil Stamped Apparel Gift Boxes", "Bespoke Woven Tag Cards"],
-      image: "/images/clothing_packaging.png"
+      image: "/images/ind_retail_apparel.svg"
     },
     {
       num: "05",
@@ -48,7 +48,7 @@ const IndustriesPage = () => {
       tag: "EXECUTIVE BRAND SUITE",
       desc: "Executive presentation gift sets, custom metallic foiled corporate portfolios, and branded stationery for enterprise accounts.",
       features: ["Metallic Silver & Copper Foiling", "Custom Presentation Trays", "Executive Matte Box Finishing"],
-      image: "/images/corporate_packaging.png"
+      image: "/images/ind_corporate_exec.svg"
     },
     {
       num: "06",
@@ -56,7 +56,7 @@ const IndustriesPage = () => {
       tag: "NATIONWIDE LOGISTICS",
       desc: "Tear-strip self-sealing e-commerce mailer boxes, heavy corrugated shipping cartons, and waterproof adhesive product labels.",
       features: ["Self-Sealing Peel & Seal Strips", "Flute E/B Corrugated Board", "Heavy Shipping Protection"],
-      image: "/images/ecommerce_packaging.png"
+      image: "/images/ind_ecommerce_logistics.svg"
     }
   ];
 

@@ -19,7 +19,7 @@ const PackagingPage = () => {
       features: ["Custom Foam & Velvet Trays", "Friction Fit & Magnetic Closures", "Book-Style & Shoulder Box Formats"],
       materials: "1000-2400 GSM Grey Chipboard, Specialty Wrap Papers, Velvet",
       finishes: "Gold/Silver Hot Foil, Spot UV, Velvet Soft-Touch",
-      image: "/images/clothing_packaging.png"
+      image: "/images/pack_rigid_setup.svg"
     },
     {
       id: "food-packaging",
@@ -29,7 +29,7 @@ const PackagingPage = () => {
       features: ["Grease & Moisture Barrier Liners", "High-Speed Automated Cartoning", "100% Recyclable Paperboard"],
       materials: "250-450 GSM Virgin Kraft, Poly-Coated Duplex, Food Board",
       finishes: "Aqueous Coating, Matte Lamination, Food-Safe Inks",
-      image: "/images/food_packaging.png"
+      image: "/images/pack_fmcg_cartons.svg"
     },
     {
       id: "cosmetic-packaging",
@@ -39,7 +39,7 @@ const PackagingPage = () => {
       features: ["Tactile Velvet Soft-Touch Film", "Multi-Level 3D Embossing", "Micro-Foil Registration"],
       materials: "300-450 GSM Bleached Kraft, Silver Metallized Board",
       finishes: "Hot Foil Stamping, Spot UV Varnish, 3D Relief Emboss",
-      image: "/images/cosmetic_packaging.png"
+      image: "/images/pack_beauty_boxes.svg"
     },
     {
       id: "pharmaceutical-packaging",
@@ -49,7 +49,7 @@ const PackagingPage = () => {
       features: ["Tamper-Evident Security Locks", "Braille & Micro-Text Embossing", "Delta-E Color Density Verification"],
       materials: "250-350 GSM Pharma Grade Folding Boxboard (FBB)",
       finishes: "Water-Based Varnish, Braille Emboss, Security Foils",
-      image: "/images/pharma_packaging.png"
+      image: "/images/pack_pharma_cartons.svg"
     },
     {
       id: "ecommerce-packaging",
@@ -60,7 +60,7 @@ const PackagingPage = () => {
       materials: "E-Flute & B-Flute Single Wall Corrugated Board",
       materials: "200-350 GSM Art Paper, Heavy Kraft Stock",
       finishes: "Matte/Gloss Lamination, Foil Stamped Logo",
-      image: "/images/cad_dieline.png"
+      image: "/images/pack_ecommerce_mailers.svg"
     }
   ];
 

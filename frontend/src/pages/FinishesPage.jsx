@@ -19,7 +19,7 @@ const FinishesPage = () => {
       visualEffect: "Opaque, mirror-like metallic shine in gold, silver, rose gold, bronze, or custom holographic films.",
       benefits: ["High-impact shelf reflection", "Tear-resistant metallic film", "Compatible with textured paperboards"],
       bestIndustries: "Perfumes, Cosmetics, Executive Gifts, Confectionery & Spirits",
-      image: "/images/ecommerce_packaging.png"
+      image: "/images/finish_gold_foil.svg"
     },
     {
       id: "spot-uv",
@@ -29,7 +29,7 @@ const FinishesPage = () => {
       visualEffect: "High-gloss glasslike sheen raised up to 100 microns for rich tactile depth.",
       benefits: ["Scratch & water resistance", "Highlights key brand elements", "Creates sensory unboxing touch"],
       bestIndustries: "Electronics, Book Covers, Rigid Setup Boxes & Retail Cartons",
-      image: "/images/foil_emboss.png"
+      image: "/images/finish_spot_uv.svg"
     },
     {
       id: "embossing",
@@ -39,7 +39,7 @@ const FinishesPage = () => {
       visualEffect: "Sculpted 3D paper elevation that catches ambient lighting and creates memorable hand-feel.",
       benefits: ["Adds physical dimension", "Refines brand crests & logos", "Zero ink requirement for blind emboss"],
       bestIndustries: "Pharma Seals, Luxury Retail Bags, Certificates & Brand Kits",
-      image: "/images/foil_emboss.png"
+      image: "/images/finish_velvet_touch.svg"
     },
     {
       id: "soft-touch",
@@ -49,7 +49,7 @@ const FinishesPage = () => {
       visualEffect: "Silky, glare-free deep matte texture with superior color saturation.",
       benefits: ["Anti-fingerprint coating", "Velvety hand-feel", "Ideal base for hot foil & spot UV"],
       bestIndustries: "High-End Beauty, Apparel Boxes, Rigid Gift Packaging & Books",
-      image: "/images/cad_dieline.png"
+      image: "/images/finish_3d_embossing.svg"
     },
     {
       id: "matte-lamination",

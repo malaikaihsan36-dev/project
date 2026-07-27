@@ -508,25 +508,25 @@ const WhyColourPixPage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 text-center space-y-2">
-              <span className="font-syne text-5xl sm:text-6xl font-extrabold text-[#2563EB] block">35+</span>
+              <span className="font-syne text-3xl sm:text-6xl font-extrabold text-[#2563EB] block">35+</span>
               <span className="text-xs font-mono text-white uppercase font-bold block">Years of Excellence</span>
               <span className="text-[10px] text-[#A1A1AA] block">Continuous Mfg History</span>
             </div>
 
             <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 text-center space-y-2">
-              <span className="font-syne text-5xl sm:text-6xl font-extrabold text-white block">LCCI</span>
+              <span className="font-syne text-3xl sm:text-6xl font-extrabold text-white block">LCCI</span>
               <span className="text-xs font-mono text-white uppercase font-bold block">Member #1991-PK</span>
               <span className="text-[10px] text-[#2563EB] font-mono block">Registered Chamber Co.</span>
             </div>
 
             <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 text-center space-y-2">
-              <span className="font-syne text-5xl sm:text-6xl font-extrabold text-[#E11D48] block">100%</span>
+              <span className="font-syne text-3xl sm:text-6xl font-extrabold text-[#E11D48] block">100%</span>
               <span className="text-xs font-mono text-white uppercase font-bold block">Custom Solutions</span>
               <span className="text-[10px] text-[#A1A1AA] block">Bespoke CAD Dielines</span>
             </div>
 
             <div className="p-8 rounded-3xl bg-[#121215] border border-white/10 text-center space-y-2">
-              <span className="font-syne text-5xl sm:text-6xl font-extrabold text-[#2563EB] block">NATIONWIDE</span>
+              <span className="font-syne text-3xl sm:text-6xl font-extrabold text-[#2563EB] block">NATIONWIDE</span>
               <span className="text-xs font-mono text-white uppercase font-bold block">& Export Logistics</span>
               <span className="text-[10px] text-[#A1A1AA] block">Tracked Container Freight</span>
             </div>
@@ -543,7 +543,7 @@ const WhyColourPixPage = () => {
             START YOUR MANUFACTURING PARTNERSHIP
           </span>
 
-          <h2 className="font-syne text-5xl sm:text-7xl font-extrabold uppercase text-white leading-tight">
+          <h2 className="font-syne text-3xl sm:text-7xl font-extrabold uppercase text-white leading-tight">
             LET'S CREATE <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
               SOMETHING EXCEPTIONAL.

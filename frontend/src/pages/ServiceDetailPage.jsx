@@ -130,7 +130,7 @@ const ServiceDetailPage = () => {
                 <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse"></span>
                 {service.tag}
               </span>
-              <h1 className="font-syne text-5xl sm:text-7xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+              <h1 className="font-syne text-3xl sm:text-7xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                 {service.title}
               </h1>
               <p className="font-syne text-xl text-[#2563EB] uppercase font-bold mt-4">

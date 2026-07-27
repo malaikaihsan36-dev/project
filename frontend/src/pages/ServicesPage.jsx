@@ -79,7 +79,7 @@ const ServicesPage = () => {
                 <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                 IN-HOUSE INDUSTRIAL MANUFACTURING DIVISIONS
               </span>
-              <h1 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+              <h1 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                 END-TO-END <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                   MANUFACTURING

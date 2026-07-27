@@ -201,7 +201,7 @@ const MagazineViewer = () => {
           {page.type === 'cover' && (
             <div className="space-y-6 text-center py-6">
               <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] font-bold block">{page.issue}</span>
-              <h1 className="font-syne text-5xl sm:text-6xl font-extrabold uppercase leading-[0.9] tracking-tight">{page.title}</h1>
+              <h1 className="font-syne text-3xl sm:text-6xl font-extrabold uppercase leading-[0.9] tracking-tight">{page.title}</h1>
               <span className="font-syne text-xl text-[#A1A1AA] tracking-widest block">{page.subtitle}</span>
               
               <div className="h-56 rounded-2xl overflow-hidden border border-white/15 my-6 max-w-sm mx-auto">

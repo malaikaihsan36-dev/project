@@ -395,7 +395,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                   OFFICIAL INSTITUTIONAL ACCREDITATION & RELIABILITY
                 </span>
-                <h2 className="font-syne text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   BUILT <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     ON
@@ -530,7 +530,7 @@ const HomePage = () => {
             </div>
 
             {/* Massive Headline */}
-            <h2 className="font-syne text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] mb-12 tracking-tight">
+            <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] mb-12 tracking-tight">
               35 YEARS OF <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                 CRAFTSMANSHIP.
@@ -702,7 +702,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                   INDUSTRIAL PRODUCTION PORTFOLIO
                 </span>
-                <h2 className="font-syne text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   WHAT <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     WE
@@ -964,7 +964,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                   INTERACTIVE INDUSTRIAL PRODUCTION JOURNEY
                 </span>
-                <h2 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   FROM <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     IDEA
@@ -1138,7 +1138,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#E11D48]"></span>
                   STRATEGIC ADVANTAGES OVER PRINT BROKERS & SHOP VENDORS
                 </span>
-                <h2 className="font-syne text-5xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   THE DIRECT <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     MANUFACTURING

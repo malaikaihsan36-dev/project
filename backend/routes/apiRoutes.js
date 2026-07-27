@@ -97,4 +97,9 @@ router.get('/contact-subjects', projCtrl.getContactSubjects);
 router.post('/contact-subjects', projCtrl.addContactSubject);
 router.delete('/contact-subjects/:id', projCtrl.deleteContactSubject);
 
+// --- SITE SETTINGS & CURRENCIES ---
+const settingsCtrl = require('../controllers/settingsController');
+router.get('/settings', settingsCtrl.getSettings);
+router.post('/settings', settingsCtrl.updateSettings);
+
 module.exports = router;

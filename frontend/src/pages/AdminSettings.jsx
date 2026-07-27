@@ -9,7 +9,8 @@ import {
   Loader2,
   UserCheck,
   Eye,      // Naya icon
-  EyeOff    // Naya icon
+  EyeOff,    // Naya icon
+  Calculator
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -30,6 +31,13 @@ const AdminSettings = () => {
     confirmPassword: ''
   });
 
+  const [exchangeRates, setExchangeRates] = useState({
+    usd_rate: '0.0036',
+    gbp_rate: '0.0028',
+    eur_rate: '0.0033'
+  });
+  const [ratesSaving, setRatesSaving] = useState(false);
+
   // 1. Fetch Admins
   const fetchAdmins = async () => {
     try {
@@ -43,10 +51,40 @@ const AdminSettings = () => {
     }
   };
 
+  // Fetch Exchange Rates Settings
+  const fetchRates = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/settings`);
+      if (res.data && res.data.usd_rate) {
+        setExchangeRates({
+          usd_rate: res.data.usd_rate,
+          gbp_rate: res.data.gbp_rate,
+          eur_rate: res.data.eur_rate || '0.0033'
+        });
+      }
+    } catch (err) {
+      console.error("Error fetching exchange rates settings:", err);
+    }
+  };
+
   useEffect(() => {
     document.title = "Admin Settings | ColourPix";
     fetchAdmins();
+    fetchRates();
   }, []);
+
+  const handleSaveRates = async (e) => {
+    e.preventDefault();
+    setRatesSaving(true);
+    try {
+      await axios.post(`${API_BASE_URL}/api/settings`, exchangeRates);
+      alert("Currency exchange rates updated successfully!");
+    } catch (err) {
+      alert("Failed to update exchange rates.");
+    } finally {
+      setRatesSaving(false);
+    }
+  };
 
   // 2. Add Admin
   const handleAddAdmin = async (e) => {
@@ -185,6 +223,73 @@ const AdminSettings = () => {
                   className="w-full h-12 bg-gradient-to-r from-[#00ffaa] to-[#00d4ff] text-[#060A14] font-bold rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(0,255,170,0.3)] transition-all active:scale-95 disabled:opacity-50"
                 >
                   {loading ? <Loader2 className="animate-spin" /> : "Register Admin"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        {/* MIDDLE: Estimator Exchange Rates Settings */}
+        <section>
+          <div className="bg-[#141A3A]/50 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Calculator className="text-[#00ffaa]" size={20} />
+              Exchange Rates & Pricing Rules
+            </h2>
+            <p className="text-sm text-gray-400 mb-6">
+              Enter exchange rates as multipliers relative to 1 PKR. The instant estimator uses these rates to convert PKR baseline quotes into local currencies.
+            </p>
+            
+            <form onSubmit={handleSaveRates} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">USD Rate (per 1 PKR)</label>
+                <input 
+                  type="number"
+                  step="0.00001"
+                  required
+                  value={exchangeRates.usd_rate}
+                  onChange={(e) => setExchangeRates({ ...exchangeRates, usd_rate: e.target.value })}
+                  className="w-full bg-[#0B0F1E] border border-white/10 rounded-xl h-12 px-4 focus:border-[#00ffaa] outline-none transition-all font-mono"
+                  placeholder="0.0036"
+                />
+                <span className="text-[10px] text-gray-500 block">Current approx: 1 USD = {(1 / parseFloat(exchangeRates.usd_rate || 0.0036)).toFixed(1)} PKR</span>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">GBP Rate (per 1 PKR)</label>
+                <input 
+                  type="number"
+                  step="0.00001"
+                  required
+                  value={exchangeRates.gbp_rate}
+                  onChange={(e) => setExchangeRates({ ...exchangeRates, gbp_rate: e.target.value })}
+                  className="w-full bg-[#0B0F1E] border border-white/10 rounded-xl h-12 px-4 focus:border-[#00ffaa] outline-none transition-all font-mono"
+                  placeholder="0.0028"
+                />
+                <span className="text-[10px] text-gray-500 block">Current approx: 1 GBP = {(1 / parseFloat(exchangeRates.gbp_rate || 0.0028)).toFixed(1)} PKR</span>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">EUR Rate (per 1 PKR)</label>
+                <input 
+                  type="number"
+                  step="0.00001"
+                  required
+                  value={exchangeRates.eur_rate}
+                  onChange={(e) => setExchangeRates({ ...exchangeRates, eur_rate: e.target.value })}
+                  className="w-full bg-[#0B0F1E] border border-white/10 rounded-xl h-12 px-4 focus:border-[#00ffaa] outline-none transition-all font-mono"
+                  placeholder="0.0033"
+                />
+                <span className="text-[10px] text-gray-500 block">Current approx: 1 EUR = {(1 / parseFloat(exchangeRates.eur_rate || 0.0033)).toFixed(1)} PKR</span>
+              </div>
+
+              <div className="md:col-span-3 pt-2">
+                <button 
+                  type="submit"
+                  disabled={ratesSaving}
+                  className="w-full h-12 bg-gradient-to-r from-[#00ffaa] to-[#00d4ff] text-[#060A14] font-bold rounded-xl flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(0,255,170,0.3)] transition-all active:scale-95 disabled:opacity-50"
+                >
+                  {ratesSaving ? <Loader2 className="animate-spin" /> : "Save Pricing Rules"}
                 </button>
               </div>
             </form>

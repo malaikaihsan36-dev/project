@@ -96,6 +96,15 @@ const EstimatorPage = () => {
   const [selectedFinishes, setSelectedFinishes] = useState(["Velvet Matte Laminate"]);
   const [selectedDelivery, setSelectedDelivery] = useState("Standard Ground");
 
+  // Dynamic Exchange Rates State
+  const [currencies, setCurrencies] = useState({
+    Pakistan: { code: "PKR", symbol: "Rs.", rate: 1.0 },
+    "United States": { code: "USD", symbol: "$", rate: 0.0036 },
+    "United Kingdom": { code: "GBP", symbol: "£", rate: 0.0028 },
+    Europe: { code: "EUR", symbol: "€", rate: 0.0033 },
+    Other: { code: "USD", symbol: "$", rate: 0.0036 }
+  });
+
   // Auxiliary UI States
   const [copySuccess, setCopySuccess] = useState(false);
   const [configSaved, setConfigSaved] = useState(false);
@@ -124,6 +133,31 @@ const EstimatorPage = () => {
     }
   }, []);
 
+  // Fetch Exchange Rates on mount
+  useEffect(() => {
+    const fetchRates = async () => {
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://colourpix.pk';
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/settings`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.usd_rate && data.gbp_rate) {
+            setCurrencies({
+              Pakistan: { code: "PKR", symbol: "Rs.", rate: 1.0 },
+              "United States": { code: "USD", symbol: "$", rate: parseFloat(data.usd_rate) || 0.0036 },
+              "United Kingdom": { code: "GBP", symbol: "£", rate: parseFloat(data.gbp_rate) || 0.0028 },
+              Europe: { code: "EUR", symbol: "€", rate: parseFloat(data.eur_rate) || 0.0033 },
+              Other: { code: "USD", symbol: "$", rate: parseFloat(data.usd_rate) || 0.0036 }
+            });
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching live settings/rates:", e);
+      }
+    };
+    fetchRates();
+  }, []);
+
   // Update Page Title
   useEffect(() => {
     document.title = "Instant Packaging Cost Estimator | ColourPix";
@@ -136,7 +170,7 @@ const EstimatorPage = () => {
     const mData = PRICING_RULES.materials[selectedMaterial] || { multiplier: 1.0 };
     const prData = PRICING_RULES.printing[selectedPrinting] || { setupCost: 2000, perUnitCost: 20 };
     const dData = PRICING_RULES.delivery[selectedDelivery] || { costMultiplier: 0.05, minCost: 1500, days: 5 };
-    const currency = PRICING_RULES.currencies[selectedMarket] || { code: "PKR", symbol: "Rs.", rate: 1.0 };
+    const currency = currencies[selectedMarket] || { code: "PKR", symbol: "Rs.", rate: 1.0 };
 
     // 1. Base Carton Price
     const baseCartonPrice = pData.base * quantity;
@@ -507,8 +541,8 @@ const EstimatorPage = () => {
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                      {["Pakistan", "United States", "United Kingdom", "Other"].map((mkt) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                      {["Pakistan", "United States", "United Kingdom", "Europe", "Other"].map((mkt) => (
                         <button
                           key={mkt}
                           onClick={() => setSelectedMarket(mkt)}

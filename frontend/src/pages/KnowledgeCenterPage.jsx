@@ -352,7 +352,7 @@ const KnowledgeCenterPage = () => {
                     </button>
                     
                     <button 
-                      onClick={() => downloadBrochure("Company Profile")}
+                      onClick={() => downloadBrochure("ColourPix Magazine")}
                       className="bg-transparent border border-white/15 text-white hover:border-white/30 px-6 py-3.5 rounded-xl text-xs font-mono uppercase tracking-wider font-bold transition-all flex items-center gap-2"
                     >
                       <Download size={14} /> Download PDF (8.5 MB)
@@ -465,7 +465,7 @@ const KnowledgeCenterPage = () => {
                         
                         <button 
                           onClick={() => {
-                            if (res.category === 'Magazine') {
+                            if (res.category === 'Magazine' || res.id === 'cp-mag-01') {
                               navigate(`/read/${res.id}`);
                             } else {
                               downloadBrochure(res.downloadName);

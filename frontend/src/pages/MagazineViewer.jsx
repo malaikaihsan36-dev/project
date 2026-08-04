@@ -329,7 +329,7 @@ const MagazineViewer = () => {
           <span className="h-4 w-px bg-white/10 mx-1 hidden sm:block" />
 
           <button onClick={handleShare} className="p-2 hover:text-white" title="Share Link"><Share2 size={16} /></button>
-          <button onClick={() => downloadBrochure('Company Profile')} className="p-2 hover:text-white" title="Download PDF"><Download size={16} /></button>
+          <button onClick={() => downloadBrochure('ColourPix Magazine')} className="p-2 hover:text-white" title="Download PDF"><Download size={16} /></button>
           
           <button onClick={toggleFullscreen} className="p-2 hover:text-white ml-1">
             {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}

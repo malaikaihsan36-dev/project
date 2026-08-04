@@ -123,7 +123,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Mega Navigation */}
-          <div className="hidden xl:flex items-center gap-7 relative select-none whitespace-nowrap flex-row flex-nowrap">
+          <div className="hidden lg:flex items-center gap-7 relative select-none whitespace-nowrap flex-row flex-nowrap">
             <Link 
               to="/" 
               className={`text-xs font-mono uppercase tracking-wider py-2 transition-all ${location.pathname === '/' ? 'text-[#2563EB] font-bold border-b-2 border-[#2563EB]' : 'text-[#A1A1AA] hover:text-white'}`}
@@ -311,7 +311,7 @@ const Navbar = () => {
               title="Admin Portal"
             />
             
-            <button className="xl:hidden text-white p-3 hover:bg-white/5 rounded-lg transition-colors" onClick={() => setIsOpen(!isOpen)}>
+            <button className="lg:hidden text-white p-3 hover:bg-white/5 rounded-lg transition-colors" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -319,7 +319,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="xl:hidden bg-[#09090B] border-b border-white/10 text-left p-6 max-h-[80vh] overflow-y-auto space-y-6">
+          <div className="lg:hidden bg-[#09090B] border-b border-white/10 text-left p-6 max-h-[80vh] overflow-y-auto space-y-6">
             {/* Company Section */}
             <div className="space-y-2">
               <span className="text-[10px] font-mono text-[#2563EB] uppercase block font-bold tracking-wider">Company</span>

@@ -154,7 +154,7 @@ Every fold consumes a fraction of paperboard thickness. CAD dieline engineers au
                 <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                 TECHNICAL PACKAGING & PRINTING KNOWLEDGE
               </span>
-              <h1 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+              <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                 KNOWLEDGE <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                   THAT SHAPES

@@ -221,7 +221,7 @@ const Portfolio = () => {
                 <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse"></span>
                 PRE-PRESS VERIFIED CASE STUDIES & PRODUCTION RUNS
               </span>
-              <h1 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+              <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                 PRODUCTION <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                   CASE STUDIES

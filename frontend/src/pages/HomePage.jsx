@@ -342,7 +342,7 @@ const HomePage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
               {/* Left Column: Massive Editorial Headline */}
               <div className="lg:col-span-8">
-                <h1 className="font-syne text-4xl sm:text-8xl md:text-[6.5rem] lg:text-[7.5rem] font-extrabold uppercase tracking-tight text-white leading-[0.9] mb-8">
+                <h1 className="font-syne text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7.5rem] font-extrabold uppercase tracking-tight text-white leading-[0.9] mb-8">
                   PRINTING <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E4E4E7] to-[#2563EB]">
                     THAT BUILDS
@@ -395,7 +395,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                   OFFICIAL INSTITUTIONAL ACCREDITATION & RELIABILITY
                 </span>
-                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   BUILT <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     ON
@@ -530,7 +530,7 @@ const HomePage = () => {
             </div>
 
             {/* Massive Headline */}
-            <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] mb-12 tracking-tight">
+            <h2 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[7rem] font-extrabold uppercase text-white leading-[0.95] mb-12 tracking-tight">
               35 YEARS OF <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                 CRAFTSMANSHIP.
@@ -964,7 +964,7 @@ const HomePage = () => {
                   <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
                   INTERACTIVE INDUSTRIAL PRODUCTION JOURNEY
                 </span>
-                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                <h2 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                   FROM <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                     IDEA

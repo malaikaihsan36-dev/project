@@ -65,7 +65,7 @@ const WhyColourPixPage = () => {
                 <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse"></span>
                 TRUST, SCALE & CRAFTSMANSHIP SINCE 1991
               </span>
-              <h1 className="font-syne text-6xl sm:text-8xl md:text-9xl font-extrabold uppercase text-white leading-[0.92] tracking-tight">
+              <h1 className="font-syne text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-white leading-[0.92] tracking-tight">
                 WHY <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                   COLOURPIX

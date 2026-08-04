@@ -172,7 +172,7 @@ const TrustCenterPage = () => {
                 <ShieldCheck className="w-4 h-4 text-[#2563EB]" />
                 COLOURPIX CORPORATE TRUST & CREDIBILITY HUB
               </span>
-              <h1 className="font-syne text-3xl sm:text-7xl md:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+              <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase text-white leading-[0.95] tracking-tight">
                 THE HEART OF <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
                   MANUFACTURING

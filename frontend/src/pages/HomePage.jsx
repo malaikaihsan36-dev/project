@@ -513,6 +513,119 @@ const HomePage = () => {
         </section>
 
         {/* ========================================================= */}
+        {/* SECTION 2: WORLD-CLASS CAPABILITIES — WHAT WE BUILD */}
+        {/* ========================================================= */}
+        <section id="capabilities" className="py-28 relative border-b border-[#27272A]/50 bg-[#0C0C0E]">
+          <div className="max-w-7xl mx-auto px-6">
+            
+            {/* Header Tag & Headline */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16">
+              <div className="lg:col-span-8">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] mb-4 block flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
+                  INDUSTRIAL PRODUCTION PORTFOLIO
+                </span>
+                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
+                  WHAT <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
+                    WE
+                  </span> <br />
+                  BUILD.
+                </h2>
+              </div>
+
+              <div className="lg:col-span-4 lg:pb-2">
+                <p className="text-[#A1A1AA] text-base leading-relaxed font-normal mb-6">
+                  From heavy offset printing to handcrafted luxury rigid boxes and specialty hot foiling — our plant manufactures 20 distinct industrial product categories under one roof.
+                </p>
+
+                <div className="flex items-center gap-2 font-mono text-xs text-[#E4E4E7]">
+                  <span className="text-[#2563EB] font-bold">20 CAPABILITIES</span>
+                  <span>•</span>
+                  <span>PHOTOGRAPHY GALLERY</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Filter Category Navigation Bar */}
+            <div className="flex flex-wrap items-center gap-3 mb-12 border-b border-white/10 pb-6">
+              {[
+                { id: 'ALL', label: 'ALL CAPABILITIES (20)' },
+                { id: 'PACKAGING & BOXES', label: 'PACKAGING & BOXES' },
+                { id: 'HEAVY PRINTING', label: 'HEAVY PRINTING' },
+                { id: 'LUXURY FINISHING', label: 'LUXURY FINISHING' },
+                { id: 'COMMERCIAL & BRANDING', label: 'COMMERCIAL & BRANDING' },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setCapabilityFilter(tab.id)}
+                  className={`px-5 py-2.5 rounded-xl text-xs font-mono uppercase tracking-wider transition-all duration-300 ${
+                    capabilityFilter === tab.id
+                      ? 'bg-[#2563EB] text-white font-bold shadow-[0_0_20px_rgba(37,99,235,0.4)]'
+                      : 'bg-[#121215] text-[#A1A1AA] border border-white/10 hover:border-white/30 hover:text-white'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Large Photography Cards Grid (No Generic Icons) */}
+            <ScrollReveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allCapabilitiesList
+                .filter(item => capabilityFilter === 'ALL' || item.category === capabilityFilter)
+                .map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className="group luxury-card rounded-3xl overflow-hidden flex flex-col justify-between border border-white/10 hover:border-[#2563EB] transition-all duration-500 shadow-xl"
+                  >
+                    {/* Large Photography Container */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#121215] via-black/20 to-transparent opacity-90"></div>
+                      
+                      {/* Top Badge Overlay */}
+                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
+                          {item.category}
+                        </span>
+                        <span className="font-syne font-extrabold text-xl text-[#2563EB]">
+                          {item.num}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card Content Footer */}
+                    <div className="p-7 relative bg-[#121215] flex flex-col justify-between flex-grow">
+                      <div>
+                        <h3 className="font-syne text-2xl font-bold text-white mb-2 group-hover:text-[#2563EB] transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-[#A1A1AA] leading-relaxed mb-6 font-normal">
+                          {item.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-[#E4E4E7]">
+                        <span className="text-[#2563EB]">INDUSTRIAL GRADE</span>
+                        <Link to="/catalog" className="flex items-center gap-1 hover:text-[#2563EB] transition-colors">
+                          <span>REQUEST SPEC SHEET</span>
+                          <ArrowUpRight className="w-4 h-4" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </ScrollReveal>
+
+          </div>
+        </section>
+
+        {/* ========================================================= */}
         {/* SECTION 1: ABOUT COLOURPIX — A 35-YEAR STORY OF CRAFTSMANSHIP */}
         {/* ========================================================= */}
         <section id="about" className="py-28 relative border-b border-[#27272A]/50 bg-gradient-to-b from-[#09090B] via-[#0D0D0F] to-[#09090B]">
@@ -685,119 +798,6 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================= */}
-        {/* SECTION 2: WORLD-CLASS CAPABILITIES — WHAT WE BUILD */}
-        {/* ========================================================= */}
-        <section id="capabilities" className="py-28 relative border-b border-[#27272A]/50 bg-[#0C0C0E]">
-          <div className="max-w-7xl mx-auto px-6">
-            
-            {/* Header Tag & Headline */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16">
-              <div className="lg:col-span-8">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#2563EB] mb-4 block flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
-                  INDUSTRIAL PRODUCTION PORTFOLIO
-                </span>
-                <h2 className="font-syne text-3xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold uppercase text-white leading-[0.95] tracking-tight">
-                  WHAT <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-white to-[#E11D48]">
-                    WE
-                  </span> <br />
-                  BUILD.
-                </h2>
-              </div>
-
-              <div className="lg:col-span-4 lg:pb-2">
-                <p className="text-[#A1A1AA] text-base leading-relaxed font-normal mb-6">
-                  From heavy offset printing to handcrafted luxury rigid boxes and specialty hot foiling — our plant manufactures 20 distinct industrial product categories under one roof.
-                </p>
-
-                <div className="flex items-center gap-2 font-mono text-xs text-[#E4E4E7]">
-                  <span className="text-[#2563EB] font-bold">20 CAPABILITIES</span>
-                  <span>•</span>
-                  <span>PHOTOGRAPHY GALLERY</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Filter Category Navigation Bar */}
-            <div className="flex flex-wrap items-center gap-3 mb-12 border-b border-white/10 pb-6">
-              {[
-                { id: 'ALL', label: 'ALL CAPABILITIES (20)' },
-                { id: 'PACKAGING & BOXES', label: 'PACKAGING & BOXES' },
-                { id: 'HEAVY PRINTING', label: 'HEAVY PRINTING' },
-                { id: 'LUXURY FINISHING', label: 'LUXURY FINISHING' },
-                { id: 'COMMERCIAL & BRANDING', label: 'COMMERCIAL & BRANDING' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setCapabilityFilter(tab.id)}
-                  className={`px-5 py-2.5 rounded-xl text-xs font-mono uppercase tracking-wider transition-all duration-300 ${
-                    capabilityFilter === tab.id
-                      ? 'bg-[#2563EB] text-white font-bold shadow-[0_0_20px_rgba(37,99,235,0.4)]'
-                      : 'bg-[#121215] text-[#A1A1AA] border border-white/10 hover:border-white/30 hover:text-white'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Large Photography Cards Grid (No Generic Icons) */}
-            <ScrollReveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {allCapabilitiesList
-                .filter(item => capabilityFilter === 'ALL' || item.category === capabilityFilter)
-                .map((item, idx) => (
-                  <div 
-                    key={idx}
-                    className="group luxury-card rounded-3xl overflow-hidden flex flex-col justify-between border border-white/10 hover:border-[#2563EB] transition-all duration-500 shadow-xl"
-                  >
-                    {/* Large Photography Container */}
-                    <div className="relative h-64 overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#121215] via-black/20 to-transparent opacity-90"></div>
-                      
-                      {/* Top Badge Overlay */}
-                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
-                          {item.category}
-                        </span>
-                        <span className="font-syne font-extrabold text-xl text-[#2563EB]">
-                          {item.num}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Card Content Footer */}
-                    <div className="p-7 relative bg-[#121215] flex flex-col justify-between flex-grow">
-                      <div>
-                        <h3 className="font-syne text-2xl font-bold text-white mb-2 group-hover:text-[#2563EB] transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-[#A1A1AA] leading-relaxed mb-6 font-normal">
-                          {item.desc}
-                        </p>
-                      </div>
-
-                      <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-[#E4E4E7]">
-                        <span className="text-[#2563EB]">INDUSTRIAL GRADE</span>
-                        <Link to="/catalog" className="flex items-center gap-1 hover:text-[#2563EB] transition-colors">
-                          <span>REQUEST SPEC SHEET</span>
-                          <ArrowUpRight className="w-4 h-4" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </ScrollReveal>
 
           </div>
         </section>

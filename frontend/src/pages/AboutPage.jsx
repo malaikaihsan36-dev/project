@@ -134,7 +134,7 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-left">
             {[
               { year: "1991", title: "FOUNDING IN LAHORE", desc: "Established as a commercial printing facility focused on color fidelity." },
               { year: "2002", title: "LCCI REGISTRATION", desc: "Expanded offset press capacity and received official LCCI accreditation (#1991-PK)." },

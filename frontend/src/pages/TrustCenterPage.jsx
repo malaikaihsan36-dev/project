@@ -359,7 +359,7 @@ const TrustCenterPage = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {qualityCheckpoints.map((qc, idx) => (
               <div key={idx} className="luxury-card p-6 rounded-2xl border border-white/10 space-y-4 hover:border-[#2563EB] transition-all">
                 <span className="font-syne text-3xl font-extrabold text-[#2563EB] block">{qc.num}</span>
